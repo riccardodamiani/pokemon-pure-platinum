@@ -6,6 +6,25 @@
 
 #include "item.h"
 #include "move_table.h"
+
+typedef struct SelectedSwitchData{
+    int switchInSlot;
+    int score;
+}SelectedSwitchData;
+
+typedef struct SelectedItemData{
+    u16 itemSlot;
+    u8 itemCondition;
+    u8 itemType;
+    int score;
+}SelectedItemData;
+
+typedef struct SelectedMoveData{
+    u8 move;    // as defined in ai_action_choise.h
+    u8 target;
+    int score;
+}SelectedMoveData;
+
 typedef struct AIContext {
     u8 evalStep;
     u8 moveSlot;
@@ -47,6 +66,11 @@ typedef struct AIContext {
 
     u16 padding1DD0[4]; // unused
     u16 padding1DD8[4]; // unused
+
+    SelectedSwitchData bestSwitchData;
+    SelectedItemData bestItemData;
+    SelectedMoveData bestMoveData;
+    u8 bestAction;
 } AIContext;
 
 #endif // POKEPLATINUM_BATTLE_AI_CONTEXT_H

@@ -178,8 +178,8 @@ static void AICmd_IfBattlerFainted(BattleSystem *battleSys, BattleContext *battl
 static void AICmd_IfBattlerNotFainted(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AICmd_LoadAbility(BattleSystem *battleSys, BattleContext *battleCtx);
 
-static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx);
-static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx);
+static void TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx);
+static void TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx);
 static void TrainerAI_EvalMoves(BattleSystem *battleSys, BattleContext *battleCtx);
 static void TrainerAI_RecordLastMove(BattleSystem *battleSys, BattleContext *battleCtx);
 static void AIScript_PushCursor(BattleSystem *battleSys, BattleContext *battleCtx, int address);
@@ -192,6 +192,11 @@ static s32 TrainerAI_CalcAllDamage(BattleSystem *battleSys, BattleContext *battl
 static s32 TrainerAI_CalcDamage(BattleSystem *battleSys, BattleContext *battleCtx, u16 move, u16 heldItem, u8 *ivs, int attacker, int ability, BOOL embargo, u8 variance);
 static int TrainerAI_MoveType(BattleSystem *battleSys, BattleContext *battleCtx, int battler, int move);
 static void TrainerAI_GetStats(BattleContext *battleCtx, int battler, int *buf1, int *buf2, int stat);
+
+static void TrainerAI_EvaluateMoves(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+static void TrainerAI_EvaluateItems(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+static void TrainerAI_EvaluateSwitching(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
+static int TrainerAI_ChooseBestAction(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
 
 static BOOL AI_PerishSongKO(BattleContext *battleCtx, int battler);
 static BOOL AI_CannotDamageWonderGuard(BattleSystem *battleSys, BattleContext *battleCtx, int battler);
@@ -257,23 +262,9 @@ void TrainerAI_Init(BattleSystem *battleSys, BattleContext *battleCtx, u8 battle
 
 u8 TrainerAI_Main(BattleSystem *battleSys, u8 battler)
 {
-    u8 result;
     BattleContext *battleCtx = battleSys->battleCtx;
 
-    if ((AI_CONTEXT.stateFlags & AI_STATUS_FLAG_CONTINUE) == FALSE) {
-        AI_CONTEXT.attacker = battler;
-        AI_CONTEXT.defender = BattleSystem_RandomOpponent(battleSys, battleCtx, battler);
-
-        TrainerAI_Init(battleSys, battleCtx, AI_CONTEXT.attacker, AI_INIT_SCORE_ALL_MOVES);
-    }
-
-    if ((battleSys->battleType & BATTLE_TYPE_DOUBLES) == FALSE) {
-        result = TrainerAI_MainSingles(battleSys, battleCtx);
-    } else {
-        result = TrainerAI_MainDoubles(battleSys, battleCtx);
-    }
-
-    return result;
+    return AI_CONTEXT.bestMoveData.move;
 }
 
 /**
@@ -283,7 +274,7 @@ u8 TrainerAI_Main(BattleSystem *battleSys, u8 battler)
  * @param battleCtx
  * @return The action that the AI picked for its turn. See enum AIActionChoice.
  */
-static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx)
+static void TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     int i;
     u8 maxScoreMoves[4];
@@ -310,8 +301,10 @@ static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCt
 
     if (AI_CONTEXT.stateFlags & AI_STATUS_FLAG_ESCAPE) {
         action = AI_ENEMY_ESCAPE;
+        AI_CONTEXT.bestMoveData.score = 50;
     } else if (AI_CONTEXT.stateFlags & AI_STATUS_FLAG_SAFARI) {
         action = AI_ENEMY_SAFARI;
+        AI_CONTEXT.bestMoveData.score = 50;
     } else {
         // Get the move with the highest score; break ties randomly
         numMaxScoreMoves = 1;
@@ -335,11 +328,13 @@ static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCt
             }
         }
 
-        action = maxScoreMoveSlots[BattleSystem_RandNext(battleSys) % numMaxScoreMoves];
+        u8 randBestChoise = BattleSystem_RandNext(battleSys) % numMaxScoreMoves;
+        action = maxScoreMoveSlots[randBestChoise];
+        AI_CONTEXT.bestMoveData.score = maxScoreMoves[randBestChoise];
     }
 
-    AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker] = AI_CONTEXT.defender;
-    return action;
+    AI_CONTEXT.bestMoveData.move = action;
+    AI_CONTEXT.bestMoveData.target = AI_CONTEXT.defender;
 }
 
 /**
@@ -349,7 +344,7 @@ static u8 TrainerAI_MainSingles(BattleSystem *battleSys, BattleContext *battleCt
  * @param battleCtx
  * @return The action that the AI picked for its turn. See enum AIActionChoice.
  */
-static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx)
+static void TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCtx)
 {
     int battler, battlerCount, thinkingMask;
     s16 maxScoreForBattler[MAX_BATTLERS];
@@ -454,22 +449,23 @@ static u8 TrainerAI_MainDoubles(BattleSystem *battleSys, BattleContext *battleCt
     }
 
     // Pick a random target from among the maximum-scored targets
-    AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker] = battlerTemp[(BattleSystem_RandNext(battleSys) % battlerCount)];
-    moveSlot = actionForBattler[AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker]];
+    u8 randBestTarget = BattleSystem_RandNext(battleSys) % battlerCount;
+    AI_CONTEXT.bestMoveData.target = battlerTemp[randBestTarget];
+    AI_CONTEXT.bestMoveData.move = actionForBattler[AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker]];
     move = battleCtx->battleMons[AI_CONTEXT.attacker].moves[moveSlot];
 
     // Override targets as needed
     if (AI_CONTEXT.moveTable[move].range == RANGE_USER_OR_ALLY
         && BattleSystem_GetBattlerSide(battleSys, AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker]) == 0) {
-        AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker] = AI_CONTEXT.attacker;
+        AI_CONTEXT.bestMoveData.target = AI_CONTEXT.attacker;
     }
 
     if (move == MOVE_CURSE && Move_IsGhostCurse(battleCtx, move, AI_CONTEXT.attacker) == FALSE) {
-        AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker] = AI_CONTEXT.attacker;
+        AI_CONTEXT.bestMoveData.target = AI_CONTEXT.attacker;
     }
 
-    return moveSlot;
 }
+
 
 /**
  * @brief Evaluation loop for scoring each move available to the AI.
@@ -3986,57 +3982,255 @@ static BOOL TrainerAI_ShouldSwitch(BattleSystem *battleSys, BattleContext *battl
     return FALSE;
 }
 
-int TrainerAI_PickCommand(BattleSystem *battleSys, int battler)
-{
+void TrainerAI_EvaluateMoves(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
+
+    if ((AI_CONTEXT.stateFlags & AI_STATUS_FLAG_CONTINUE) == FALSE) {
+        AI_CONTEXT.attacker = battler;
+        AI_CONTEXT.defender = BattleSystem_RandomOpponent(battleSys, battleCtx, battler);
+
+        TrainerAI_Init(battleSys, battleCtx, AI_CONTEXT.attacker, AI_INIT_SCORE_ALL_MOVES);
+    }
+
+    if ((battleSys->battleType & BATTLE_TYPE_DOUBLES) == FALSE) {
+        TrainerAI_MainSingles(battleSys, battleCtx);
+    } else {
+        TrainerAI_MainDoubles(battleSys, battleCtx);
+    }
+}
+
+void TrainerAI_EvaluateItems(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
+    int i;
+    u8 aliveMons = 0;
+    u16 item;
+    u8 hpRestore;
+    BOOL result;
+    Party *party;
+    Pokemon *mon;
+    AI_CONTEXT.bestItemData.itemCondition = 0;
+    result = FALSE;
+
+    // Don't let the AI partners ever use items in battle against trainers.
+    if ((battleSys->battleType & BATTLE_TYPE_TRAINER_WITH_AI_PARTNER) == BATTLE_TYPE_TRAINER_WITH_AI_PARTNER
+        && BattleSystem_GetBattlerType(battleSys, battler) == BATTLER_TYPE_PLAYER_SIDE_SLOT_2) {
+        return;
+    }
+
+    // Don't try to use items if it's illegal to do so.
+    if (battleCtx->battleMons[battler].moveEffectsMask & MOVE_EFFECT_EMBARGO) {
+        return;
+    }
+
+    party = BattleSystem_GetParty(battleSys, battler);
+    for (i = 0; i < Party_GetCurrentCount(party); i++) {
+        mon = Party_GetPokemonBySlotIndex(party, i);
+
+        if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) != 0
+            && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_NONE
+            && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG) {
+            aliveMons++;
+        }
+    }
+
+    for (i = 0; i < MAX_TRAINER_ITEMS; i++) {
+        if (i == 0 || aliveMons <= AI_CONTEXT.trainerItemCounts[battler >> 1] - i + 1) {
+            item = AI_CONTEXT.trainerItems[battler >> 1][i];
+
+            if (item == ITEM_NONE) {
+                continue;
+            }
+
+            if (item == ITEM_FULL_RESTORE) {
+                if (battleCtx->battleMons[battler].curHP < (battleCtx->battleMons[battler].maxHP / 4)
+                    && battleCtx->battleMons[battler].curHP) {
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_FULL_RESTORE;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORE)) {
+                hpRestore = BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORED);
+
+                // Use an HP restore item if the battler is at less than 1/4 HP or if the full HP restore
+                // value of the item would be used.
+                if (hpRestore) {
+                    if (battleCtx->battleMons[battler].curHP
+                        && (battleCtx->battleMons[battler].curHP < (battleCtx->battleMons[battler].maxHP / 4)
+                            || (battleCtx->battleMons[battler].maxHP - battleCtx->battleMons[battler].curHP) > hpRestore)) {
+                        AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_HP;
+                        result = TRUE;
+                    }
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_SLEEP)) {
+                if (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(5);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_POISON)) {
+                if ((battleCtx->battleMons[battler].status & MON_CONDITION_POISON)
+                    || (battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC)) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(4);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_BURN)) {
+                if (battleCtx->battleMons[battler].status & MON_CONDITION_BURN) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(3);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_FREEZE)) {
+                if (battleCtx->battleMons[battler].status & MON_CONDITION_FREEZE) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(2);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_PARALYSIS)) {
+                if (battleCtx->battleMons[battler].status & MON_CONDITION_PARALYSIS) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(1);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_CONFUSION)) {
+                if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_CONFUSION) {
+                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(0);
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+                    result = TRUE;
+                }
+                // Don't try to use any of these until after the first turn that a mon is in play.
+            } else if ((battleCtx->battleMons[battler].moveEffectsData.fakeOutTurnNumber - battleCtx->totalTurns) >= 0) {
+                if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ATK_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_ATTACK;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_DEF_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_DEFENSE;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPATK_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SP_ATTACK;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPDEF_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SP_DEFENSE;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPEED_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SPEED;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ACC_STAGES)) {
+                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_ACCURACY;
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+                    result = TRUE;
+                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_GUARD_SPEC)
+                    && (battleCtx->sideConditionsMask[1] & SIDE_CONDITION_MIST) == FALSE) {
+                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_GUARD_SPEC;
+                    result = TRUE;
+                }
+            } else {
+                // Unrecognized item type
+                AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_MAX;
+            }
+
+            if (result == TRUE) {
+                AI_CONTEXT.bestItemData.itemSlot = i;
+                AI_CONTEXT.bestItemData.score = 150;
+                //AI_CONTEXT.trainerItems[battler >> 1][i] = 0;
+            }
+        }
+    }
+}
+
+void TrainerAI_EvaluateSwitching(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
     // must declare C89-style to match
     int i;
     u8 battler1, battler2;
     u32 battleType;
     int end;
     Pokemon *mon;
-    BattleContext *battleCtx = battleSys->battleCtx;
     battleType = BattleSystem_GetBattleType(battleSys);
 
-    if ((battleType & BATTLE_TYPE_TRAINER) || BattleSystem_GetBattlerSide(battleSys, battler) == BATTLE_SIDE_PLAYER) {
-        if (TrainerAI_ShouldSwitch(battleSys, battleCtx, battler)) {
-            // If this is a switch which should use the post-KO switch logic, then do so.
-            // If there is no valid battler, pick the first one in party order.
-            if (battleCtx->aiSwitchedPartySlot[battler] == 6) {
-                if ((i = BattleAI_PostKOSwitchIn(battleSys, battler)) == 6) {
-                    battler1 = battler;
-                    if ((battleType & BATTLE_TYPE_TAG) || (battleType & BATTLE_TYPE_2vs2)) {
-                        battler2 = battler1;
-                    } else {
-                        battler2 = BattleSystem_GetPartner(battleSys, battler);
-                    }
-
-                    end = BattleSystem_GetPartyCount(battleSys, battler);
-                    for (i = 0; i < end; i++) {
-                        mon = BattleSystem_GetPartyPokemon(battleSys, battler, i);
-
-                        if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) != 0
-                            && i != battleCtx->selectedPartySlot[battler1]
-                            && i != battleCtx->selectedPartySlot[battler2]
-                            && i != battleCtx->aiSwitchedPartySlot[battler1]
-                            && i != battleCtx->aiSwitchedPartySlot[battler2]) {
-                            break;
-                        }
-                    }
+    if (TrainerAI_ShouldSwitch(battleSys, battleCtx, battler)) {
+        // If this is a switch which should use the post-KO switch logic, then do so.
+        // If there is no valid battler, pick the first one in party order.
+        if (battleCtx->aiSwitchedPartySlot[battler] == 6) {
+            if ((i = BattleAI_PostKOSwitchIn(battleSys, battler)) == 6) {
+                battler1 = battler;
+                if ((battleType & BATTLE_TYPE_TAG) || (battleType & BATTLE_TYPE_2vs2)) {
+                    battler2 = battler1;
+                } else {
+                    battler2 = BattleSystem_GetPartner(battleSys, battler);
                 }
 
-                battleCtx->aiSwitchedPartySlot[battler] = i;
+                end = BattleSystem_GetPartyCount(battleSys, battler);
+                for (i = 0; i < end; i++) {
+                    mon = BattleSystem_GetPartyPokemon(battleSys, battler, i);
+
+                    if (Pokemon_GetValue(mon, MON_DATA_HP, NULL) != 0
+                        && i != battleCtx->selectedPartySlot[battler1]
+                        && i != battleCtx->selectedPartySlot[battler2]
+                        && i != battleCtx->aiSwitchedPartySlot[battler1]
+                        && i != battleCtx->aiSwitchedPartySlot[battler2]) {
+                        break;
+                    }
+                }
             }
 
-            return PLAYER_INPUT_PARTY;
-        }
-
-        // Check if the AI determines that it should use an item
-        if (TrainerAI_ShouldUseItem(battleSys, battler)) {
-            return PLAYER_INPUT_ITEM;
+            //battleCtx->aiSwitchedPartySlot[battler] = i;
+            battleCtx->aiContext.bestSwitchData.switchInSlot = i;
+            battleCtx->aiContext.bestSwitchData.score = 200;
         }
     }
+}
 
+int TrainerAI_ChooseBestAction(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
+    
+    if(AI_CONTEXT.bestMoveData.score >= AI_CONTEXT.bestItemData.score &&
+        AI_CONTEXT.bestMoveData.score >= AI_CONTEXT.bestSwitchData.score){
+
+        AI_CONTEXT.selectedTarget[AI_CONTEXT.attacker] = AI_CONTEXT.bestMoveData.target;
+        AI_CONTEXT.bestAction = PLAYER_INPUT_FIGHT;
+        return AI_CONTEXT.bestAction;
+    }
+    if(AI_CONTEXT.bestItemData.score >= AI_CONTEXT.bestMoveData.score &&
+        AI_CONTEXT.bestItemData.score >= AI_CONTEXT.bestSwitchData.score){
+
+        AI_CONTEXT.usedItemType[battler >> 1] = AI_CONTEXT.bestItemData.itemType;
+        AI_CONTEXT.usedItemCondition[battler >> 1] = AI_CONTEXT.bestItemData.itemCondition;
+        u16 item = AI_CONTEXT.trainerItems[battler >> 1][AI_CONTEXT.bestItemData.itemSlot];
+        AI_CONTEXT.usedItem[battler >> 1] = item;
+        AI_CONTEXT.trainerItems[battler >> 1][AI_CONTEXT.bestItemData.itemSlot] = 0;
+        AI_CONTEXT.bestAction = PLAYER_INPUT_ITEM;
+        return AI_CONTEXT.bestAction;
+    }
+    if(AI_CONTEXT.bestSwitchData.score >= AI_CONTEXT.bestItemData.score &&
+        AI_CONTEXT.bestSwitchData.score >= AI_CONTEXT.bestMoveData.score){
+        
+        battleCtx->aiSwitchedPartySlot[battler] = AI_CONTEXT.bestSwitchData.switchInSlot;
+        AI_CONTEXT.bestAction = PLAYER_INPUT_PARTY;
+        return AI_CONTEXT.bestAction;
+    }
     return PLAYER_INPUT_FIGHT;
+}
+
+int TrainerAI_PickCommand(BattleSystem *battleSys, int battler)
+{
+    u32 battleType = BattleSystem_GetBattleType(battleSys);
+    BattleContext *battleCtx = battleSys->battleCtx;
+    
+    // starts with negative scores
+    battleCtx->aiContext.bestSwitchData.score = -1;
+    battleCtx->aiContext.bestItemData.score = -1;
+    battleCtx->aiContext.bestMoveData.score = -1;
+
+    // evaluate actions
+    if (TRUE || (battleType & BATTLE_TYPE_TRAINER) || BattleSystem_GetBattlerSide(battleSys, battler) == BATTLE_SIDE_PLAYER) {
+        TrainerAI_EvaluateSwitching(battleSys, battleCtx, battler);
+        TrainerAI_EvaluateItems(battleSys, battleCtx, battler);
+    }
+    TrainerAI_EvaluateMoves(battleSys, battleCtx, battler);
+    
+    // select the best one
+    return TrainerAI_ChooseBestAction(battleSys, battleCtx, battler);
 }
 
 /**
