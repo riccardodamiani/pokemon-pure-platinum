@@ -3998,6 +3998,233 @@ void TrainerAI_EvaluateMoves(BattleSystem *battleSys, BattleContext *battleCtx, 
     }
 }
 
+int RemainingHPPercentage(BattleMon* mon){
+    return (mon->curHP * 100) / mon->maxHP;
+}
+
+#define AI_ITEM_HP_RESTORE_FACTOR 0.67
+#define AI_ITEM_HP_RESTORE_STATBOOST_FACTOR 1.1
+#define AI_ITEM_HEAL_SLP_FRE 100
+#define AI_ITEM_HEAL_BASE 50
+#define AI_ITEM_HEAL_MIN_BASE 25
+#define AI_ITEM_HEAL_TOXIC_COUNT_BOOST 15
+#define AI_ITEM_HEAL_NATURAL_CURE 0.5
+#define AI_ITEM_HEAL_SHED_SKIN 0.5
+#define AI_ITEM_HEAL_CONFUSION_BASE 25
+#define AI_ITEM_HEAL_CONFUSION_BOOST_FACTOR 1.1
+
+/**
+ * toxic, poison heal verificate
+ * paralisys ok
+ * burn low ok
+ * burn high ok?
+ * fullheal ok
+ * full restore ok
+ * confusion ...
+ * 
+ */
+
+int HPRestoreValue(BattleSystem *battleSys, BattleContext *battleCtx, int battler, u16 item){
+    s32 hpRestore;
+
+    if(!BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORE)){
+        return 0;
+    }
+
+    hpRestore = BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORED);
+    if(!hpRestore) return 0;
+    if(item == ITEM_FULL_RESTORE){
+        hpRestore = battleCtx->battleMons[battler].maxHP;
+    }
+    int hpPercentage = RemainingHPPercentage(&battleCtx->battleMons[battler]);
+    int hpLost = battleCtx->battleMons[battler].maxHP - battleCtx->battleMons[battler].curHP;
+    int restorePercent = (hpRestore * 100) / battleCtx->battleMons[battler].maxHP;
+    int lostPercent = 100 - hpPercentage;
+
+    // item utilization factor is the minimum of the percent of hp restored and the percent of hp lost
+    // it's then arbitrarily adjusted based on other parameters
+    float item_utilization_factor = restorePercent;
+    if(restorePercent > lostPercent){
+        item_utilization_factor = lostPercent;
+    }
+
+    // artificially adjust the item utitlization factor depending on stats boosted/dropped
+    // translated: if the pokemon is goated save it at all costs. If it's trash, don't waste the item
+    int i;
+    int statBoosts = 0;
+    for(i = 0; i < NUM_BOOSTABLE_STATS; i++){
+        // stat boost go fron 0 to 12, with 6 being the neutral value. So we subtract 6 to get the net boost/drops
+        statBoosts += battleCtx->battleMons[battler].statBoosts[i] - 6;
+    }
+    if(statBoosts >= 0){
+        for(i = 0; i < statBoosts; i++){
+            item_utilization_factor *= AI_ITEM_HP_RESTORE_STATBOOST_FACTOR;
+        }
+    }else{
+        statBoosts = -statBoosts;
+        for(i = 0; i < statBoosts; i++){
+            item_utilization_factor /= AI_ITEM_HP_RESTORE_STATBOOST_FACTOR;
+        }
+    }
+
+    // the score is higher the more the item is utilized and the less hp is remaining
+    // the score can be negative
+    float score = (item_utilization_factor + lostPercent - (restorePercent/2 + hpPercentage)) * AI_ITEM_HP_RESTORE_FACTOR;
+
+    // TODO: the less damage the opponent does the better it is to restore hp
+
+    return (int)score;
+}
+
+float AI_StatusHealEvalNaturalCure(BattleContext *battleCtx, BattleMon* mon){
+    if(mon->ability == ABILITY_NATURAL_CURE){
+        return 0.5;
+    }
+
+    return 1.0;
+}
+
+float AI_StatusHealEvalShedSkin(BattleContext *battleCtx, BattleMon* mon){
+    if(mon->ability == ABILITY_SHED_SKIN){
+        return 0.5;
+    }
+
+    return 1.0;
+}
+
+float AI_StatusHealEvalGuts(BattleContext *battleCtx, BattleMon* mon, u32 conditionStatus){
+    if(mon->ability != ABILITY_GUTS){
+        return 1.0;
+    }
+
+    if(conditionStatus & (MON_CONDITION_PARALYSIS | MON_CONDITION_SLEEP | MON_CONDITION_FREEZE)){
+        return 1.0;
+    }
+
+    return 0;
+}
+
+float AI_StatusHealEvalMagicGuard(BattleContext *battleCtx, BattleMon* mon, u32 conditionStatus){
+    if(mon->ability != ABILITY_MAGIC_GUARD){
+        return 1.0;
+    }
+
+    if(conditionStatus & (MON_CONDITION_PARALYSIS | MON_CONDITION_SLEEP | MON_CONDITION_FREEZE)){
+        return 1.0;
+    }
+
+    return 0;
+}
+
+float AI_StatusHealEvalHydration(BattleContext *battleCtx, BattleMon* mon){
+    if(mon->ability != ABILITY_HYDRATION){
+        return 1.0;
+    }
+
+    if(battleCtx->fieldConditionsMask & FIELD_CONDITION_RAINING){
+        return 0.0;
+    }
+
+    return 1.0;
+}
+
+float AI_StatusHealEvalPoisonHeal(BattleContext *battleCtx, BattleMon* mon, u32 conditionStatus){
+    if(mon->ability != ABILITY_POISON_HEAL){
+        return 1.0;
+    }
+
+    if(conditionStatus & MON_CONDITION_ANY_POISON){
+        return 0.0;
+    }
+
+    return 1.0;
+}
+
+float AI_StatusHealEvalQuickFeet(BattleContext *battleCtx, BattleMon* mon, u32 conditionStatus){
+    if(mon->ability != ABILITY_QUICK_FEET){
+        return 1.0;
+    }
+
+    if(conditionStatus & (MON_CONDITION_SLEEP | MON_CONDITION_FREEZE)){
+        return 1.0;
+    }
+
+    return 0.0;
+}
+
+float AI_StatusHealEvalMarvelScale(BattleContext *battleCtx, BattleMon* mon, u32 conditionStatus){
+    if(mon->ability != ABILITY_MARVEL_SCALE){
+        return 1.0;
+    }
+
+    if(conditionStatus & (MON_CONDITION_SLEEP | MON_CONDITION_FREEZE)){
+        return 1.0;
+    }
+
+    return 0.0;
+}
+
+int AI_StatusHealEvaluate(BattleSystem *battleSys, BattleContext *battleCtx, int battler, u16 item, u32 conditionStatus){
+    BattleMon* mon = &battleCtx->battleMons[battler];
+
+    float value = AI_ITEM_HEAL_MIN_BASE; 
+
+    //sleep, freeze
+    if(conditionStatus & (MON_CONDITION_SLEEP | MON_CONDITION_FREEZE)){
+        value = AI_ITEM_HEAL_SLP_FRE;
+    }
+
+    // paralisys or burn if attack is important use base score
+    if(((conditionStatus & MON_CONDITION_BURN) && ((mon->attack * 4 / 5) > mon->spAttack)) || 
+       (conditionStatus & MON_CONDITION_PARALYSIS)){
+        value = AI_ITEM_HEAL_BASE;
+    }
+
+    // any poison or low importance burn use min_base score
+
+    // toxic is a big deal after few turns
+    // the first turn toxic_counter is already 1, second turn 2 and so on
+    u16 toxic_counter = (battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC_COUNTER) >> 8;
+    if((conditionStatus & MON_CONDITION_TOXIC) && toxic_counter > 0){
+        value += AI_ITEM_HEAL_TOXIC_COUNT_BOOST * (toxic_counter - 1);
+    }
+
+    // evaluate abilities
+    value *= AI_StatusHealEvalNaturalCure(battleCtx, mon);
+    value *= AI_StatusHealEvalShedSkin(battleCtx, mon);
+    value *= AI_StatusHealEvalGuts(battleCtx, mon, conditionStatus);
+    value *= AI_StatusHealEvalMagicGuard(battleCtx, mon, conditionStatus);
+    value *= AI_StatusHealEvalHydration(battleCtx, mon);
+    value *= AI_StatusHealEvalPoisonHeal(battleCtx, mon, conditionStatus);
+    value *= AI_StatusHealEvalQuickFeet(battleCtx, mon, conditionStatus);
+    value *= AI_StatusHealEvalMarvelScale(battleCtx, mon, conditionStatus);
+
+    return value;
+}
+
+int AI_ConfusionEvaluate(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
+    if(battleCtx->battleMons[battler].ability == ABILITY_TANGLED_FEET){
+        return 0;
+    }
+
+    float score = AI_ITEM_HEAL_CONFUSION_BASE;
+
+    // better to heal a boosted pokemon to avcoid self damage and be sure to damage opponent
+    int i;
+    int statBoosts = 0;
+    for(i = 0; i < NUM_BOOSTABLE_STATS; i++){
+        // stat boost go fron 0 to 12, with 6 being the neutral value. So we subtract 6 to get the net boost/drops
+        statBoosts += battleCtx->battleMons[battler].statBoosts[i] - 6;
+    }
+    if(statBoosts >= 0){
+        for(i = 0; i < statBoosts; i++){
+            score *= AI_ITEM_HEAL_CONFUSION_BOOST_FACTOR;
+        }
+    }
+
+    return score;
+}
+
 void TrainerAI_EvaluateItems(BattleSystem *battleSys, BattleContext *battleCtx, int battler){
     int i;
     u8 aliveMons = 0;
@@ -4006,7 +4233,12 @@ void TrainerAI_EvaluateItems(BattleSystem *battleSys, BattleContext *battleCtx, 
     BOOL result;
     Party *party;
     Pokemon *mon;
+
+    AI_CONTEXT.bestItemData.itemSlot = 0;
+    AI_CONTEXT.bestItemData.itemType = 0;
+    AI_CONTEXT.bestItemData.score = -1;
     AI_CONTEXT.bestItemData.itemCondition = 0;
+
     result = FALSE;
 
     // Don't let the AI partners ever use items in battle against trainers.
@@ -4032,110 +4264,131 @@ void TrainerAI_EvaluateItems(BattleSystem *battleSys, BattleContext *battleCtx, 
     }
 
     for (i = 0; i < MAX_TRAINER_ITEMS; i++) {
-        if (i == 0 || aliveMons <= AI_CONTEXT.trainerItemCounts[battler >> 1] - i + 1) {
-            item = AI_CONTEXT.trainerItems[battler >> 1][i];
+        int score = -1;
+        u8 itemType = 0;
+        u8 itemCondition = 0;
 
-            if (item == ITEM_NONE) {
-                continue;
+        item = AI_CONTEXT.trainerItems[battler >> 1][i];
+        if (item == ITEM_NONE) {
+            continue;
+        }
+
+        if (item == ITEM_FULL_RESTORE) {
+            // hp heal
+            score = HPRestoreValue(battleSys, battleCtx, battler, item);
+
+            // status heal
+            if(battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_POISON ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_BURN ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_FREEZE ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_PARALYSIS){
+                 
+                score += AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
             }
 
-            if (item == ITEM_FULL_RESTORE) {
-                if (battleCtx->battleMons[battler].curHP < (battleCtx->battleMons[battler].maxHP / 4)
-                    && battleCtx->battleMons[battler].curHP) {
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_FULL_RESTORE;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORE)) {
-                hpRestore = BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORED);
-
-                // Use an HP restore item if the battler is at less than 1/4 HP or if the full HP restore
-                // value of the item would be used.
-                if (hpRestore) {
-                    if (battleCtx->battleMons[battler].curHP
-                        && (battleCtx->battleMons[battler].curHP < (battleCtx->battleMons[battler].maxHP / 4)
-                            || (battleCtx->battleMons[battler].maxHP - battleCtx->battleMons[battler].curHP) > hpRestore)) {
-                        AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_HP;
-                        result = TRUE;
-                    }
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_SLEEP)) {
-                if (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(5);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_POISON)) {
-                if ((battleCtx->battleMons[battler].status & MON_CONDITION_POISON)
-                    || (battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC)) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(4);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_BURN)) {
-                if (battleCtx->battleMons[battler].status & MON_CONDITION_BURN) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(3);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_FREEZE)) {
-                if (battleCtx->battleMons[battler].status & MON_CONDITION_FREEZE) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(2);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_PARALYSIS)) {
-                if (battleCtx->battleMons[battler].status & MON_CONDITION_PARALYSIS) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(1);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_CONFUSION)) {
-                if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_CONFUSION) {
-                    AI_CONTEXT.bestItemData.itemCondition |= FlagIndex(0);
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
-                    result = TRUE;
-                }
-                // Don't try to use any of these until after the first turn that a mon is in play.
-            } else if ((battleCtx->battleMons[battler].moveEffectsData.fakeOutTurnNumber - battleCtx->totalTurns) >= 0) {
-                if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ATK_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_ATTACK;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_DEF_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_DEFENSE;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPATK_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SP_ATTACK;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPDEF_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SP_DEFENSE;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPEED_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_SPEED;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ACC_STAGES)) {
-                    AI_CONTEXT.bestItemData.itemCondition = BATTLE_STAT_ACCURACY;
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
-                    result = TRUE;
-                } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_GUARD_SPEC)
-                    && (battleCtx->sideConditionsMask[1] & SIDE_CONDITION_MIST) == FALSE) {
-                    AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_GUARD_SPEC;
-                    result = TRUE;
-                }
-            } else {
-                // Unrecognized item type
-                AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_MAX;
+            // confusion heal
+            if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_CONFUSION) {
+                score += AI_ConfusionEvaluate(battleSys, battleCtx, battler);
             }
 
-            if (result == TRUE) {
-                AI_CONTEXT.bestItemData.itemSlot = i;
-                AI_CONTEXT.bestItemData.score = 150;
-                //AI_CONTEXT.trainerItems[battler >> 1][i] = 0;
+            itemType = ITEM_AI_CATEGORY_FULL_RESTORE;
+            itemCondition = 0;
+        }else if(item == ITEM_FULL_HEAL){
+            // effect of status heal
+            if(battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_POISON ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_BURN ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_FREEZE ||
+                battleCtx->battleMons[battler].status & MON_CONDITION_PARALYSIS){
+                 
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(5) | FlagIndex(4) | FlagIndex(3) | FlagIndex(2) | FlagIndex(1);
             }
+
+            if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_CONFUSION) {
+                score += AI_ConfusionEvaluate(battleSys, battleCtx, battler);
+                itemCondition |= FlagIndex(0);
+            }
+            itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HP_RESTORE)) {
+            score = HPRestoreValue(battleSys, battleCtx, battler, item);
+            itemType = ITEM_AI_CATEGORY_RECOVER_HP;
+            itemCondition = 0;
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_SLEEP)) {
+            if (battleCtx->battleMons[battler].status & MON_CONDITION_SLEEP) {
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(5);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_POISON)) {
+            if ((battleCtx->battleMons[battler].status & MON_CONDITION_POISON)
+                || (battleCtx->battleMons[battler].status & MON_CONDITION_TOXIC)) {
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(4);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_BURN)) {
+            if (battleCtx->battleMons[battler].status & MON_CONDITION_BURN) {
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(3);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_FREEZE)) {
+            if (battleCtx->battleMons[battler].status & MON_CONDITION_FREEZE) {
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(2);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_PARALYSIS)) {
+            if (battleCtx->battleMons[battler].status & MON_CONDITION_PARALYSIS) {
+                score = AI_StatusHealEvaluate(battleSys, battleCtx, battler, item, battleCtx->battleMons[battler].status);
+                itemCondition |= FlagIndex(1);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+        } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_HEAL_CONFUSION)) {
+            if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_CONFUSION) {
+                score = AI_ConfusionEvaluate(battleSys, battleCtx, battler);
+                itemCondition |= FlagIndex(0);
+                itemType = ITEM_AI_CATEGORY_RECOVER_STATUS;
+            }
+            // Don't care about stats boost. Won't be in the game anyway
+        } /*else if ((battleCtx->battleMons[battler].moveEffectsData.fakeOutTurnNumber - battleCtx->totalTurns) >= 0) {
+            if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ATK_STAGES)) {
+                itemCondition = BATTLE_STAT_ATTACK;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_DEF_STAGES)) {
+                itemCondition = BATTLE_STAT_DEFENSE;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPATK_STAGES)) {
+                itemCondition = BATTLE_STAT_SP_ATTACK;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPDEF_STAGES)) {
+                itemCondition = BATTLE_STAT_SP_DEFENSE;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_SPEED_STAGES)) {
+                itemCondition = BATTLE_STAT_SPEED;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_ACC_STAGES)) {
+                itemCondition = BATTLE_STAT_ACCURACY;
+                itemType = ITEM_AI_CATEGORY_STAT_BOOSTER;
+            } else if (BattleSystem_GetItemData(battleCtx, item, ITEM_PARAM_GUARD_SPEC)
+                && (battleCtx->sideConditionsMask[1] & SIDE_CONDITION_MIST) == FALSE) {
+                itemType = ITEM_AI_CATEGORY_GUARD_SPEC;
+            }
+        } */else {
+            // Unrecognized item type
+            AI_CONTEXT.bestItemData.itemType = ITEM_AI_CATEGORY_MAX;
+        }
+
+        if(score > AI_CONTEXT.bestItemData.score){
+            AI_CONTEXT.bestItemData.score = score;
+            AI_CONTEXT.bestItemData.itemSlot = i;
+            AI_CONTEXT.bestItemData.itemCondition = itemCondition;
+            AI_CONTEXT.bestItemData.itemType = itemType;
         }
     }
 }
@@ -4224,11 +4477,12 @@ int TrainerAI_PickCommand(BattleSystem *battleSys, int battler)
 
     // evaluate actions
     if (TRUE || (battleType & BATTLE_TYPE_TRAINER) || BattleSystem_GetBattlerSide(battleSys, battler) == BATTLE_SIDE_PLAYER) {
-        TrainerAI_EvaluateSwitching(battleSys, battleCtx, battler);
+        //TrainerAI_EvaluateSwitching(battleSys, battleCtx, battler);
         TrainerAI_EvaluateItems(battleSys, battleCtx, battler);
     }
     TrainerAI_EvaluateMoves(battleSys, battleCtx, battler);
-    
+    battleCtx->aiContext.bestMoveData.score = 35;
+
     // select the best one
     return TrainerAI_ChooseBestAction(battleSys, battleCtx, battler);
 }
