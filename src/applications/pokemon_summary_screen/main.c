@@ -160,6 +160,8 @@ static void SetMonDataFromMon(PokemonSummaryScreen *summaryScreen, Pokemon *mon,
 static void SetupInitialPageGfx(PokemonSummaryScreen *summaryScreen);
 static void PlayMonCry(PokemonSummaryScreen *summaryScreen);
 static void SetupPageFromSubscreenButton(PokemonSummaryScreen *summaryScreen, u8 page);
+static void SetupPageFromSubscreenButtonForced(PokemonSummaryScreen *summaryScreen, s8 page);
+static void UpdatePage(PokemonSummaryScreen *summaryScreen);
 static void ChangePage(PokemonSummaryScreen *summaryScreen, s8 delta);
 static u8 CheckSubscreenPressAndSetButton(PokemonSummaryScreen *summaryScreen);
 static void TryHideContestPages(PokemonSummaryScreen *summaryScreen);
@@ -601,6 +603,22 @@ static int HandleInput_Main(PokemonSummaryScreen *summaryScreen)
 
     if (JOY_REPEAT(PAD_KEY_DOWN)) {
         ChangeSummaryMon(summaryScreen, 1);
+        return SUMMARY_STATE_HANDLE_INPUT;
+    }
+
+    if (JOY_REPEAT(PAD_BUTTON_R)) {
+        if(summaryScreen->statScreenPage < STATS_PAGE_IV){
+            summaryScreen->statScreenPage++;
+            UpdatePage(summaryScreen);
+        }
+        return SUMMARY_STATE_HANDLE_INPUT;
+    }
+
+    if (JOY_REPEAT(PAD_BUTTON_L)) {
+        if(summaryScreen->statScreenPage > STATS_PAGE_MAIN) {
+            summaryScreen->statScreenPage--;
+            UpdatePage(summaryScreen);
+        }
         return SUMMARY_STATE_HANDLE_INPUT;
     }
 
@@ -1107,6 +1125,20 @@ static void SetMonDataFromMon(PokemonSummaryScreen *summaryScreen, Pokemon *mon,
     monData->ability = Pokemon_GetValue(mon, MON_DATA_ABILITY, NULL);
     monData->nature = Pokemon_GetNature(mon);
 
+    monData->evHP = Pokemon_GetValue(mon, MON_DATA_HP_EV, NULL);
+    monData->evAttack = Pokemon_GetValue(mon, MON_DATA_ATK_EV, NULL);
+    monData->evDefense = Pokemon_GetValue(mon, MON_DATA_DEF_EV, NULL);
+    monData->evSpeed = Pokemon_GetValue(mon, MON_DATA_SPEED_EV, NULL);
+    monData->evSpAttack = Pokemon_GetValue(mon, MON_DATA_SPATK_EV, NULL);
+    monData->evSpDefense = Pokemon_GetValue(mon, MON_DATA_SPDEF_EV, NULL);
+
+    monData->ivHP = Pokemon_GetValue(mon, MON_DATA_HP_IV, NULL);
+    monData->ivAttack = Pokemon_GetValue(mon, MON_DATA_ATK_IV, NULL);
+    monData->ivDefense = Pokemon_GetValue(mon, MON_DATA_DEF_IV, NULL);
+    monData->ivSpeed = Pokemon_GetValue(mon, MON_DATA_SPEED_IV, NULL);
+    monData->ivSpAttack = Pokemon_GetValue(mon, MON_DATA_SPATK_IV, NULL);
+    monData->ivSpDefense = Pokemon_GetValue(mon, MON_DATA_SPDEF_IV, NULL);
+
     u16 i;
     u8 maxPP;
     for (i = 0; i < LEARNED_MOVES_MAX; i++) {
@@ -1313,6 +1345,47 @@ static void SetupPageFromSubscreenButton(PokemonSummaryScreen *summaryScreen, u8
     }
 }
 
+static void SetupPageFromSubscreenButtonForced(PokemonSummaryScreen *summaryScreen, s8 page){
+    // this code path is never reached because the select move mode
+    // doesn't handle subscreen input
+    if (summaryScreen->data->mode == SUMMARY_MODE_SELECT_MOVE) {
+        ClearMoveInfoWindows(summaryScreen);
+    }
+
+    PokemonSummaryScreen_RemoveExtraWindows(summaryScreen);
+    summaryScreen->page = page;
+    PokemonSummaryScreen_UpdateAButtonSprite(summaryScreen, NULL);
+
+    PokemonSummaryScreen_UpdatePageTabSprites(summaryScreen);
+    PokemonSummaryScreen_SetPageArrowsPos(summaryScreen);
+    PokemonSummaryScreen_UpdateTypeIcons(summaryScreen);
+    PokemonSummaryScreen_UpdateRibbonSprites(summaryScreen);
+    PokemonSummaryScreen_InitSheenSprites(summaryScreen);
+    PokemonSummaryScreen_AddExtraWindows(summaryScreen);
+    PokemonSummaryScreen_UpdateConditionFlashSprites(summaryScreen, FALSE);
+
+    Bg_FillTilemapRect(summaryScreen->bgConfig, BG_LAYER_MAIN_1, 0, 14, 4, 19, 20, 0);
+    Bg_CopyTilemapBufferToVRAM(summaryScreen->bgConfig, BG_LAYER_MAIN_1);
+    PokemonSummaryScreen_DrawExtraWindows(summaryScreen);
+    LoadCurrentPageTilemap(summaryScreen);
+    PokemonSummaryScreen_InitConditionRects(summaryScreen);
+
+    // this code path is also never reached
+    if (summaryScreen->data->mode == SUMMARY_MODE_SELECT_MOVE) {
+        SetupMoveInfoFromSubscreenButton(summaryScreen);
+    }
+}
+
+static void UpdatePage(PokemonSummaryScreen *summaryScreen)
+{
+    s8 page = summaryScreen->page;
+
+    Sound_PlayEffect(SEQ_SE_DP_SELECT5);
+    PokemonSummaryScreen_UpdateSubscreenButtonGfx(summaryScreen);
+    PokemonSummaryScreen_UpdateConditionFlashSprites(summaryScreen, FALSE);
+    SetupPageFromSubscreenButtonForced(summaryScreen, page);
+}
+
 static void ChangePage(PokemonSummaryScreen *summaryScreen, s8 delta)
 {
     s8 page = summaryScreen->page;
@@ -1342,6 +1415,7 @@ static void ChangePage(PokemonSummaryScreen *summaryScreen, s8 delta)
         return;
     }
 
+    summaryScreen->statScreenPage = STATS_PAGE_MAIN;
     Sound_PlayEffect(SEQ_SE_DP_SELECT5);
     PokemonSummaryScreen_UpdateSubscreenButtonGfx(summaryScreen);
     PokemonSummaryScreen_UpdateConditionFlashSprites(summaryScreen, FALSE);
