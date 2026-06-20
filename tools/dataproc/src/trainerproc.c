@@ -196,7 +196,7 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
         u16 species = dp_u16(dp_lookup(dp_objmemb(party_member, "species"), "enum Species"));
         u16 form    = dp_u8(dp_objmemb(party_member, "form"));
         u16 ev = 0;
-        int stat = 0;
+        u8 stat = 0;
         for (stat = 0; stat < countof(ev_flags_str); stat++) {
             if (dp_bool(dp_objmemb(ev_node, ev_flags_str[stat]))) ev |= (u16)(1 << stat);
         }
