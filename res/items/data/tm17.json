@@ -20,7 +20,7 @@
   "flingPower": 0,
   "naturalGiftPower": 0,
   "naturalGiftType": null,
-  "preventToss": false,
+  "preventToss": true,
   "canRegister": false,
   "fieldPocket": "POCKET_TMHMS",
   "battlePocket": "BATTLE_POCKET_MASK_NONE",
