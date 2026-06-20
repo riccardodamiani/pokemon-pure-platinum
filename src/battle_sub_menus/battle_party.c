@@ -715,19 +715,7 @@ static u8 BattlePartyTask_ConfirmLearnMoveScreen(BattleParty *battleParty)
             BattlePartyButtons_PressButton(battleParty, BATTLE_CONFIRM_LEARN_MOVE_SCREEN_BUTTON_OFFSET + 1);
         }
 
-        if (CheckSelectedMoveIsHM(battleParty) == TRUE) {
-            BattlePartyText_PrintHMMovesCantBeForgottenText(battleParty);
-
-            if (battleParty->displayingContestStats == FALSE) {
-                ClearMoveStats(battleParty);
-            } else {
-                ClearMoveContestStats(battleParty);
-            }
-
-            battleParty->queuedState = TASK_STATE_CONFIRM_LEARN_MOVE_SCREEN;
-        } else {
-            battleParty->queuedState = TASK_STATE_EXIT;
-        }
+        battleParty->queuedState = TASK_STATE_EXIT;
 
         return TASK_STATE_SCREEN_TRANSITION;
     case BATTLE_CONFIRM_LEARN_MOVE_SCREEN_BUTTON_CONTEST_STATS:
