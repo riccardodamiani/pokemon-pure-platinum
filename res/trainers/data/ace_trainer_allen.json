@@ -21,7 +21,17 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "iv_scale": 60,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_GASTLY",
@@ -35,7 +45,17 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "iv_scale": 60,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_HAUNTER",
@@ -49,7 +69,17 @@
                 "MOVE_MEAN_LOOK"
             ],
             "iv_scale": 60,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         }
     ],
     "messages": [

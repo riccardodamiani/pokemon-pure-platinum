@@ -107,7 +107,7 @@ static void PhotoPokemon_SetTrainerNameAndGender(PhotoPokemon *photoMon, const S
 
 static void PhotoPokemon_CopyToPokemonInternal(const PhotoPokemon *photoMon, Pokemon *mon)
 {
-    Pokemon_InitWith(mon, photoMon->species, 0, 0, TRUE, photoMon->personality, OTID_SET, photoMon->otID);
+    Pokemon_InitWith(mon, photoMon->species, 0, 0, 0, 0, TRUE, photoMon->personality, OTID_SET, photoMon->otID);
     Pokemon_SetValue(mon, MON_DATA_NICKNAME, photoMon->nickname);
     Pokemon_SetValue(mon, MON_DATA_FORM, &photoMon->form);
 }

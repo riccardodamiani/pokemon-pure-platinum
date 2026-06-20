@@ -19,7 +19,17 @@
                 "MOVE_FAKE_OUT"
             ],
             "iv_scale": 30,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_GOLBAT",
@@ -33,7 +43,17 @@
                 "MOVE_SUPERSONIC"
             ],
             "iv_scale": 30,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_MURKROW",
@@ -46,7 +66,17 @@
                 "MOVE_WING_ATTACK"
             ],
             "iv_scale": 30,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         }
     ],
     "messages": [

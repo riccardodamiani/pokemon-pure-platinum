@@ -19,7 +19,17 @@
                 "MOVE_FAINT_ATTACK"
             ],
             "iv_scale": 40,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_MACHOKE",
@@ -31,7 +41,17 @@
                 "MOVE_FORESIGHT"
             ],
             "iv_scale": 40,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         }
     ],
     "messages": [

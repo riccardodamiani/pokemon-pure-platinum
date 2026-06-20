@@ -1401,7 +1401,7 @@ static BOOL NamingScreen_Exit(ApplicationManager *appMan, int *unusedState)
         Pokemon *mon;
 
         mon = Pokemon_New(HEAP_ID_NAMING_SCREEN_APP);
-        Pokemon_InitWith(mon, namingScreen->playerGenderOrMonSpecies, 5, 10, 10, 10, 10, 10);
+        Pokemon_InitWith(mon, namingScreen->playerGenderOrMonSpecies, 5, 10, 0, 0, 10, 10, 10, 10);
         Heap_Free(mon);
     }
 
@@ -1684,7 +1684,7 @@ static void NamingScreen_InitCursorsAndChars(NamingScreen *namingScreen, Applica
         Pokemon *pkm;
 
         pkm = Pokemon_New(HEAP_ID_NAMING_SCREEN_APP);
-        Pokemon_InitWith(pkm, namingScreen->playerGenderOrMonSpecies, 5, 10, 10, 10, 10, 10);
+        Pokemon_InitWith(pkm, namingScreen->playerGenderOrMonSpecies, 5, 10, 0, 0, 10, 10, 10, 10);
         StringTemplate_SetSpeciesName(namingScreen->strTemplate, 0, Pokemon_GetBoxPokemon(pkm));
         Heap_Free(pkm);
     }
@@ -1756,7 +1756,7 @@ static void NamingScreen_PrepareBattleMessage(NamingScreen *namingScreen, Applic
         if (namingScreen->textCursorPos == 0 || NamingScreen_IsRawStringAllSpaces(namingScreen->entryBuf)) {
             Pokemon *mon = Pokemon_New(HEAP_ID_NAMING_SCREEN_APP);
 
-            Pokemon_InitWith(mon, namingScreen->playerGenderOrMonSpecies, 1, 0, FALSE, 0, OTID_NOT_SET, 0);
+            Pokemon_InitWith(mon, namingScreen->playerGenderOrMonSpecies, 1, 0, 0, 0, FALSE, 0, OTID_NOT_SET, 0);
             StringTemplate_SetSpeciesName(namingScreen->strTemplate, 0, Pokemon_GetBoxPokemon(mon));
             Heap_Free(mon);
         } else {

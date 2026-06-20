@@ -254,7 +254,7 @@ void FrontierPokemonDataDTO_InitPokemon(const FrontierPokemonDataDTO *pokemonDTO
 
     combinedIVs = (pokemonDTO->combinedIVs & 0x3FFFFFFF);
 
-    Pokemon_InitWith(mon, pokemonDTO->species, level, combinedIVs, TRUE, pokemonDTO->personality, OTID_NOT_SHINY, 0);
+    Pokemon_InitWith(mon, pokemonDTO->species, level, combinedIVs, 0, 0, TRUE, pokemonDTO->personality, OTID_NOT_SHINY, 0);
     Pokemon_SetValue(mon, MON_DATA_COMBINED_IVS, &combinedIVs);
     Pokemon_CalcLevelAndStats(mon);
 

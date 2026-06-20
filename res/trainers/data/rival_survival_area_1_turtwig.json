@@ -24,7 +24,17 @@
                 "MOVE_U_TURN"
             ],
             "iv_scale": 250,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_FLOATZEL",
@@ -38,7 +48,17 @@
                 "MOVE_BRICK_BREAK"
             ],
             "iv_scale": 250,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_HERACROSS",
@@ -52,7 +72,17 @@
                 "MOVE_ROCK_SLIDE"
             ],
             "iv_scale": 250,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_ROSERADE",
@@ -66,7 +96,17 @@
                 "MOVE_GRASS_WHISTLE"
             ],
             "iv_scale": 250,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_SNORLAX",
@@ -80,7 +120,17 @@
                 "MOVE_REST"
             ],
             "iv_scale": 250,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_INFERNAPE",
@@ -94,7 +144,17 @@
                 "MOVE_AERIAL_ACE"
             ],
             "iv_scale": 250,
-            "ball_seal": 24
+            "ball_seal": 24,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         }
     ],
     "messages": [
