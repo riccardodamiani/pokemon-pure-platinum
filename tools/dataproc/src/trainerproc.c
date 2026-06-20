@@ -25,6 +25,8 @@ static enum_template_t enums[] = {
     include_enum("generated/species.h",               "enum Species"),
     include_enum("generated/trainer_classes.h",       "enum TrainerClass"),
     include_enum("generated/trainer_message_types.h", "enum TrainerMessageType"),
+    include_enum("generated/natures.h",               "enum Nature"),
+    include_enum("generated/abilities.h",             "enum Ability"),
     { .from_file = NULL },
 };
 
@@ -130,6 +132,15 @@ int main(int argc, char *argv[]) {
     return common_done(errc, NULL);
 }
 
+static const char *ev_flags_str[] = {
+    "hp",
+    "attack",
+    "defense",
+    "speed",
+    "special_attack",
+    "special_defense",
+};
+
 Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
     datanode_t party      = dp_get(df, ".party");
     size_t     party_size = dp_arrlen(party);
@@ -179,14 +190,25 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
 
     for (size_t i = 0; i < party_size; i++) {
         party_member = dp_arrelem(party, i);
+        datanode_t ev_node = dp_objmemb(party_member, "evFlags");
 
         // We always store the maximum possible data, then trim it when packing
         u16 species = dp_u16(dp_lookup(dp_objmemb(party_member, "species"), "enum Species"));
         u16 form    = dp_u8(dp_objmemb(party_member, "form"));
+        u16 ev = 0;
+        int stat = 0;
+        for (stat = 0; stat < countof(ev_flags_str); stat++) {
+            if (dp_bool(dp_objmemb(ev_node, ev_flags_str[stat]))) ev |= (u16)(1 << stat);
+        }
+        u16 ability = dp_u16(dp_lookup(dp_objmemb(party_member, "ability"), "enum Ability"));
+        u16 nature  = dp_u16(dp_lookup(dp_objmemb(party_member, "nature"), "enum Nature"));
         trparty.party[i] = (TrainerMonWithMovesAndItem){
             .ivScale = dp_u16(dp_objmemb(party_member, "iv_scale")),
             .level   = dp_u16(dp_objmemb(party_member, "level")),
             .species = (u16)(species | (form << TRAINER_MON_FORM_SHIFT)),
+            .ev      = ev,
+            .ability = ability,
+            .nature  = nature,
             .cbSeal  = dp_u16(dp_objmemb(party_member, "ball_seal")),
         };
 

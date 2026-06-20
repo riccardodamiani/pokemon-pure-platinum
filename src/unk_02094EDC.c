@@ -628,7 +628,7 @@ void sub_02095380(const UnkStruct_ov6_02248BE8 *param0, Pokemon *mon, enum HeapI
     int i;
     u16 v1;
     u32 personality = sub_02074128(param0->unk_14, param0->unk_20_12, 0);
-    Pokemon_InitWith(mon, param0->unk_14, 10, INIT_IVS_RANDOM, TRUE, personality, OTID_NOT_SHINY, 0xf0f0f0f);
+    Pokemon_InitWith(mon, param0->unk_14, 10, INIT_IVS_RANDOM, 0, 0, TRUE, personality, OTID_NOT_SHINY, 0xf0f0f0f);
 
     for (i = 0; i < LEARNED_MOVES_MAX; i++) {
         v1 = param0->unk_0C[i];

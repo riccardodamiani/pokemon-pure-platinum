@@ -20,7 +20,17 @@
                 "MOVE_SPORE"
             ],
             "iv_scale": 30,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         },
         {
             "species": "SPECIES_TOXICROAK",
@@ -34,7 +44,17 @@
                 "MOVE_DARK_PULSE"
             ],
             "iv_scale": 30,
-            "ball_seal": 0
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
         }
     ],
     "messages": [

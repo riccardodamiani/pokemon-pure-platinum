@@ -252,7 +252,7 @@ enum TrainerClassFilesTypes {
     TRAINER_CLASS_NUM_FILETYPES,
 };
 
-static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID);
+static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID);
 static u32 Pokemon_GetDataInternal(Pokemon *mon, enum PokemonDataParam param, void *dest);
 static u32 BoxPokemon_GetDataInternal(BoxPokemon *boxMon, enum PokemonDataParam param, void *dest);
 static void Pokemon_SetDataInternal(Pokemon *mon, enum PokemonDataParam param, const void *value);
@@ -378,11 +378,44 @@ BOOL BoxPokemon_ExitDecryptionContext(BoxPokemon *boxMon, BOOL encrypt)
     return wasEncrypted;
 }
 
-void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
+static void Pokemon_SetEvFromFlags(Pokemon *mon, u16 evFlags)
+{
+    u8 ev_count;
+    u8 ev = 0;
+    u8 zero = 0;
+    int v0;
+
+    for (v0 = 0; v0 < STAT_MAX; v0++) {
+        if (evFlags & FlagIndex(v0)) {
+            ev_count++;
+        }
+    }
+
+    if(ev_count == 0){
+        return;
+    }
+
+    if (MAX_EVS_ALL_STATS / ev_count > MAX_EVS_SINGLE_STAT) {
+        ev = MAX_EVS_SINGLE_STAT;
+    } else {
+        ev = MAX_EVS_ALL_STATS / ev_count;
+    }
+
+    int stat;
+    for(stat = 0; stat < STAT_MAX; stat++) {
+        if (evFlags & FlagIndex(stat)) {
+            Pokemon_SetValue(mon, MON_DATA_HP_EV + stat, &ev);
+        } else {
+            Pokemon_SetValue(mon, MON_DATA_HP_EV + stat, &zero);
+        }
+    }
+}
+
+void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, u16 evFlags, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
 {
     Pokemon_Init(mon);
 
-    sub_02073E18(&mon->box, monSpecies, monLevel, monIVs, useMonPersonalityParam, monPersonality, monOTIDSource, monOTID);
+    sub_02073E18(&mon->box, monSpecies, monLevel, monIVs, ability, useMonPersonalityParam, monPersonality, monOTIDSource, monOTID);
     Pokemon_EncryptData(&mon->party, sizeof(PartyPokemon), 0);
     Pokemon_EncryptData(&mon->party, sizeof(PartyPokemon), mon->box.personality);
     Pokemon_SetValue(mon, MON_DATA_LEVEL, &monLevel);
@@ -399,10 +432,11 @@ void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, BO
     MI_CpuClearFast(&v2, sizeof(BallCapsule));
 
     Pokemon_SetValue(mon, MON_DATA_BALL_CAPSULE, &v2);
+    Pokemon_SetEvFromFlags(mon, evFlags);
     Pokemon_CalcLevelAndStats(mon);
 }
 
-static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
+static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
 {
     BoxPokemon_Init(boxMon);
 
@@ -470,18 +504,22 @@ static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int m
         BoxPokemon_SetValue(boxMon, MON_DATA_SPDEF_IV, &v2);
     }
 
-    v1 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_ABILITY_1);
-    v2 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_ABILITY_2);
+    if(ability != ABILITY_NONE){
+        BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &ability);
+    } else {
+        v1 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_ABILITY_1);
+        v2 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_ABILITY_2);
 
-    if (v2 != ABILITY_NONE) {
-        if (monPersonality & 1) {
-            BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &v2);
+        if (v2 != ABILITY_NONE) {
+            if (monPersonality & 1) {
+                BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &v2);
+            } else {
+                BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &v1);
+            }
         } else {
             BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &v1);
         }
-    } else {
-        BoxPokemon_SetValue(boxMon, MON_DATA_ABILITY, &v1);
-    }
+    }    
 
     v1 = BoxPokemon_GetGender(boxMon);
 
@@ -498,7 +536,7 @@ void sub_02074044(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 monNa
         monPersonality = (LCRNG_Next() | (LCRNG_Next() << 16));
     } while (monNature != Pokemon_GetNatureOf(monPersonality));
 
-    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
 }
 
 void sub_02074088(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 gender, u8 param5, u8 param6)
@@ -516,7 +554,7 @@ void sub_02074088(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 gende
         monPersonality = sub_02074128(monSpecies, gender, param5);
     }
 
-    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
 }
 
 u32 sub_02074128(u16 monSpecies, u8 gender, u8 param2)
@@ -546,7 +584,7 @@ u32 sub_02074128(u16 monSpecies, u8 gender, u8 param2)
 // only used when encountering a roamer
 void Pokemon_InitAndCalcStats(Pokemon *mon, u16 monSpecies, u8 monLevel, u32 monCombinedIVs, u32 monPersonality)
 {
-    Pokemon_InitWith(mon, monSpecies, monLevel, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, 0, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
     Pokemon_SetValue(mon, MON_DATA_COMBINED_IVS, &monCombinedIVs);
     Pokemon_CalcLevelAndStats(mon);
 }
