@@ -3970,6 +3970,41 @@ static void BoxPokemon_SetMoveSlot(BoxPokemon *boxMon, u16 moveID, u8 moveSlot)
     BoxPokemon_SetValue(boxMon, MON_DATA_MOVE1_PP + moveSlot, &moveMaxPP);
 }
 
+BOOL Pokemon_LearnByLevelUp(Pokemon *mon, u16 moveID)
+{
+    u16 result = MOVE_NONE;
+    u16 *monLevelUpMoves = Heap_Alloc(HEAP_ID_SYSTEM, sizeof(SpeciesLearnset));
+    u16 monSpecies = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+    int monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
+    u8 monLevel = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+
+    Pokemon_LoadLevelUpMovesOf(monSpecies, monForm, monLevelUpMoves);
+
+    if (monLevelUpMoves[0] == LEARNSET_SENTINEL_ENTRY) {
+        Heap_Free(monLevelUpMoves);
+        return FALSE;
+    }
+
+    int index = 0;
+    u8 moveLearnLevel = monLevelUpMoves[0] >> 9;
+    while(moveLearnLevel <= monLevel) {
+        if (monLevelUpMoves[index] == LEARNSET_SENTINEL_ENTRY) {
+            Heap_Free(monLevelUpMoves);
+            return FALSE;
+        }
+        
+        if(moveID == (monLevelUpMoves[index] & 0x1FF)) {
+            Heap_Free(monLevelUpMoves);
+            return TRUE;
+        }
+        index++;
+        moveLearnLevel = monLevelUpMoves[index] >> 9;
+    }
+
+    Heap_Free(monLevelUpMoves);
+    return FALSE;
+}
+
 u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID)
 {
     u16 result = MOVE_NONE;

@@ -62,6 +62,7 @@
 #include "tv_segment.h"
 #include "unk_0206B9D8.h"
 #include "vram_transfer.h"
+#include "field_move_tasks.h"
 
 #include "res/graphics/party_menu/party_menu_graphics.naix"
 #include "res/text/bank/party_menu.h"
@@ -1754,7 +1755,7 @@ static void sub_0207FFC8(PartyMenuApplication *application)
     u8 v1;
 
     Window_EraseMessageBox(&application->windows[32], 1);
-    v0 = Heap_Alloc(HEAP_ID_PARTY_MENU, 8);
+    v0 = Heap_Alloc(HEAP_ID_PARTY_MENU, 12);
 
     switch (application->partyMenu->mode) {
     case PARTY_MENU_MODE_FIELD:
@@ -1794,27 +1795,84 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
 {
     Pokemon *mon = Party_GetPokemonBySlotIndex(application->partyMenu->party, application->currPartySlot);
     u16 move;
-    u8 fieldMoveIndex = 0, i, count = 0, fieldEffect;
+    u8 fieldMoveIndex = 0, count = 0, fieldEffect;
+    int fieldMove = 0;
 
     menuEntriesBuffer[count] = 1;
     count++;
 
     if (FieldSystem_IsInBattleTowerSalon(application->partyMenu->fieldSystem) == FALSE) {
         if (application->partyMembers[application->currPartySlot].isEgg == FALSE) {
-            for (i = 0; i < 4; i++) {
-                move = (u16)Pokemon_GetValue(mon, MON_DATA_MOVE1 + i, NULL);
+            for(fieldMove = 0; fieldMove < FIELD_MOVE_MAX; fieldMove++){
+                u16 TMHM_Item = fieldMoveToTMHM[fieldMove];
+                u16 move = fieldMoveToMove[fieldMove];
+                u8 TMId = TMHM_Item - ITEM_TM01;
 
-                if (move == 0) {
-                    break;
+                
+                BOOL pokemonHasMove = FALSE;
+                BOOL HMTM_InBag = FALSE;
+                if(TMHM_Item != ITEM_NONE){
+
+                    // finds out if the pokemon knows the move
+                    int monMoveId;
+                    for (monMoveId = 0; monMoveId < 4; monMoveId++) {
+                        u16 monMove = (u16)Pokemon_GetValue(mon, MON_DATA_MOVE1 + monMoveId, NULL);
+
+                        if (monMove == 0) {
+                            break;
+                        }
+
+                        if(monMove == move){
+                            pokemonHasMove = TRUE;
+                            break;
+                        }
+                    }
+
+                    // search for the TM/HM in bag
+                    u32 i;
+                    for (i = 0; i < TMHM_POCKET_SIZE; i++) {
+                        if (application->partyMenu->bag->tmHms[i].item == TMHM_Item) {
+                            if(application->partyMenu->bag->tmHms[i].quantity > 0){
+                                HMTM_InBag = TRUE;
+                            }
+                            break;
+                        }
+                    }
                 }
 
-                fieldEffect = GetFieldMoveIndex(move);
+                // If the move is a HM or TM, check if it is usable in the field
+                // This is done before everything else because some pokemons can learn HM by level up which require the badge
+                if(TMHM_Item != ITEM_NONE && 
+                    !FieldMoves_CheckHMUsable(application->partyMenu->fieldMoveContext, fieldMove)){
+                    continue;
+                }
 
-                if (fieldEffect != 0xff) {
-                    menuEntriesBuffer[count] = fieldEffect;
-                    count++;
-                    PartyMenu_SetKnownFieldMove(application, move, fieldMoveIndex);
-                    fieldMoveIndex++;
+                // TM/HM moves
+                if((HMTM_InBag || pokemonHasMove) && // the TM/HM is in the bag or already learned by the mon
+                    Pokemon_CanLearnTM(mon, TMId)){     // the pokemon can learn it
+
+                    fieldEffect = GetFieldMoveIndex(move);
+
+                    if (fieldEffect != 0xff) {
+                        menuEntriesBuffer[count] = fieldEffect;
+                        count++;
+                        PartyMenu_SetKnownFieldMove(application, move, fieldMoveIndex);
+                        fieldMoveIndex++;
+                    }
+                    continue;
+                }
+
+                // Level up moves
+                if(Pokemon_LearnByLevelUp(mon, move)){
+                    fieldEffect = GetFieldMoveIndex(move);
+
+                    if (fieldEffect != 0xff) {
+                        menuEntriesBuffer[count] = fieldEffect;
+                        count++;
+                        PartyMenu_SetKnownFieldMove(application, move, fieldMoveIndex);
+                        fieldMoveIndex++;
+                    }
+                    continue;
                 }
             }
 

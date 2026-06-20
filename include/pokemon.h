@@ -588,6 +588,7 @@ void Pokemon_ResetMoveSlot(Pokemon *mon, u16 moveID, u8 moveSlot);
 void Pokemon_SetMoveSlot(Pokemon *mon, u16 moveID, u8 moveSlot);
 
 u16 Pokemon_LevelUpMove(Pokemon *mon, int *index, u16 *moveID);
+BOOL Pokemon_LearnByLevelUp(Pokemon *mon, u16 moveID);
 
 /**
  * @brief Swaps the places of two moves on a Pokemon

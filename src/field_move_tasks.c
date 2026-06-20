@@ -337,6 +337,79 @@ static enum FieldMoveError FieldMoves_CheckCut(const FieldMoveContext *fieldMove
     return FIELD_MOVE_ERROR_LOCATION;
 }
 
+BOOL FieldMoves_CheckHMUsable(const FieldMoveContext *fieldMoveContext, enum FieldMoveList move)
+{
+    switch (move) {
+    case FIELD_MOVE_CUT:
+        return FieldMoves_CheckCut(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_FLY:
+        return FieldMoves_CheckFly(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_SURF:
+        return FieldMoves_CheckSurf(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_STRENGTH:
+        return FieldMoves_CheckStrength(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_DEFOG:
+        return FieldMoves_CheckDefog(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_ROCK_SMASH:
+        return FieldMoves_CheckRockSmash(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_WATERFALL:
+        return FieldMoves_CheckWaterfall(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_ROCK_CLIMB:
+        return FieldMoves_CheckRockClimb(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_FLASH:
+        return FieldMoves_CheckFlash(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_TELEPORT:
+        return FieldMoves_CheckTeleport(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_DIG:
+        return FieldMoves_CheckDig(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_SWEET_SCENT:
+        return FieldMoves_CheckSweetScent(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    case FIELD_MOVE_CHATTER:
+        return FieldMoves_CheckChatter(fieldMoveContext) == FIELD_MOVE_ERROR_NONE;
+    default:
+        return TRUE;
+    }
+
+    return TRUE;
+}
+
+// Checks whether the player has the required badge to use the given field move
+// If the field move doesn't require a badge return true
+BOOL FieldMoves_CheckMNBadge(const FieldMoveContext *fieldMoveContext, enum FieldMoveList move){
+    enum Badge requiredBadge;
+
+    switch (move) {
+    case FIELD_MOVE_CUT:
+        requiredBadge = BADGE_ID_FOREST;
+        break;
+    case FIELD_MOVE_FLY:
+        requiredBadge = BADGE_ID_COBBLE;
+        break;
+    case FIELD_MOVE_SURF:
+        requiredBadge = BADGE_ID_FEN;
+        break;
+    case FIELD_MOVE_STRENGTH:
+        requiredBadge = BADGE_ID_MINE;
+        break;
+    case FIELD_MOVE_DEFOG:
+        requiredBadge = BADGE_ID_RELIC;
+        break;
+    case FIELD_MOVE_ROCK_SMASH:
+        requiredBadge = BADGE_ID_COAL;
+        break;
+    case FIELD_MOVE_WATERFALL:
+        requiredBadge = BADGE_ID_BEACON;
+        break;
+    case FIELD_MOVE_ROCK_CLIMB:
+        requiredBadge = BADGE_ID_ICICLE;
+        break;
+    default:
+        return TRUE;
+    }
+
+    return PlayerHasRequiredBadge(fieldMoveContext, requiredBadge);
+}
+
 static void FieldMoves_SetCutTask(FieldMovePokemon *fieldMoveMon, const FieldMoveContext *fieldMoveContext)
 {
     StartMenu *menu = FieldTask_GetEnv(fieldMoveMon->fieldTask);
