@@ -19,7 +19,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Speed up health bar animation | Testing |
 | Instant honey tree | Testing |
 | Re-teach old moves from menu | Concept |
-| Eggs hatch with less steps | Concept |
+| Eggs hatch require less steps | Testing |
 | All Mystery Gifts and Special Events unlocked | Concept |
 | Repurpose Move Tutors and the Move Relearner | Concept |
 | Pokemon won't obey if level of any pokemon too high | Concept |
