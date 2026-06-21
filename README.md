@@ -33,3 +33,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Decide whether to keep a captured pokemon or send it to the pc | Concept |
 | More NPC selling useful items | Concept |
 | Improve leveling experience | Concept |
+| Add EV training NPC | Concept |
+| Improve menu navigation | Concept |
+| Re-use prompt when repel wore off | Concept |
+| Fix original game bugs & glitches | Concept |
