@@ -1866,7 +1866,8 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
                 }
 
                 // TM/HM moves
-                if((HMTM_InBag || pokemonHasMove) && // the TM/HM is in the bag or already learned by the mon
+                if(TMHM_Item != ITEM_NONE &&
+                    (HMTM_InBag || pokemonHasMove) && // the TM/HM is in the bag or already learned by the mon
                     Pokemon_CanLearnTM(mon, TMId)){     // the pokemon can learn it
 
                     fieldEffect = GetFieldMoveIndex(move);
