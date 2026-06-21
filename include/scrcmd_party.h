@@ -10,6 +10,7 @@ BOOL ScrCmd_GiveEgg(ScriptContext *ctx);
 BOOL ScrCmd_ResetPartyMonMoveSlot_Unused(ScriptContext *ctx);
 BOOL ScrCmd_CheckPartyMonHasMove(ScriptContext *ctx);
 BOOL ScrCmd_FindPartySlotWithMove(ScriptContext *ctx);
+BOOL ScrCmd_FindPartySlotThatLearnMove(ScriptContext *ctx);
 BOOL ScrCmd_SurvivePoison(ScriptContext *ctx);
 BOOL ScrCmd_CountPartyMonsBelowLevelThreshold(ScriptContext *ctx);
 BOOL ScrCmd_GetPartyMonLevel(ScriptContext *ctx);

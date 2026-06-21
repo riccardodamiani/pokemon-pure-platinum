@@ -18,6 +18,7 @@
 #include "savedata.h"
 #include "trainer_info.h"
 #include "unk_02017038.h"
+#include "bag.h"
 
 BOOL Pokemon_CanBattle(Pokemon *mon)
 {
@@ -79,6 +80,116 @@ BOOL sub_02054930(int unused, SaveData *saveData, u16 param2, u8 param3, int par
 void Party_ResetMonMoveSlot(Party *party, int partySlot, int moveSlot, u16 moveID)
 {
     Pokemon_ResetMoveSlot(Party_GetPokemonBySlotIndex(party, partySlot), moveID, moveSlot);
+}
+
+u16 MoveToTM(u16 move){
+    switch (move) {
+    case MOVE_CUT:
+        return ITEM_HM01;
+    case MOVE_FLY:
+        return ITEM_HM02;
+    case MOVE_SURF:
+        return ITEM_HM03;
+    case MOVE_STRENGTH:
+        return ITEM_HM04;
+    case MOVE_DEFOG:
+        return ITEM_HM05;
+    case MOVE_ROCK_SMASH:
+        return ITEM_HM06;
+    case MOVE_WATERFALL:
+        return ITEM_HM07;
+    case MOVE_ROCK_CLIMB:
+        return ITEM_HM08;
+    case MOVE_FLASH:
+        return ITEM_TM70;
+    case MOVE_TELEPORT:
+        return ITEM_NONE;
+    case MOVE_DIG:
+        return ITEM_TM28;
+    case MOVE_SWEET_SCENT:
+        return ITEM_NONE;
+    case MOVE_CHATTER:
+        return ITEM_NONE;
+    case MOVE_MILK_DRINK:
+        return ITEM_NONE;
+    case MOVE_SOFTBOILED:
+        return ITEM_NONE;
+    default:
+        return ITEM_NONE;
+    }
+}
+
+BOOL Party_CanMonUseFieldMove(Party *party, Bag* bag, u16 move, u8* outMonSlot){
+    u16 TMItem = MoveToTM(move);
+    u8 TMId = TMItem - ITEM_TM01;
+
+    u8 partyCount = Party_GetCurrentCount(party);
+    if(outMonSlot != NULL) {
+        *outMonSlot = MAX_PARTY_SIZE;
+    }
+
+    BOOL TM_InBag = FALSE;
+
+    // search for the TM/HM in bag
+    if(TMItem != ITEM_NONE){
+        u32 i;
+        for (i = 0; i < TMHM_POCKET_SIZE; i++) {
+            if (bag->tmHms[i].item == TMItem) {
+                if(bag->tmHms[i].quantity > 0){
+                    TM_InBag = TRUE;
+                }
+                break;
+            }
+        }
+    }
+
+
+    for(int monSlot = 0; monSlot < partyCount; monSlot++){
+        BOOL pokemonHasMove = FALSE;
+        Pokemon *mon = Party_GetPokemonBySlotIndex(party, monSlot);
+
+        if (Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL)) {
+            continue;
+        }
+        
+        if(TMItem != ITEM_NONE){
+            // finds out if the pokemon knows the move
+            int monMoveId;
+            for (monMoveId = 0; monMoveId < 4; monMoveId++) {
+                u16 monMove = (u16)Pokemon_GetValue(mon, MON_DATA_MOVE1 + monMoveId, NULL);
+
+                if (monMove == 0) {
+                    break;
+                }
+
+                if(monMove == move){
+                    pokemonHasMove = TRUE;
+                    break;
+                }
+            }
+        }
+
+        // TM/HM moves
+        if(TMItem != ITEM_NONE &&
+            (TM_InBag || pokemonHasMove) && // the TM/HM is in the bag or already learned by the mon
+            Pokemon_CanLearnTM(mon, TMId)){     // the pokemon can learn it
+
+            if(outMonSlot != NULL) {
+                *outMonSlot = monSlot;
+            }
+            return TRUE;
+        }
+
+        // Level up moves
+        if(Pokemon_LearnByLevelUp(mon, move)){
+            if(outMonSlot != NULL) {
+                *outMonSlot = monSlot;
+            }
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 // In many of the functions below, C99-style iterator declaration doesn't match

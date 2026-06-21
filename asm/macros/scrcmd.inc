@@ -1032,6 +1032,12 @@
     .short \move
     .endm
 
+    .macro FindPartySlotThatLearnMove destVar, move
+    .short SCRCMD_FINDPARTYSLOTTHATLEARNMOVE
+    .short \destVar
+    .short \move
+    .endm
+
     .macro GetRematchTrainerID trainerID, destVar
     .short SCRCMD_GETREMATCHTRAINERID
     .short \trainerID

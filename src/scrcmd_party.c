@@ -165,6 +165,24 @@ BOOL ScrCmd_FindPartySlotWithMove(ScriptContext *ctx)
     return FALSE;
 }
 
+BOOL ScrCmd_FindPartySlotThatLearnMove(ScriptContext *ctx)
+{
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+    u16 *scriptDestVar = ScriptContext_GetVarPointer(ctx);
+    u16 move = ScriptContext_GetVar(ctx);
+    u8 monSlot;
+
+    Party* party = SaveData_GetParty(fieldSystem->saveData);
+    Bag* bag = SaveData_GetBag(fieldSystem->saveData);
+
+    if(Party_CanMonUseFieldMove(party, bag, move, &monSlot)){
+        *scriptDestVar = monSlot;
+        return TRUE;
+    }
+    *scriptDestVar = MAX_PARTY_SIZE;
+    return FALSE;
+}
+
 BOOL ScrCmd_SurvivePoison(ScriptContext *ctx)
 {
     u16 *destVar = ScriptContext_GetVarPointer(ctx);

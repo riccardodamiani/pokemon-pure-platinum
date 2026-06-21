@@ -7,6 +7,7 @@
 #include "struct_defs/pokemon.h"
 
 #include "savedata.h"
+#include "bag.h"
 
 typedef struct Party {
     int capacity;
@@ -22,6 +23,7 @@ BOOL Party_AddPokemon(Party *party, Pokemon *mon);
 BOOL Party_RemovePokemonBySlotIndex(Party *party, int slot);
 int Party_GetCapacity(const Party *party);
 int Party_GetCurrentCount(const Party *party);
+BOOL Party_CanMonUseFieldMove(Party *party, Bag* bag, u16 move, u8* outMonSlot);
 Pokemon *Party_GetPokemonBySlotIndex(const Party *party, int slot);
 void Party_AddPokemonBySlotIndex(Party *party, int slot, Pokemon *mon);
 BOOL Party_SwapSlots(Party *party, int slotA, int slotB);

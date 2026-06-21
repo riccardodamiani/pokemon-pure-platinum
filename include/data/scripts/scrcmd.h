@@ -160,6 +160,7 @@ ScriptCommand(SCRCMD_GIVEEGG,                                              ScrCm
 ScriptCommand(SCRCMD_RESETPARTYMONMOVESLOT_UNUSED,                         ScrCmd_ResetPartyMonMoveSlot_Unused)
 ScriptCommand(SCRCMD_CHECKPARTYMONHASMOVE,                                 ScrCmd_CheckPartyMonHasMove)
 ScriptCommand(SCRCMD_FINDPARTYSLOTWITHMOVE,                                ScrCmd_FindPartySlotWithMove)
+ScriptCommand(SCRCMD_FINDPARTYSLOTTHATLEARNMOVE,                           ScrCmd_FindPartySlotThatLearnMove)
 ScriptCommand(SCRCMD_GETREMATCHTRAINERID,                                  ScrCmd_GetRematchTrainerID)
 ScriptCommand(SCRCMD_UNUSED_09C,                                           ScrCmd_Unused_09C)
 ScriptCommand(SCRCMD_UNUSED_09D,                                           ScrCmd_Unused_09D)
