@@ -446,6 +446,7 @@ static BOOL ScrCmd_SlatherHoneyTree(ScriptContext *ctx);
 static BOOL ScrCmd_GetHoneyTreeStatus(ScriptContext *ctx);
 static BOOL ScrCmd_StartHoneyTreeBattle(ScriptContext *ctx);
 static BOOL ScrCmd_StopHoneyTreeShaking(ScriptContext *ctx);
+static BOOL ScrCmd_StartHoneyTreeShaking(ScriptContext *ctx);
 static BOOL ScrCmd_StartSignatureApp(ScriptContext *ctx);
 static BOOL ScrCmd_CheckSaveType(ScriptContext *ctx);
 static BOOL ScrCmd_TrySaveGame(ScriptContext *ctx);
@@ -4076,6 +4077,14 @@ static BOOL ScrCmd_StartHoneyTreeBattle(ScriptContext *ctx)
     int *battleResultMaskPtr = FieldSystem_GetScriptMemberPtr(fieldSystem, SCRIPT_MANAGER_BATTLE_RESULT);
     Encounter_NewVsHoneyTree(ctx->task, battleResultMaskPtr);
     return TRUE;
+}
+
+static BOOL ScrCmd_StartHoneyTreeShaking(ScriptContext *ctx)
+{
+    FieldSystem *fieldSystem = ctx->fieldSystem;
+
+    HoneyTree_StartShaking(fieldSystem);
+    return FALSE;
 }
 
 static BOOL ScrCmd_StopHoneyTreeShaking(ScriptContext *ctx)

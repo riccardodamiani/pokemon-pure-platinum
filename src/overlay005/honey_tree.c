@@ -206,6 +206,31 @@ void HoneyTree_StopShaking(FieldSystem *fieldSystem)
     }
 }
 
+void HoneyTree_StartShaking(FieldSystem *fieldSystem)
+{
+    u8 treeId = GetTreeIdFromMapId(fieldSystem->location->mapId);
+    GF_ASSERT(treeId != NUM_HONEY_TREES);
+
+    u8 v1;
+    MapProp *v2;
+    MapPropManager *v3;
+    NNSG3dRenderObj *v4;
+
+    v1 = LandDataManager_GetTrackedTargetLoadedMapsQuadrant(fieldSystem->landDataMan);
+    LandDataManager_GetLoadedMapPropManager(v1, fieldSystem->landDataMan, &v3);
+    v2 = MapPropManager_FindLoadedPropByModelID(v3, honey_tree_nsbmd);
+    
+    if (v2 != NULL) {
+        v4 = MapProp_GetRenderObj(v2);
+        MapPropAnimationManager_RemoveAnimationFromRenderObj(fieldSystem->mapPropAnimMan, v4, honey_tree_nsbmd, fieldSystem->unk_A8->trees[treeId].shakeValue);
+    }
+
+    fieldSystem->unk_A8->trees[treeId].isShaking = TRUE;
+    
+    MapPropAnimationManager_AddAnimationToRenderObj(honey_tree_nsbmd, fieldSystem->unk_A8->trees[treeId].shakeValue, 1, v4, fieldSystem->mapPropAnimMan);
+
+}
+
 // Group 0 is no encounter. Group 3 is Munchlax.
 // For munchlax trees the rates are 9/20/70/1.
 // For normal trees the rates are 10/70/20/0.

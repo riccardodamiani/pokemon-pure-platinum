@@ -526,6 +526,7 @@ CommonScript_SlatherHoneyTree:
     Message CommonStrings_Text_BarkWasSlathered
     WaitButton
     CloseMessage
+    StartHoneyTreeShaking
     ReleaseAll
     End
 

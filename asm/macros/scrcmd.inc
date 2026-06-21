@@ -1808,6 +1808,10 @@
     .short SCRCMD_STOPHONEYTREESHAKING
     .endm
 
+    .macro StartHoneyTreeShaking
+    .short SCRCMD_STARTHONEYTREESHAKING
+    .endm
+
     .macro StartSignatureApp
     .short SCRCMD_STARTSIGNATUREAPP
     .endm
