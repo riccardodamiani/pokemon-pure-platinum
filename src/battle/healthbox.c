@@ -1376,7 +1376,14 @@ static s32 HealthBox_DrawGauge(HealthBox *healthbox, enum HealthBoxGaugeType gau
     s32 fillOffset;
 
     if (gaugeType == HEALTHBOX_GAUGE_HP) {
-        result = UpdateGauge(healthbox->maxHP, healthbox->curHP, healthbox->damage, &healthbox->hpTemp, HEALTHBOX_HP_CELL_COUNT, 1);
+        fillOffset = CalcGaugeFill(healthbox->curHP, healthbox->damage, healthbox->maxHP, HEALTHBOX_HP_CELL_COUNT);
+
+        if (fillOffset == 0) {
+            fillOffset = 1;
+        }
+
+        fillOffset = abs(healthbox->damage / fillOffset);
+        result = UpdateGauge(healthbox->maxHP, healthbox->curHP, healthbox->damage, &healthbox->hpTemp, HEALTHBOX_HP_CELL_COUNT, fillOffset);
     } else {
         fillOffset = CalcGaugeFill(healthbox->curExp, healthbox->expReward, healthbox->maxExp, HEALTHBOX_EXP_CELL_COUNT);
 
