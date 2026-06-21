@@ -211,9 +211,8 @@ BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
             playerEvent |= PLAYER_EVENT_USED_STRENGTH;
         }
 
-        if (Party_HasMonWithMove(SaveData_GetParty(fieldSystem->saveData), MOVE_WATERFALL) != PARTY_SLOT_NONE) {
+        // descending waterfall always permitted
             playerEvent |= PLAYER_EVENT_USED_WATERFALL;
-        }
 
         if (PersistedMapFeatures_IsCurrentDynamicMap(fieldSystem, DYNAMIC_MAP_FEATURES_DISTORTION_WORLD) == TRUE && DistWorld_ArePersistedFeaturesInit(fieldSystem) == TRUE) {
             playerEvent |= PLAYER_EVENT_DISTORTION_WORLD;
