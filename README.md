@@ -16,7 +16,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Teaching field moves is not required for use outside battle | Testing |
 | Field moves will be visible in menu only if usable | Testing |
 | Descending from waterfall is always possible | Testing |
-| Speed up health bar animation | Concept |
+| Speed up health bar animation | Testing |
 | Instant honey tree | Concept |
 | Re-teach old moves from menu | Concept |
 | Eggs hatch with less steps | Concept |
