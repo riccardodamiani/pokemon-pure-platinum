@@ -299,6 +299,10 @@ FieldMoves_UseRockClimbFromMenu:
 FieldMoves_Water:
     PlaySE SEQ_SE_CONFIRM
     LockAll
+    FindPartySlotThatLearnMove VAR_RESULT, MOVE_SURF
+    GoToIfEq VAR_RESULT, 6, FieldMoves_WaterDeepBlue
+    CheckBadgeAcquired BADGE_ID_FEN, VAR_RESULT
+    GoToIfEq VAR_RESULT, 0, FieldMoves_WaterDeepBlue
     CheckHasPartner VAR_RESULT
     GoToIfEq VAR_RESULT, 1, _0512
     Message FieldMoves_Text_WouldYouLikeToUseSurf
@@ -306,6 +310,13 @@ FieldMoves_Water:
     GoToIfEq VAR_RESULT, MENU_YES, _051F
     CloseMessage
     GoTo _0671
+    End
+
+FieldMoves_WaterDeepBlue:
+    Message FieldMoves_Text_WaterDeepBlue
+    WaitButton
+    CloseMessage
+    GoTo _066D
     End
 
 _0512:

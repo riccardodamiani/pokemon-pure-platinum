@@ -82,6 +82,12 @@
       ]
     },
     {
+      "id": "FieldMoves_Text_WaterDeepBlue",
+      "en_US": [
+        "The water is a deep blue color..."
+      ]
+    },
+    {
       "id": "FieldMoves_Text_PokemonUsedSurf",
       "en_US": "{STRVAR_1 0, 0, 0} used Surf!\r"
     },
