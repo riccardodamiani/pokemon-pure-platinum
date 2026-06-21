@@ -261,6 +261,24 @@ static const u16 sFieldMoves[FIELD_MOVE_MAX] = {
     [FIELD_MOVE_SOFTBOILED] = MOVE_SOFTBOILED,
 };
 
+static const u16 sFieldMovesTM[FIELD_MOVE_MAX] = {
+    [FIELD_MOVE_CUT] = ITEM_HM01,
+    [FIELD_MOVE_FLY] = ITEM_HM02,
+    [FIELD_MOVE_SURF] = ITEM_HM03,
+    [FIELD_MOVE_STRENGTH] = ITEM_HM04,
+    [FIELD_MOVE_DEFOG] = ITEM_HM05,
+    [FIELD_MOVE_ROCK_SMASH] = ITEM_HM06,
+    [FIELD_MOVE_WATERFALL] = ITEM_HM07,
+    [FIELD_MOVE_ROCK_CLIMB] = ITEM_HM08,
+    [FIELD_MOVE_FLASH] = ITEM_TM70,
+    [FIELD_MOVE_TELEPORT] = ITEM_NONE,
+    [FIELD_MOVE_DIG] = ITEM_TM28,
+    [FIELD_MOVE_SWEET_SCENT] = ITEM_NONE,
+    [FIELD_MOVE_CHATTER] = ITEM_NONE,
+    [FIELD_MOVE_MILK_DRINK] = ITEM_NONE,
+    [FIELD_MOVE_SOFTBOILED] = ITEM_NONE,
+};
+
 static BOOL PartyMenu_Init(ApplicationManager *appMan, int *state)
 {
     PartyMenuApplication *application; // must forward-declare to match
@@ -1804,8 +1822,8 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
     if (FieldSystem_IsInBattleTowerSalon(application->partyMenu->fieldSystem) == FALSE) {
         if (application->partyMembers[application->currPartySlot].isEgg == FALSE) {
             for(fieldMove = 0; fieldMove < FIELD_MOVE_MAX; fieldMove++){
-                u16 TMHM_Item = fieldMoveToTMHM[fieldMove];
-                u16 move = fieldMoveToMove[fieldMove];
+                u16 TMHM_Item = sFieldMovesTM[fieldMove];
+                u16 move = sFieldMoves[fieldMove];
                 u8 TMId = TMHM_Item - ITEM_TM01;
 
                 

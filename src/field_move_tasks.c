@@ -373,43 +373,6 @@ BOOL FieldMoves_CheckHMUsable(const FieldMoveContext *fieldMoveContext, enum Fie
     return TRUE;
 }
 
-// Checks whether the player has the required badge to use the given field move
-// If the field move doesn't require a badge return true
-BOOL FieldMoves_CheckMNBadge(const FieldMoveContext *fieldMoveContext, enum FieldMoveList move){
-    enum Badge requiredBadge;
-
-    switch (move) {
-    case FIELD_MOVE_CUT:
-        requiredBadge = BADGE_ID_FOREST;
-        break;
-    case FIELD_MOVE_FLY:
-        requiredBadge = BADGE_ID_COBBLE;
-        break;
-    case FIELD_MOVE_SURF:
-        requiredBadge = BADGE_ID_FEN;
-        break;
-    case FIELD_MOVE_STRENGTH:
-        requiredBadge = BADGE_ID_MINE;
-        break;
-    case FIELD_MOVE_DEFOG:
-        requiredBadge = BADGE_ID_RELIC;
-        break;
-    case FIELD_MOVE_ROCK_SMASH:
-        requiredBadge = BADGE_ID_COAL;
-        break;
-    case FIELD_MOVE_WATERFALL:
-        requiredBadge = BADGE_ID_BEACON;
-        break;
-    case FIELD_MOVE_ROCK_CLIMB:
-        requiredBadge = BADGE_ID_ICICLE;
-        break;
-    default:
-        return TRUE;
-    }
-
-    return PlayerHasRequiredBadge(fieldMoveContext, requiredBadge);
-}
-
 static void FieldMoves_SetCutTask(FieldMovePokemon *fieldMoveMon, const FieldMoveContext *fieldMoveContext)
 {
     StartMenu *menu = FieldTask_GetEnv(fieldMoveMon->fieldTask);
