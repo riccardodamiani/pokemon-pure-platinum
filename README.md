@@ -17,7 +17,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Field moves will be visible in menu only if usable | Testing |
 | Descending from waterfall is always possible | Testing |
 | Speed up health bar animation | Testing |
-| Instant honey tree | Concept |
+| Instant honey tree | Testing |
 | Re-teach old moves from menu | Concept |
 | Eggs hatch with less steps | Concept |
 | All Mystery Gifts and Special Events unlocked | Concept |
