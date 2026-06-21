@@ -35,7 +35,7 @@ static u8 GetTreeIdFromMapId(const int param0);
 static const int GetEncounterTableFromGroup(const u8 param0);
 static const int GetShakesFromGroup(const u8 param0);
 static const BOOL GetShakingValue(const int numShakes, u8 *value);
-static const BOOL SixHoursSinceSlathered(const int param0);
+static const BOOL NoHoursSinceSlathered(const int param0);
 static BOOL IsMunchlaxTree(const u32 param0, const u8 param1);
 
 static const int sHoneyTreeMapIds[NUM_HONEY_TREES] = {
@@ -127,7 +127,7 @@ u16 HoneyTree_GetTreeSlatherStatus(FieldSystem *fieldSystem)
     treeDat = SpecialEncounter_GetPlayerHoneyTreeStates(SaveData_GetSpecialEncounters(fieldSystem->saveData));
     tree = SpecialEncounter_GetHoneyTree(treeId, treeDat);
 
-    if (SixHoursSinceSlathered(tree->minutesRemaining)) {
+    if (NoHoursSinceSlathered(tree->minutesRemaining)) {
         return TREE_STATUS_ENCOUNTER; // tree can have Pokemon
     } else if (tree->minutesRemaining != 0) {
         return TREE_STATUS_SLATHERED; // tree is slathered
@@ -355,7 +355,7 @@ static void DoTreeShakingAnimation(FieldSystem *fieldSystem, MapPropManager *par
         treeDat = SpecialEncounter_GetPlayerHoneyTreeStates(SaveData_GetSpecialEncounters(fieldSystem->saveData));
         tree = SpecialEncounter_GetHoneyTree(treeId, treeDat);
 
-        if (SixHoursSinceSlathered(tree->minutesRemaining)) {
+        if (NoHoursSinceSlathered(tree->minutesRemaining)) {
             BOOL isShaking;
             u8 shakeValue;
 
@@ -396,9 +396,9 @@ static u8 GetTreeIdFromMapId(const int mapId)
     return i;
 }
 
-static const BOOL SixHoursSinceSlathered(const int minutesLeft)
+static const BOOL NoHoursSinceSlathered(const int minutesLeft)
 {
-    if ((0 < minutesLeft) && (minutesLeft <= (18 * 60))) {
+    if ((0 < minutesLeft) && (minutesLeft <= (24 * 60))) {
         return TRUE;
     } else {
         return FALSE;
