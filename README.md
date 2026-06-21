@@ -11,9 +11,11 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Complete AI re-design | In Progress |
 | IV/EV check using L/R in summery screen | Testing |
 | Ability, EVs and nature of any trainer pokemon customizable | Testing |
-| Infinite use MT | Concept |
-| Overwritable MN | Concept |
-| Teaching MN not required for use outside battle | Concept |
+| Infinite use MT | Testing |
+| Overwritable MN | Testing |
+| Teaching field moves is required for use outside battle | Testing |
+| Field moves will be visible in menu only if usable | Testing |
+| Descending from waterfall is always possible | Testing |
 | Speed up health bar animation | Concept |
 | Instant honey tree | Concept |
 | Re-teach old moves from menu | Concept |
