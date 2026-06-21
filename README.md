@@ -11,8 +11,8 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Complete AI re-design | In Progress |
 | IV/EV check using L/R in summery screen | Testing |
 | Ability, EVs and nature of any trainer pokemon customizable | Testing |
-| Infinite use MT | Testing |
-| Overwritable MN | Testing |
+| Infinite use TMs | Testing |
+| Overwritable HMs | Testing |
 | Teaching field moves is not required for use outside battle | Testing |
 | Field moves will be visible in menu only if usable | Testing |
 | Descending from waterfall is always possible | Testing |
@@ -26,7 +26,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Any pokemon is obtainable in game | Concept |
 | All pokemons are evolvable without weird requirements | Concept |
 | Rework all trainers for a more challenging experience | Concept |
-| All MT obtainable in main story map | Concept |
+| All TMs obtainable in main story map | Concept |
 | Better pokemon distribution around the map | Concept |
 | Change level progress of trainer and wild pokemons | Concept |
 | Improve pokemon move pools | Concept |
