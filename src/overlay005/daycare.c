@@ -903,16 +903,16 @@ static int Daycare_GetEggCycleLength(FieldSystem *fieldSystem)
     int i;
 
     if (FieldSystem_HasPenalty(fieldSystem)) {
-        return 255;
+        return 40;
     }
 
     for (i = 0; i < NELEMS(sEggCycleSpecialDates); i++) {
         if (sEggCycleSpecialDates[i] == date) {
-            return 230;
+            return 32;
         }
     }
 
-    return 255;
+    return 40;
 }
 
 BOOL Daycare_Update(Daycare *daycare, Party *party, FieldSystem *fieldSystem)
