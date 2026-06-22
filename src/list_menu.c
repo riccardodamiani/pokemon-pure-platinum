@@ -68,6 +68,22 @@ u32 ListMenu_ProcessInput(ListMenu *menu)
         return MENU_CANCEL;
     }
 
+    if (JOY_NEW(PAD_BUTTON_L)) {
+        if (UpdateSelectedRow(menu, TRUE, 5, FALSE) == 0) {
+            menu->lastAction = LIST_MENU_ACTION_MOVE_UP;
+        }
+
+        return MENU_NOTHING_CHOSEN;
+    }
+
+    if (JOY_NEW(PAD_BUTTON_R)) {
+        if (UpdateSelectedRow(menu, TRUE, 5, TRUE) == 0) {
+            menu->lastAction = LIST_MENU_ACTION_MOVE_DOWN;
+        }
+
+        return MENU_NOTHING_CHOSEN;
+    }
+
     if (JOY_REPEAT(PAD_KEY_UP)) {
         if (UpdateSelectedRow(menu, TRUE, 1, FALSE) == 0) {
             menu->lastAction = LIST_MENU_ACTION_MOVE_UP;
