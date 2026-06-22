@@ -422,7 +422,17 @@ static u8 UpdateOffsetsForScroll(ListMenu *menu, u8 movingDown)
                 }
             }
 
-            return 0;
+            // Wrap to end
+            {
+                u16 lastListPos = menu->template.count - menu->template.maxDisplay;
+                u16 lastCursorPos = menu->template.maxDisplay - 1;
+                while (lastCursorPos > 0 && menu->template.choices[lastListPos + lastCursorPos].index == MENU_HEADER) {
+                    lastCursorPos--;
+                }
+                menu->listPos = lastListPos;
+                menu->cursorPos = lastCursorPos;
+                return 4;
+            }
         }
 
         while (cursorPos > newListPos) {
@@ -454,7 +464,16 @@ static u8 UpdateOffsetsForScroll(ListMenu *menu, u8 movingDown)
                 }
             }
 
-            return 0;
+            // Wrap to beginning
+            {
+                u16 firstCursorPos = 0;
+                while (firstCursorPos < (u16)(menu->template.maxDisplay - 1) && menu->template.choices[firstCursorPos].index == MENU_HEADER) {
+                    firstCursorPos++;
+                }
+                menu->listPos = 0;
+                menu->cursorPos = firstCursorPos;
+                return 4;
+            }
         }
 
         while (cursorPos < newListPos) {
@@ -545,6 +564,17 @@ static u8 UpdateSelectedRow(ListMenu *menu, u8 updateCursor, u8 scrollCount, u8 
         case 3:
             EraseCursor(menu, cursorPos);
             ScrollList(menu, linesScrolled, movingDown);
+            PrintCursor(menu);
+            InvokeCursorCallback(menu, FALSE);
+            Window_CopyToVRAM(menu->template.window);
+            break;
+
+        case 4:// full screen redraw on wrap around
+        case 5:
+        case 6:
+        case 7:
+            Window_FillTilemap(menu->template.window, menu->template.textColorBg);
+            PrintEntries(menu, menu->listPos, 0, menu->template.maxDisplay);
             PrintCursor(menu);
             InvokeCursorCallback(menu, FALSE);
             Window_CopyToVRAM(menu->template.window);
