@@ -34,6 +34,6 @@ There are numerous features and changes I want to add in this mod. This table ke
 | More NPC selling useful items | Concept |
 | Improve leveling experience | Concept |
 | Add EV training NPC | Concept |
-| Improve menu navigation | Concept |
+| Improve menu navigation | In-Progress |
 | Re-use prompt when repel wore off | Concept |
 | Fix original game bugs & glitches | Concept |
