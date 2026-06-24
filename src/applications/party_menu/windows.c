@@ -743,6 +743,7 @@ void PartyMenu_LoadContextMenuStrings(PartyMenuApplication *application)
     LoadMenuString(PartyMenu_Text_MailRead, PARTY_MENU_STR_MAIL_READ);
     LoadMenuString(PartyMenu_Text_MailTake, PARTY_MENU_STR_MAIL_TAKE);
     LoadMenuString(PartyMenu_Text_MailStore, PARTY_MENU_STR_MAIL_STORE);
+    LoadMenuString(PartyMenu_Text_RelearnMove, PARTY_MENU_STR_RELEARN_MOVE);
     LoadMenuString(PartyMenu_Text_ContextCancel, PARTY_MENU_STR_CANCEL);
     LoadMenuString(PartyMenu_Text_Separator, PARTY_MENU_STR_SEPARATOR);
     LoadMenuString(PartyMenu_Text_Enter, PARTY_MENU_STR_ENTER);

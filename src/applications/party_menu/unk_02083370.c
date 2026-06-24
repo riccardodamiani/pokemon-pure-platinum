@@ -63,6 +63,7 @@ static void PartyMenu_SelectItemTake(PartyMenuApplication *application, int *par
 static void PartyMenu_SelectMail(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectMailRead(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectMailTake(PartyMenuApplication *application, int *partyMenuState);
+static void PartyMenu_SelectRelearnMove(PartyMenuApplication *application, int *partyMenuState);
 static int sub_0208384C(void *applicationPtr);
 static int sub_020838C4(void *applicationPtr);
 static int sub_020838F4(void *applicationPtr);
@@ -73,7 +74,7 @@ static void sub_020845E8(PartyMenuApplication *application, int *partyMenuState)
 static void sub_020846FC(PartyMenuApplication *application, int *partyMenuState);
 static void PartyMenu_SelectBallSeal(PartyMenuApplication *application, int *partyMenuState);
 
-static const PartyMenuAction sPartyMenuActions[32] = {
+static const PartyMenuAction sPartyMenuActions[33] = {
     PartyMenu_SelectSwitch,
     PartyMenu_SelectSummary,
     PartyMenu_SelectItem,
@@ -83,6 +84,7 @@ static const PartyMenuAction sPartyMenuActions[32] = {
     PartyMenu_SelectMailRead,
     PartyMenu_SelectMailTake,
     PartyMenu_SelectBallSeal,
+    PartyMenu_SelectRelearnMove,
     0xFFFFFFFE,
     0xFFFFFFFE,
     sub_020844B0, // select pokemon?
@@ -133,7 +135,7 @@ static void PartyMenu_SelectItem(PartyMenuApplication *application, int *partyMe
 
     StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_ITEM_GIVE], PartyMenu_GetAction(3));
     StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_ITEM_TAKE], PartyMenu_GetAction(4));
-    StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_CANCEL], PartyMenu_GetAction(9));
+    StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_CANCEL], PartyMenu_GetAction(10));
 
     v0.choices = application->contextMenuChoices;
     v0.window = &application->windows[PARTY_MENU_WIN_GIVE_ITEM_OR_MAIL];
@@ -263,7 +265,7 @@ static void PartyMenu_SelectMail(PartyMenuApplication *application, int *partyMe
 
     StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_MAIL_READ], PartyMenu_GetAction(6));
     StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_MAIL_TAKE], PartyMenu_GetAction(7));
-    StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_CANCEL], PartyMenu_GetAction(9));
+    StringList_AddFromString(application->contextMenuChoices, application->menuStrings[PARTY_MENU_STR_CANCEL], PartyMenu_GetAction(10));
 
     v0.choices = application->contextMenuChoices;
     v0.window = &application->windows[PARTY_MENU_WIN_GIVE_ITEM_OR_MAIL];
@@ -823,6 +825,16 @@ static void sub_020846FC(PartyMenuApplication *application, int *partyMenuState)
 static void PartyMenu_SelectSummary(PartyMenuApplication *application, int *partyMenuState)
 {
     application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_SUMMARY;
+
+    Menu_Free(application->contextMenu, NULL);
+    StringList_Free(application->contextMenuChoices);
+
+    *partyMenuState = PARTY_MENU_STATE_32;
+}
+
+static void PartyMenu_SelectRelearnMove(PartyMenuApplication *application, int *partyMenuState)
+{
+    application->partyMenu->menuSelectionResult = PARTY_MENU_EXIT_CODE_RELEARN_MOVE;
 
     Menu_Free(application->contextMenu, NULL);
     StringList_Free(application->contextMenuChoices);

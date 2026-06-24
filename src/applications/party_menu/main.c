@@ -41,6 +41,7 @@
 #include "journal.h"
 #include "menu.h"
 #include "message.h"
+#include "move_reminder_data.h"
 #include "narc.h"
 #include "network_icon.h"
 #include "overlay_manager.h"
@@ -1905,6 +1906,13 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
             }
 
             count++;
+
+            u16 *learnableMoves = MoveReminderData_GetMoves(mon, HEAP_ID_PARTY_MENU);
+            if (MoveReminderData_HasMoves(learnableMoves)) {
+                menuEntriesBuffer[count] = 9;
+                count++;
+            }
+            Heap_FreeExplicit(HEAP_ID_PARTY_MENU, learnableMoves);
         } else {
             menuEntriesBuffer[count] = 0;
             count++;

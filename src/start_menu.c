@@ -175,6 +175,7 @@ static BOOL StartMenu_SelectSave(FieldTask *fieldTask);
 static void StartMenu_SaveWait(FieldTask *fieldTask);
 static void StartMenu_Save(FieldTask *fieldTask);
 static BOOL StartMenu_ExitSummary(FieldTask *fieldTask);
+static BOOL StartMenu_ExitMoveReminder(FieldTask *fieldTask);
 static void StartMenu_ShowBerryTag(FieldTask *fieldTask, u16 berryItemID);
 static BOOL StartMenu_ExitBerryTag(FieldTask *fieldTask);
 static void StartMenu_EvolveInit(FieldTask *fieldTask);
@@ -1092,6 +1093,23 @@ BOOL StartMenu_ExitPartyMenu(FieldTask *fieldTask)
         menu->state = START_MENU_STATE_EVOLVE_INIT;
         break;
 
+    case PARTY_MENU_EXIT_CODE_RELEARN_MOVE: {
+        Pokemon *reminderMon = Party_GetPokemonBySlotIndex(SaveData_GetParty(fieldSystem->saveData), partyMenu->selectedMonSlot);
+
+        MoveReminderData *reminderData = MoveReminderData_Alloc(HEAP_ID_FIELD2);
+        reminderData->mon = reminderMon;
+        reminderData->trainerInfo = SaveData_GetTrainerInfo(fieldSystem->saveData);
+        reminderData->options = SaveData_GetOptions(fieldSystem->saveData);
+        reminderData->moves = MoveReminderData_GetMoves(reminderMon, HEAP_ID_FIELD2);
+        reminderData->isMoveTutor = FALSE;
+
+        menu->additionalTaskContext = (void *)(u32)partyMenu->selectedMonSlot;
+        menu->taskData = reminderData;
+
+        FieldSystem_OpenMoveReminderMenu(fieldSystem, reminderData);
+        StartMenu_SetCallback(menu, StartMenu_ExitMoveReminder);
+        break;
+    }
     case PARTY_MENU_EXIT_CODE_CUT:
     case PARTY_MENU_EXIT_CODE_FLY:
     case PARTY_MENU_EXIT_CODE_SURF:
@@ -1511,6 +1529,22 @@ static BOOL StartMenu_ExitSummary(FieldTask *fieldTask)
     }
 
     Heap_Free(summary);
+
+    return FALSE;
+}
+
+static BOOL StartMenu_ExitMoveReminder(FieldTask *fieldTask)
+{
+    FieldSystem *fieldSystem = FieldTask_GetFieldSystem(fieldTask);
+    StartMenu *menu = FieldTask_GetEnv(fieldTask);
+    MoveReminderData *reminderData = (MoveReminderData *)menu->taskData;
+    u32 selectedSlot = (u32)menu->additionalTaskContext;
+
+    Heap_Free(reminderData->moves);
+    MoveReminderData_Free(reminderData);
+
+    menu->taskData = FieldSystem_OpenPartyMenu(fieldSystem, &menu->fieldMoveContext, selectedSlot);
+    StartMenu_SetCallback(menu, StartMenu_ExitPartyMenu);
 
     return FALSE;
 }

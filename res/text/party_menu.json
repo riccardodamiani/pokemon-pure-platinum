@@ -766,6 +766,10 @@
       "en_US": "STORE"
     },
     {
+      "id": "PartyMenu_Text_RelearnMove",
+      "en_US": "LEARN MOVE"
+    },
+    {
       "id": "PartyMenu_Text_ContextCancel",
       "en_US": "CANCEL"
     },
