@@ -1911,9 +1911,6 @@ static u8 GetContextMenuEntriesForPartyMon(PartyMenuApplication *application, u8
         }
     }
 
-    menuEntriesBuffer[count] = 9;
-    count++;
-
     return count;
 }
 
