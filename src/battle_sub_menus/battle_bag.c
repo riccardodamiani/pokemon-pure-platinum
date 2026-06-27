@@ -311,6 +311,12 @@ static u8 BattleBagTask_PocketMenuScreen(BattleBag *battleBag)
         BattleBagSprites_DisableCursor(battleBag);
     }
 
+    if (JOY_NEW(PAD_BUTTON_R)) {
+        pocketMenuScreenButtonPressed = BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_NEXT_PAGE;
+    }else if (JOY_NEW(PAD_BUTTON_L)) {
+        pocketMenuScreenButtonPressed = BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_PREV_PAGE;
+    }
+
     switch (pocketMenuScreenButtonPressed) {
     case BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_ITEM_1:
     case BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_ITEM_2:
