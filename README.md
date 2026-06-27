@@ -11,7 +11,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Feature | Status |
 | :--- | :---: |
 | Complete AI re-design | In Progress |
-| IV/EV check using L/R in summery screen | Testing |
+| Display IV/EV using L/R in summary screen | Testing |
 | Ability, EVs and nature of any trainer pokemon customizable | Testing |
 | Infinite use TMs | Testing |
 | Overwritable HMs | Testing |
