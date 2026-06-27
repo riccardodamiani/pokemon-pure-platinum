@@ -261,6 +261,11 @@ static u8 BattleBagTask_MenuScreen(BattleBag *battleBag)
         BattleBagSprites_DisableCursor(battleBag);
     }
 
+    // shortcut for last used item
+    if (JOY_NEW(PAD_BUTTON_X) && battleBag->context->lastUsedItem != ITEM_NONE) {
+        menuButtonPressed = BATTLE_BAG_MENU_SCREEN_BUTTON_LAST_USED_ITEM;
+    }
+
     switch (menuButtonPressed) {
     case BATTLE_BAG_MENU_SCREEN_BUTTON_RECOVER_HP_POCKET:
     case BATTLE_BAG_MENU_SCREEN_BUTTON_RECOVER_STATUS_POCKET:
@@ -304,6 +309,12 @@ static u8 BattleBagTask_PocketMenuScreen(BattleBag *battleBag)
         }
     } else {
         BattleBagSprites_DisableCursor(battleBag);
+    }
+
+    if (JOY_NEW(PAD_BUTTON_R)) {
+        pocketMenuScreenButtonPressed = BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_NEXT_PAGE;
+    }else if (JOY_NEW(PAD_BUTTON_L)) {
+        pocketMenuScreenButtonPressed = BATTLE_BAG_POCKET_MENU_SCREEN_BUTTON_PREV_PAGE;
     }
 
     switch (pocketMenuScreenButtonPressed) {
