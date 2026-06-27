@@ -35,7 +35,7 @@
     },
     {
       "id": "BattleBag_Text_ItemUsedLast",
-      "en_US": "Item used last"
+      "en_US": "Last used item (X)"
     },
     {
       "id": "BattleBag_Text_PocketSlot1ItemName",
