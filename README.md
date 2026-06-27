@@ -35,5 +35,5 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Improve leveling experience | Concept |
 | Add EV training NPC | Concept |
 | Improve menu navigation | In-Progress |
-| Re-use prompt when repel wore off | Concept |
+| Re-use prompt when repel wore off | Testing |
 | Fix original game bugs & glitches | Concept |
