@@ -20,19 +20,19 @@ Let's get into some examples:
   
 **Example 1**  
 We have a pokemon that at level 30 could learn the move dig by level up. Right now it's at level 40. The pokemon can use dig (outside combat) without learning it, because:
-    - The pokemon is able to learn it (by level up)
-    - The pokemon has a way to learn the move right now (Move Reminding)    
+- The pokemon is able to learn it (by level up)
+- The pokemon has a way to learn the move right now (Move Reminding)    
   
 
 **Example 2**  
 We have Azumarill that is able to learn the move surf from the HM. We already have the required badge and we have the HM item in the bag. Then Azumarill can use surf without learning it because:
-    - The pokemon is able to learn it (by HM)
-    - We have the HM to teach it
+- The pokemon is able to learn it (by HM)
+- We have the HM to teach it
   
 Some example when you cannot use the move without learning it:  
 **Example 3**  
 We have a pokemon that is able to learn the move Dig from TM. It doesn't learn it naturally thought. If we don't have the TM 28 dig in the bag, the pokemon cannot use it outside combat. Why?
-    - the pokemon is able to learn dig by TM
-    - we **don't have a way** to teach the move even if we wanted to
+- the pokemon is able to learn dig by TM
+- we **don't have a way** to teach the move even if we wanted to
 
 
