@@ -30,7 +30,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Better pokemon distribution around the map | Concept |
 | Change level progress of trainer and wild pokemons | Concept |
 | Improve pokemon move pools | Concept |
-| Decide whether to keep a captured pokemon or send it to the pc | Concept |
+| Decide whether to keep a captured pokemon or send it to the pc | Testing |
 | More NPC selling useful items | Concept |
 | Improve leveling experience | Concept |
 | Add EV training NPC | Concept |
