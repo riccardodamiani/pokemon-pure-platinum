@@ -18,13 +18,15 @@ The change was made because IVs and EVs are a really important part of the battl
 Health bar animation was significantly sped up in all screens instances. Now it should move at 1 pixel per frame which means that a full HP bar of any pokemon in battle should take only ~2.5 seconds to reach zero. 
 The change was made to speed up the game battles, which seems really slow compared to other games of the series.
 
-## Sped Up Bag Menu Navigation
+## Improved Bag Menu Navigation
 Added features in the item menu navigations for faster movement in the item lists. List wrap around is introduced so that if you move up when you are already at the first item of the list it will restart from the bottom. Also, you can press the buttons R and L to move respectively 5 items down or 5 items up in the list.  
 The changes were made to reduce the time spent in the item list searching for a item. A way to speed up the game overall.
 
-## Sped Up Battle Bag Menu Navigation
+## Improved Battle Bag Menu Navigation
 Added features in the battle item menu navigations for faster movement. 
 Now you can press the buttons R and L to move respectively to the next and previous item page. Also, if you press the button 'X' in the battle bag page it will use the last used item.  
 The changes were made to reduce the time spent in the item list searching for a item. A way to speed up the game overall.
 ![Battle Bag Manu](images/last-used-item.png)
 
+## Hide currently unusable field moves
+If you open the team menu and select a pokemon, it will also display the field moves that can be used by the pokemon. However after the changes made to the [field move system](field_moves.md) cases where 4 or more moves are displayed in this menu are pretty common. This is a issue due to screen space limit, so to make up for it, the moves are displayed only if the pokemon can use them at the current moment. For example the move surf (in a pokemon that can use the move) will appear only when we are adjacent to water. The move fly won't be displayed if we are in a cave and so on.  

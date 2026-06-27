@@ -13,5 +13,6 @@ This documentation was made to highlight the mechanics and features that were ad
 - Reduced by ~6 times the number of steps required to hatch an egg. [more](other.md#egg-hatching)
 - Faster navigation in bag menu. [more](ui.md#sped-up-bag-menu-navigation)
 - Faster navigation in battle bag menu. [more](ui.md#sped-up-battle-bag-menu-navigation)
+- Display only the filed moves that can be used at the current moment. [more](ui.md#hide-currently-unusable-field-moves)
 - You can teach all moves the pokemon can learn by level up from the pokemon context menu (no Move Reminder required). [more](ui.md#move-reminder)
 - Auto repel use prompt when it's effect wears off. [more](ui.md#auto-repel)
