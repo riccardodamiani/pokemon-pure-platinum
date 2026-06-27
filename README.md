@@ -4,6 +4,8 @@ Pokémon Pure Platinum is a WIP mod of Pokémon Platinum for NDS, designed to mo
 
 This project is based on the decompilation of the game made by pret. Checkout [pret/pokeplatinum](https://github.com/pret/pokeplatinum.git).  
 
+Game documentation is available [here](game_doc/game.md).  
+
 ## Goals
 There are numerous features and changes I want to add in this mod. This table keeps track of them.  
 | Feature | Status |
