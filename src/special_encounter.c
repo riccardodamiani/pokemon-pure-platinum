@@ -247,6 +247,11 @@ u8 *SpecialEncounter_GetRepelSteps(SpecialEncounter *speEnc)
     return &(speEnc->repelSteps);
 }
 
+u16 *SpecialEncounter_GetRepelItem(SpecialEncounter *speEnc)
+{
+    return &(speEnc->repelItem);
+}
+
 BOOL SpecialEncounter_RepelStepsEmpty(SpecialEncounter *speEnc)
 {
     if (!speEnc->repelSteps) {

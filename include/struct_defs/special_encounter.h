@@ -57,6 +57,7 @@ typedef struct SpecialEncounter {
     u8 roamerRouteIndexes[ROAMING_SLOT_MAX]; // Not a map ID. Actually index into RoamingPokemonRoutes in roaming_pokemon.c
     u8 swarmEnabled;
     u8 repelSteps;
+    u16 repelItem;
     u8 radarCharge;
     u8 fluteFactor;
 } SpecialEncounter;

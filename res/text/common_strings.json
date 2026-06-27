@@ -497,6 +497,13 @@
       "en_US": "Repel’s effect wore off..."
     },
     {
+      "id": "CommonStrings_Text_RepelsEffectWoreOffReuseIt",
+      "en_US": [
+        "Repel’s effect wore off...\n",
+        "Do you want to reuse it?"
+      ]
+    },
+    {
       "id": "CommonStrings_Text_ObtainedTheUndergroundTrap",
       "en_US": "Obtained the {STRVAR_1 8, 0, 0}!"
     },

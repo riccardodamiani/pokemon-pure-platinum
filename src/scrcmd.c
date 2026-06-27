@@ -220,6 +220,7 @@
 #include "unk_0209C194.h"
 #include "vars_flags.h"
 #include "wifi_list.h"
+#include "item.h"
 
 #include "constdata/const_020F8BE0.h"
 #include "res/text/bank/mystery_gift_phrase.h"
@@ -741,6 +742,8 @@ static BOOL ScriptContext_WaitForMovement(ScriptContext *ctx);
 static void sub_02040F28(FieldSystem *fieldSystem, SysTask *param1, MapObjectAnimCmd *param2);
 static void sub_02040F5C(SysTask *param0, void *param1);
 static u32 SaveData_GetRotomFormsInSave(SaveData *saveData);
+static BOOL ScrCmd_RepelReuseItem(ScriptContext *ctx);
+static BOOL ScrCmd_RepelReusable(ScriptContext *ctx);
 
 static const u8 sConditionTable[6][3] = {
     //   <     ==      >
@@ -2367,6 +2370,41 @@ static BOOL ScrCmd_RemoveObject(ScriptContext *ctx)
         GF_ASSERT(FALSE);
     } else {
         MapObject_SetFlagAndDeleteObject(mapObj);
+    }
+
+    return FALSE;
+}
+
+static BOOL ScrCmd_RepelReusable(ScriptContext *ctx){
+    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(ctx->fieldSystem->saveData);
+    u16 *destVar = ScriptContext_GetVarPointer(ctx);
+
+    u16 *repelItem = SpecialEncounter_GetRepelItem(speEnc);
+
+    if(*repelItem != ITEM_NONE){
+        *destVar = Bag_CanRemoveItem(SaveData_GetBag(ctx->fieldSystem->saveData), *repelItem, 1, HEAP_ID_FIELD2);
+        return FALSE;
+    }
+
+    *repelItem = FALSE;
+    return FALSE;
+}
+
+static BOOL ScrCmd_RepelReuseItem(ScriptContext *ctx){
+    SpecialEncounter *speEnc = SaveData_GetSpecialEncounters(ctx->fieldSystem->saveData);
+
+    u16 *repelItem = SpecialEncounter_GetRepelItem(speEnc);
+    u8* playerRepelStepCount = SpecialEncounter_GetRepelSteps(speEnc);
+    u32 itemStepCount = Item_LoadParam(*repelItem, ITEM_PARAM_EFFECT_PARAM, HEAP_ID_FIELD1);
+
+    if(*repelItem != ITEM_NONE){
+        Bag* bag = SaveData_GetBag(ctx->fieldSystem->saveData);
+        BOOL removed = Pocket_TryRemoveItem(bag->items, ITEM_POCKET_SIZE, *repelItem, 1, HEAP_ID_FIELD1);
+        if(removed){
+            Sound_PlayEffect(SEQ_SE_DP_CARD2);
+            *playerRepelStepCount = itemStepCount;
+            return TRUE;
+        }
     }
 
     return FALSE;

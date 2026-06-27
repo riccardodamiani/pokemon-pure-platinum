@@ -2459,6 +2459,15 @@
     .short SCRCMD_DUMMY1A7
     .endm
 
+    .macro RepelReuseItem
+    .short SCRCMD_REPELREUSEITEM
+    .endm
+
+    .macro RepelReusable destVar
+    .short SCRCMD_REPELREUSABLE
+    .short \destVar
+    .endm
+
     .macro ResetDaycarePersonalityAndStepCounter
     .short SCRCMD_RESETDAYCAREPERSONALITYANDSTEPCOUNTER
     .endm

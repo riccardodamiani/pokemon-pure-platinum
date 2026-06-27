@@ -431,6 +431,8 @@ ScriptCommand(SCRCMD_MOVEMONTOPARTYFROMDAYCARESLOT,                        ScrCm
 ScriptCommand(SCRCMD_DUMMY1A5,                                             ScrCmd_Dummy1A5)
 ScriptCommand(SCRCMD_DUMMY1A6,                                             ScrCmd_Dummy1A6)
 ScriptCommand(SCRCMD_DUMMY1A7,                                             ScrCmd_Dummy1A7)
+ScriptCommand(SCRCMD_REPELREUSEITEM,                                       ScrCmd_RepelReuseItem)
+ScriptCommand(SCRCMD_REPELREUSABLE,                                        ScrCmd_RepelReusable)
 ScriptCommand(SCRCMD_RESETDAYCAREPERSONALITYANDSTEPCOUNTER,                ScrCmd_ResetDaycarePersonalityAndStepCounter)
 ScriptCommand(SCRCMD_GIVEEGGFROMDAYCARE,                                   ScrCmd_GiveEggFromDaycare)
 ScriptCommand(SCRCMD_BUFFERDAYCAREPRICEBYSLOT,                             ScrCmd_BufferDaycarePriceBySlot)

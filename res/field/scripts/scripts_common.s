@@ -1444,8 +1444,24 @@ CommonScript_HatchEgg:
 CommonScript_RepelsEffectWoreOff:
     PlaySE SEQ_SE_CONFIRM
     LockAll
+    RepelReusable VAR_RESULT
+    GoToIfEq VAR_RESULT, TRUE, CommonScript_RepelReusableMenu
     Message CommonStrings_Text_RepelsEffectWoreOff
     WaitABPress
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_RepelReusableMenu:
+    Message CommonStrings_Text_RepelsEffectWoreOffReuseIt
+    ShowYesNoMenu VAR_RESULT
+    GoToIfEq VAR_RESULT, MENU_YES, CommonScript_RepelReuse
+    CloseMessage
+    ReleaseAll
+    End
+
+CommonScript_RepelReuse:
+    RepelReuseItem
     CloseMessage
     ReleaseAll
     End

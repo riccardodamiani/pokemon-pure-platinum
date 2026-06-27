@@ -636,10 +636,13 @@ static SpecialEncounter *GetSpecialEncounter(BagController *controller)
     return SaveData_GetSpecialEncounters(controller->bagCtx->saveData);
 }
 
-static void SetRepelSteps(BagController *controller, u8 stepCount)
+static void SetRepelSteps(BagController *controller, u8 stepCount, u16 item)
 {
     u8 *repelSteps = SpecialEncounter_GetRepelSteps(GetSpecialEncounter(controller));
     *repelSteps = stepCount;
+
+    u16 *repelItem = SpecialEncounter_GetRepelItem(GetSpecialEncounter(controller));
+    *repelItem = item;
 }
 
 static void SetFluteActive(BagController *controller, u8 flute)
@@ -2262,7 +2265,7 @@ static String *TryUseRepel(BagController *controller, u16 item)
     }
 
     u32 stepCount = Item_LoadParam(item, ITEM_PARAM_EFFECT_PARAM, HEAP_ID_BAG);
-    SetRepelSteps(controller, stepCount);
+    SetRepelSteps(controller, stepCount, item);
     controller->selectedItemCount = 1;
     Sound_PlayEffect(SEQ_SE_DP_CARD2);
 
