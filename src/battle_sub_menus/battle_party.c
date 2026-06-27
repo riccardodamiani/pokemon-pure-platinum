@@ -1617,7 +1617,7 @@ static BOOL CheckCanSwitchPokemon(BattleParty *battleParty)
         return FALSE;
     }
 
-    if (pokemon->curHP == 0) {
+    if (pokemon->curHP == 0 && battleParty->context->battlePartyMode != BATTLE_PARTY_MODE_SEND_TO_BOX) {
         String *string = MessageLoader_GetNewString(battleParty->messageLoader, BattleParty_Text_CantSwitchWithFaintedPokemon);
         StringTemplate_SetNickname(battleParty->stringTemplate, 0, Pokemon_GetBoxPokemon(pokemon->mon));
         StringTemplate_Format(battleParty->stringTemplate, battleParty->string, string);
@@ -1625,7 +1625,9 @@ static BOOL CheckCanSwitchPokemon(BattleParty *battleParty)
         return FALSE;
     }
 
-    if (battleParty->context->pokemonPartySlots[battleParty->context->selectedPartyIndex] == battleParty->context->playerPokemonPartySlot || battleParty->context->pokemonPartySlots[battleParty->context->selectedPartyIndex] == battleParty->context->partnerPokemonPartySlot) {
+    if ((battleParty->context->pokemonPartySlots[battleParty->context->selectedPartyIndex] == battleParty->context->playerPokemonPartySlot || 
+        battleParty->context->pokemonPartySlots[battleParty->context->selectedPartyIndex] == battleParty->context->partnerPokemonPartySlot) &&
+        battleParty->context->battlePartyMode != BATTLE_PARTY_MODE_SEND_TO_BOX) {
         String *string = MessageLoader_GetNewString(battleParty->messageLoader, BattleParty_Text_CantSwitchWithPokemonAlreadyInBattle);
         StringTemplate_SetNickname(battleParty->stringTemplate, 0, Pokemon_GetBoxPokemon(pokemon->mon));
         StringTemplate_Format(battleParty->stringTemplate, battleParty->string, string);
@@ -1633,7 +1635,8 @@ static BOOL CheckCanSwitchPokemon(BattleParty *battleParty)
         return FALSE;
     }
 
-    if (CheckSelectedPokemonIsEgg(battleParty) == TRUE) {
+    if (CheckSelectedPokemonIsEgg(battleParty) == TRUE &&
+        battleParty->context->battlePartyMode != BATTLE_PARTY_MODE_SEND_TO_BOX) {
         MessageLoader_GetString(battleParty->messageLoader, BattleParty_Text_CantSwitchWithEgg, battleParty->string);
         return FALSE;
     }

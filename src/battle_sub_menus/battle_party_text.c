@@ -1896,6 +1896,8 @@ static void RenderPartyPokemonScreen(BattleParty *battleParty)
 
     if (battleParty->context->battlePartyMode == BATTLE_PARTY_MODE_USE_ITEM) {
         PrintSelectOptionText(battleParty, BattleParty_Text_UseOnWhichPokemon);
+    } else if (battleParty->context->battlePartyMode == BATTLE_PARTY_MODE_SEND_TO_BOX) {
+        PrintSelectOptionText(battleParty, BattleParty_Text_ChooseAPokemonToTransfer);
     } else {
         PrintSelectOptionText(battleParty, BattleParty_Text_ChooseAPokemon);
     }

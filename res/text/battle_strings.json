@@ -7967,6 +7967,14 @@
       ]
     },
     {
+      "id": "BattleStrings_Text_PartyFullTransferPokemonToBox",
+      "en_US": [
+        "Your party is full.\r",
+        "Do you want to tranfer\n",
+        "{STRVAR_1 1, 0, 0} to the PC?"
+      ]
+    },
+    {
       "id": "BattleStrings_Text_PokemonWantsToLearnMove",
       "en_US": [
         "{STRVAR_1 1, 0, 0} wants to learn the\n",

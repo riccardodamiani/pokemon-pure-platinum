@@ -126,6 +126,7 @@ enum BattlePartyMode {
     BATTLE_PARTY_MODE_SELECT_POKEMON_NO_CANCEL,
     BATTLE_PARTY_MODE_USE_ITEM,
     BATTLE_PARTY_MODE_LEARN_MOVE,
+    BATTLE_PARTY_MODE_SEND_TO_BOX,
 };
 
 typedef struct BattlePartyPokemonMove {

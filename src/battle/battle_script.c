@@ -40,6 +40,7 @@
 #include "battle/ov16_02268520.h"
 #include "battle_anim/ov12_02235E94.h"
 #include "battle_anim/struct_ov12_02237728.h"
+#include "battle_sub_menus/battle_party.h"
 
 #include "bg_window.h"
 #include "char_transfer.h"
@@ -2579,6 +2580,9 @@ static BOOL BtlCmd_StartCatchMonTask(BattleSystem *battleSys, BattleContext *bat
     battleCtx->taskData->seqNum = 0;
     battleCtx->taskData->flag = safariCapture;
     battleCtx->taskData->ball = battleCtx->msgItemTemp;
+    for (int i = 0; i < 8; i++) {
+        battleCtx->taskData->tmpData[i] = 0;
+    }
 
     SysTask_Start(BattleScript_CatchMonTask, battleCtx->taskData, NULL);
 
@@ -10335,6 +10339,13 @@ enum CatchMonTaskState {
     SEQ_CATCH_MON_DIDNT_GIVE_NICKNAME,
     SEQ_CATCH_MON_GAVE_NICKNAME,
     SEQ_CATCH_MON_WAIT_PRINT_TRANSFERRED_TO_BOX,
+    SEQ_CATCH_MON_PARTY_FULL_YES_NO,
+    SEQ_CATCH_MON_PARTY_FULL_YES_NO_INPUT,
+    SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON,
+    SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON_INPUT,
+    SEQ_CATCH_MON_PARTY_FULL_DO_SWAP,
+    SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME,
+    SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME_INPUT,
     SEQ_CATCH_MON_PRINT_TRAINER_BLOCKED_BALL,
     SEQ_CATCH_MON_PRINT_DONT_BE_A_THIEF,
     SEQ_CATCH_MON_DONE_TRAINER_BLOCKED_BALL,
@@ -10349,7 +10360,9 @@ enum CatchMonTaskDataIndex {
     CATCH_MON_MSG_INDEX = 0,
     CATCH_MON_DELAY,
     CATCH_MON_TOTAL_SHAKES,
-    CATCH_MON_REMAINING_SHAKES
+    CATCH_MON_REMAINING_SHAKES,
+    CATCH_MON_ORIGINAL_SEQ,
+    CATCH_MON_CHOSEN_PARTY_SLOT
 };
 
 static void BattleScript_CatchMonTask(SysTask *task, void *inData)
@@ -10622,9 +10635,25 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
         break;
     case SEQ_CATCH_MON_WAIT_FADE_FOR_ASK_NICKNAME:
         if (PaletteData_GetSelectedBuffersMask(paletteData) == 0) {
-            data->seqNum = SEQ_CATCH_MON_PRINT_YES_NO_GIVE_NICKNAME;
-            sub_02015738(ov16_0223E220(data->battleSys), 0);
-            PaletteData_SetAutoTransparent(paletteData, 1);
+            if (BattleSystem_GetPartyCount(data->battleSys, 0) >= MAX_PARTY_SIZE) {
+                // Party full: do all common setup here while the battle UI is intact,
+                // then enter the party-full flow (yes/no → nickname at the end).
+                mon = BattleSystem_GetPartyPokemon(data->battleSys, battler, data->battleCtx->selectedPartySlot[battler]);
+                BattleSystem_DexFlagCaught(data->battleSys, battler);
+                BattleSystem_SetPokemonCatchData(data->battleSys, data->battleCtx, mon);
+                BattleSystem_EnqueuePokemonHistory(data->battleSys, mon);
+                BattleSystem_InitCaptureAttempt(data->battleSys, mon);
+                BattleController_EmitIncrementRecord(data->battleSys, 0, 0, RECORD_CAUGHT_POKEMON);
+                data->tmpData[CATCH_MON_ORIGINAL_SEQ] = SEQ_CATCH_MON_PARTY_FULL_YES_NO;
+                data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT] = -1;  // -1 = box path
+                sub_02015738(ov16_0223E220(data->battleSys), 0);
+                PaletteData_SetAutoTransparent(paletteData, 1);
+                data->seqNum = SEQ_CATCH_MON_PARTY_FULL_YES_NO;
+            } else {
+                data->seqNum = SEQ_CATCH_MON_PRINT_YES_NO_GIVE_NICKNAME;
+                sub_02015738(ov16_0223E220(data->battleSys), 0);
+                PaletteData_SetAutoTransparent(paletteData, 1);
+            }
         }
         break;
     case SEQ_CATCH_MON_PRINT_YES_NO_GIVE_NICKNAME:
@@ -10660,10 +10689,13 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
                 BattleSystem_GetOptions(data->battleSys));
             data->tmpPtr[1] = namingScreenArgs;
 
-            if (BattleSystem_GetPartyCount(data->battleSys, 0) < MAX_PARTY_SIZE) {
-                namingScreenArgs->battleMsgID = 0;
-            } else {
+            // Show "transferred to box" message inside the naming screen only for the box
+            // path (CHOSEN_PARTY_SLOT < 0). Swap path and non-full path get battleMsgID = 0.
+            if (data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT] < 0
+                && BattleSystem_GetPartyCount(data->battleSys, 0) >= MAX_PARTY_SIZE) {
                 namingScreenArgs->battleMsgID = BattleStrings_Text_PokemonWasTransferredToBoxInSomeonesPC + BattleSystem_GetMetBebe(data->battleSys);
+            } else {
+                namingScreenArgs->battleMsgID = 0;
             }
 
             namingScreenArgs->monForm = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
@@ -10710,17 +10742,51 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
     case SEQ_CATCH_MON_DIDNT_GIVE_NICKNAME:
     case SEQ_CATCH_MON_GAVE_NICKNAME:
         if (PaletteData_GetSelectedBuffersMask(paletteData) == 0) {
-            BattleMessage msg;
-            Party *party = BattleSystem_GetParty(data->battleSys, 0);
             mon = BattleSystem_GetPartyPokemon(data->battleSys, battler, data->battleCtx->selectedPartySlot[battler]);
 
-            BattleSystem_DexFlagCaught(data->battleSys, battler);
-            BattleSystem_SetPokemonCatchData(data->battleSys, data->battleCtx, mon);
-            BattleSystem_EnqueuePokemonHistory(data->battleSys, mon);
-            BattleSystem_InitCaptureAttempt(data->battleSys, mon);
-            BattleController_EmitIncrementRecord(data->battleSys, 0, 0, RECORD_CAUGHT_POKEMON);
+            if (data->tmpData[CATCH_MON_ORIGINAL_SEQ] == SEQ_CATCH_MON_PARTY_FULL_YES_NO) {
+                // Party-full path: common setup was done at WAIT_FADE_FOR_ASK_NICKNAME.
+                // Place the (possibly named) mon in box or in the chosen party slot.
+                int chosenSlot = data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT];
 
-            if (Party_AddPokemon(party, mon) == TRUE) {
+                if (chosenSlot < 0) {
+                    // Box path: PP restore + store in box. Naming screen showed the message.
+                    PCBoxes *pcBoxes = BattleSystem_GetPCBoxes(data->battleSys);
+                    u32 firstEmptyBoxID = PCBoxes_FirstEmptyBox(pcBoxes);
+                    int i;
+                    int pp;
+
+                    PCBoxes_SetCurrentBox(pcBoxes, firstEmptyBoxID);
+
+                    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+                        pp = Pokemon_GetValue(mon, MON_DATA_MOVE1_MAX_PP + i, NULL);
+                        Pokemon_SetValue(mon, MON_DATA_MOVE1_PP + i, &pp);
+                    }
+
+                    if (Pokemon_SetGiratinaFormByHeldItem(mon) != -1) {
+                        BattleSystem_DexFlagCaught(data->battleSys, battler);
+                    }
+
+                    PCBoxes_TryStoreBoxMonInBox(pcBoxes, firstEmptyBoxID, Pokemon_GetBoxPokemon(mon));
+                } else {
+                    // Swap path: overwrite chosen slot with the named caught mon.
+                    Party *party = BattleSystem_GetParty(data->battleSys, 0);
+                    Party_AddPokemonBySlotIndex(party, chosenSlot, mon);
+                }
+
+                data->seqNum = SEQ_CATCH_MON_DONE;
+            } else {
+                // Normal path (party not full): do common setup and add to party.
+                Party *party = BattleSystem_GetParty(data->battleSys, 0);
+
+                BattleSystem_DexFlagCaught(data->battleSys, battler);
+                BattleSystem_SetPokemonCatchData(data->battleSys, data->battleCtx, mon);
+                BattleSystem_EnqueuePokemonHistory(data->battleSys, mon);
+                BattleSystem_InitCaptureAttempt(data->battleSys, mon);
+                BattleController_EmitIncrementRecord(data->battleSys, 0, 0, RECORD_CAUGHT_POKEMON);
+
+                Party_AddPokemon(party, mon);
+
                 if (data->seqNum == SEQ_CATCH_MON_DIDNT_GIVE_NICKNAME) {
                     sub_02015738(ov16_0223E220(data->battleSys), 1);
                     PaletteData_StartFade(paletteData, PLTTBUF_MAIN_BG_F | PLTTBUF_SUB_BG_F | PLTTBUF_MAIN_OBJ_F | PLTTBUF_SUB_OBJ_F, 0xFFFF, 1, 0, 16, 0);
@@ -10728,27 +10794,144 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
                 }
 
                 data->seqNum = SEQ_CATCH_MON_DONE;
+            }
+        }
+        break;
+    case SEQ_CATCH_MON_WAIT_PRINT_TRANSFERRED_TO_BOX:
+        if (Text_IsPrinterActive(data->tmpData[CATCH_MON_MSG_INDEX]) == FALSE) {
+            if (--data->tmpData[CATCH_MON_DELAY] == 0) {
+                if (data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT] >= 0) {
+                    // Swap path: party mon was sent to box; now ask about nickname.
+                    data->seqNum = SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME;
+                } else {
+                    // Box+no-nickname path: fade out and finish.
+                    sub_02015738(ov16_0223E220(data->battleSys), 1);
+                    PaletteData_StartFade(paletteData, PLTTBUF_MAIN_BG_F | PLTTBUF_SUB_BG_F | PLTTBUF_MAIN_OBJ_F | PLTTBUF_SUB_OBJ_F, 0xFFFF, 1, 0, 16, 0);
+                    PokemonSpriteManager_StartFadeAll(monSpriteMan, 0, 16, 0, 0);
+                    data->seqNum = SEQ_CATCH_MON_DONE;
+                }
+            }
+        }
+        break;
+    case SEQ_CATCH_MON_PARTY_FULL_YES_NO: {
+        int v15 = battler | (data->battleCtx->selectedPartySlot[battler]);
+        BattleController_EmitShowYesNoMenu(data->battleSys, data->battleCtx, 0, BattleStrings_Text_PartyFullTransferPokemonToBox, 5, NULL, v15);
+        data->seqNum = SEQ_CATCH_MON_PARTY_FULL_YES_NO_INPUT;
+        break;
+    }
+    case SEQ_CATCH_MON_PARTY_FULL_YES_NO_INPUT: {
+        u8 input = BattleContext_IOBufferVal(data->battleCtx, 0);
+        if (input) {
+            if (input == PLAYER_INPUT_CANCEL) {
+                data->seqNum = SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON;
             } else {
-                PCBoxes *pcBoxes = BattleSystem_GetPCBoxes(data->battleSys);
-                u32 currentBoxID = PCBoxes_GetCurrentBoxID(pcBoxes);
-                u32 firstEmptyBoxID = PCBoxes_FirstEmptyBox(pcBoxes);
-                int i;
-                int pp;
+                // YES: send caught mon to box. Ask about nickname first.
+                // CHOSEN_PARTY_SLOT is already -1 (set in WAIT_FADE).
+                data->seqNum = SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME;
+            }
+        }
+        break;
+    }
+    case SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON:
+        BattleController_EmitShowPartyMenu(data->battleSys, data->battleCtx, BATTLER_US, BATTLE_PARTY_MODE_SEND_TO_BOX, 0, 6);
+        data->seqNum = SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON_INPUT;
+        break;
+    case SEQ_CATCH_MON_PARTY_FULL_CHOOSE_MON_INPUT: {
+        u8 input = BattleContext_IOBufferVal(data->battleCtx, 0);
+        if (input) {
+            if (input == PLAYER_INPUT_CANCEL) {
+                data->seqNum = SEQ_CATCH_MON_PARTY_FULL_YES_NO;
+            } else {
+                data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT] = input - 1;
+                data->seqNum = SEQ_CATCH_MON_PARTY_FULL_DO_SWAP;
+            }
+        }
+        break;
+    }
+    case SEQ_CATCH_MON_PARTY_FULL_DO_SWAP: {
+        Party *party = BattleSystem_GetParty(data->battleSys, 0);
+        int chosenSlot = data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT];
+        Pokemon *swappedMon = Party_GetPokemonBySlotIndex(party, chosenSlot);
+        PCBoxes *pcBoxes = BattleSystem_GetPCBoxes(data->battleSys);
+        u32 currentBoxID = PCBoxes_GetCurrentBoxID(pcBoxes);
+        u32 firstEmptyBoxID = PCBoxes_FirstEmptyBox(pcBoxes);
+        BattleMessage msg;
+        int i;
+        int pp;
 
-                PCBoxes_SetCurrentBox(pcBoxes, firstEmptyBoxID);
+        PCBoxes_SetCurrentBox(pcBoxes, firstEmptyBoxID);
 
-                for (i = 0; i < LEARNED_MOVES_MAX; i++) {
-                    pp = Pokemon_GetValue(mon, MON_DATA_MOVE1_MAX_PP + i, NULL);
-                    Pokemon_SetValue(mon, MON_DATA_MOVE1_PP + i, &pp);
-                }
+        for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+            pp = Pokemon_GetValue(swappedMon, MON_DATA_MOVE1_MAX_PP + i, NULL);
+            Pokemon_SetValue(swappedMon, MON_DATA_MOVE1_PP + i, &pp);
+        }
 
-                if (Pokemon_SetGiratinaFormByHeldItem(mon) != -1) {
-                    BattleSystem_DexFlagCaught(data->battleSys, battler);
-                }
+        if (Pokemon_SetGiratinaFormByHeldItem(swappedMon) != -1) {
+            BattleSystem_DexFlagCaught(data->battleSys, battler);
+        }
 
-                PCBoxes_TryStoreBoxMonInBox(pcBoxes, firstEmptyBoxID, Pokemon_GetBoxPokemon(mon));
+        PCBoxes_TryStoreBoxMonInBox(pcBoxes, firstEmptyBoxID, Pokemon_GetBoxPokemon(swappedMon));
 
-                if (data->seqNum == SEQ_CATCH_MON_DIDNT_GIVE_NICKNAME) {
+        // Build and print the message while swappedMon is still at chosenSlot,
+        // so BattleSystem_GetPartyPokemon resolves to the correct (swapped) pokemon.
+        if (currentBoxID == firstEmptyBoxID) {
+            msg.id = BattleStrings_Text_PokemonWasTransferredToBoxInSomeonesPC + BattleSystem_GetMetBebe(data->battleSys);
+            msg.tags = TAG_NICKNAME_BOX | 0x80;
+            msg.params[0] = BATTLER_US | (chosenSlot << 8);
+            msg.params[1] = currentBoxID;
+        } else {
+            msg.id = BattleStrings_Text_BoxInSomeonesPCIsFullPokemonWasTransferredToOtherBoxInstead + BattleSystem_GetMetBebe(data->battleSys);
+            msg.tags = TAG_NICKNAME_BOX_BOX | 0x80;
+            msg.params[0] = BATTLER_US | (chosenSlot << 8);
+            msg.params[1] = currentBoxID;
+            msg.params[2] = firstEmptyBoxID;
+        }
+
+        data->tmpData[CATCH_MON_MSG_INDEX] = BattleMessage_Print(data->battleSys, msgLoader, &msg, BattleSystem_GetTextSpeed(data->battleSys));
+        data->tmpData[CATCH_MON_DELAY] = 30;
+
+        // Caught mon will be placed in party[chosenSlot] later, after nickname is asked.
+        // CHOSEN_PARTY_SLOT is already set (input - 1) by CHOOSE_MON_INPUT.
+        data->seqNum = SEQ_CATCH_MON_WAIT_PRINT_TRANSFERRED_TO_BOX;
+        break;
+    }
+    case SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME: {
+        int v15 = battler | (data->battleCtx->selectedPartySlot[battler]);
+        BattleController_EmitShowYesNoMenu(data->battleSys, data->battleCtx, 0, BattleStrings_Text_GiveANicknameToTheCaughtPokemonYesNo, 5, NULL, v15);
+        data->seqNum = SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME_INPUT;
+        break;
+    }
+    case SEQ_CATCH_MON_PARTY_FULL_ASK_NICKNAME_INPUT: {
+        u8 input = BattleContext_IOBufferVal(data->battleCtx, 0);
+        if (input) {
+            int chosenSlot = data->tmpData[CATCH_MON_CHOSEN_PARTY_SLOT];
+
+            if (input == PLAYER_INPUT_CANCEL) {
+                // No nickname: finalise immediately based on path.
+                mon = BattleSystem_GetPartyPokemon(data->battleSys, battler, data->battleCtx->selectedPartySlot[battler]);
+
+                if (chosenSlot < 0) {
+                    // Box path: PP restore + store in box + print message + fade.
+                    PCBoxes *pcBoxes = BattleSystem_GetPCBoxes(data->battleSys);
+                    u32 currentBoxID = PCBoxes_GetCurrentBoxID(pcBoxes);
+                    u32 firstEmptyBoxID = PCBoxes_FirstEmptyBox(pcBoxes);
+                    BattleMessage msg;
+                    int i;
+                    int pp;
+
+                    PCBoxes_SetCurrentBox(pcBoxes, firstEmptyBoxID);
+
+                    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+                        pp = Pokemon_GetValue(mon, MON_DATA_MOVE1_MAX_PP + i, NULL);
+                        Pokemon_SetValue(mon, MON_DATA_MOVE1_PP + i, &pp);
+                    }
+
+                    if (Pokemon_SetGiratinaFormByHeldItem(mon) != -1) {
+                        BattleSystem_DexFlagCaught(data->battleSys, battler);
+                    }
+
+                    PCBoxes_TryStoreBoxMonInBox(pcBoxes, firstEmptyBoxID, Pokemon_GetBoxPokemon(mon));
+
                     if (currentBoxID == firstEmptyBoxID) {
                         msg.id = BattleStrings_Text_PokemonWasTransferredToBoxInSomeonesPC + BattleSystem_GetMetBebe(data->battleSys);
                         msg.tags = TAG_NICKNAME_BOX | 0x80;
@@ -10766,22 +10949,25 @@ static void BattleScript_CatchMonTask(SysTask *task, void *inData)
                     data->tmpData[CATCH_MON_DELAY] = 30;
                     data->seqNum = SEQ_CATCH_MON_WAIT_PRINT_TRANSFERRED_TO_BOX;
                 } else {
+                    // Swap path: place unnamed caught mon in party[chosenSlot] + fade.
+                    Party *party = BattleSystem_GetParty(data->battleSys, 0);
+                    Party_AddPokemonBySlotIndex(party, chosenSlot, mon);
+
+                    sub_02015738(ov16_0223E220(data->battleSys), 1);
+                    PaletteData_StartFade(paletteData, PLTTBUF_MAIN_BG_F | PLTTBUF_SUB_BG_F | PLTTBUF_MAIN_OBJ_F | PLTTBUF_SUB_OBJ_F, 0xFFFF, 1, 0, 16, 0);
+                    PokemonSpriteManager_StartFadeAll(monSpriteMan, 0, 16, 0, 0);
                     data->seqNum = SEQ_CATCH_MON_DONE;
                 }
-            }
-        }
-        break;
-    case SEQ_CATCH_MON_WAIT_PRINT_TRANSFERRED_TO_BOX:
-        if (Text_IsPrinterActive(data->tmpData[CATCH_MON_MSG_INDEX]) == FALSE) {
-            if (--data->tmpData[CATCH_MON_DELAY] == 0) {
+            } else {
+                // YES: naming screen. GAVE_NICKNAME will finalise (box or swap) afterwards.
                 sub_02015738(ov16_0223E220(data->battleSys), 1);
                 PaletteData_StartFade(paletteData, PLTTBUF_MAIN_BG_F | PLTTBUF_SUB_BG_F | PLTTBUF_MAIN_OBJ_F | PLTTBUF_SUB_OBJ_F, 0xFFFF, 1, 0, 16, 0);
                 PokemonSpriteManager_StartFadeAll(monSpriteMan, 0, 16, 0, 0);
-
-                data->seqNum = SEQ_CATCH_MON_DONE;
+                data->seqNum = SEQ_CATCH_MON_START_NAMING_SCREEN;
             }
         }
         break;
+    }
     case SEQ_CATCH_MON_PRINT_TRAINER_BLOCKED_BALL:
         if (ov12_022368D0(data->ballRotation, 2) == FALSE) {
             BattleMessage msg;

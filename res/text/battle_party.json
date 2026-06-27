@@ -30,6 +30,10 @@
       "en_US": "Choose a Pokémon."
     },
     {
+      "id": "BattleParty_Text_ChooseAPokemonToTransfer",
+      "en_US": "Choose a Pokémon to transfer."
+    },
+    {
       "id": "BattleParty_Text_UseOnWhichPokemon",
       "en_US": "Use on which Pokémon?"
     },
