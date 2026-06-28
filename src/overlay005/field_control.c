@@ -201,6 +201,10 @@ BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
         if (Field_ProcessStep(fieldSystem) == TRUE) {
             return TRUE;
         }
+
+        if (input->endMovement && Field_CheckWildEncounter(fieldSystem)) {
+            return TRUE;
+        }
     }
 
     if (input->dummy5 == FALSE) {
@@ -224,9 +228,6 @@ BOOL FieldInput_Process(const FieldInput *input, FieldSystem *fieldSystem)
     }
 
     if (input->endMovement) {
-        if (Field_CheckWildEncounter(fieldSystem)) {
-            return TRUE;
-        }
 
         if (Field_CheckSign(fieldSystem) == TRUE) {
             return TRUE;
