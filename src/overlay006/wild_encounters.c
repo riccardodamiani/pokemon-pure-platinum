@@ -766,7 +766,7 @@ static BOOL ShouldGetRandomEncounter(FieldSystem *fieldSystem, const u32 encount
     if (TileBehavior_IsVeryTallGrass(tileBehavior)) {
         flatEncounterRate += 30;
     } else if (PlayerAvatar_GetPlayerState(fieldSystem->playerAvatar) == PLAYER_STATE_CYCLING) {
-        flatEncounterRate += 30;
+        flatEncounterRate -= 10;
     }
 
     flatEncounterRate = SpecialDates_ModifyEncounterRate(flatEncounterRate, FieldSystem_HasPenalty(fieldSystem));
