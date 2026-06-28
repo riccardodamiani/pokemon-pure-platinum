@@ -39,3 +39,4 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Improve menu navigation | In-Progress |
 | Re-use prompt when repel wore off | Testing |
 | Fix original game bugs & glitches | Concept |
+| Adjust encounter rates | In Progress |

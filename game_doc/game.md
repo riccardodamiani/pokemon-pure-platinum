@@ -16,3 +16,6 @@ This documentation was made to highlight the mechanics and features that were ad
 - Display only the field moves that can be used at the current moment. [more](ui.md#hide-currently-unusable-field-moves)
 - You can teach all moves the pokemon can learn by level up from the pokemon context menu (no Move Reminder required). [more](ui.md#move-reminder)
 - Auto repel use prompt when it's effect wears off. [more](ui.md#auto-repel)
+- Adjusted some encounter rates. [more](encounters.md#changed-encounter-rates)
+- Encounter can happen only on full steps. [more](encounters.md#encounter-mechanics)
+- Reduced encounters rate while biking. [more](encounters.md#bicycle-encounter-change)
