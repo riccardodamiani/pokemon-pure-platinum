@@ -211,21 +211,6 @@
             "y": 0
         },
         {
-            "id": "LOCALID_STRENGTH_BOULDER_4",
-            "graphics_id": "OBJ_EVENT_GFX_STRENGTH_BOULDER",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_4",
-            "script": 10002,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 9,
-            "z": 16,
-            "y": 0
-        },
-        {
             "id": "LOCALID_STRENGTH_BOULDER_5",
             "graphics_id": "OBJ_EVENT_GFX_STRENGTH_BOULDER",
             "movement_type": "MOVEMENT_TYPE_NONE",
@@ -238,21 +223,6 @@
             "movement_range_z": 0,
             "x": 14,
             "z": 16,
-            "y": 0
-        },
-        {
-            "id": "LOCALID_ROCK_SMASH_1",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_6",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 9,
-            "z": 36,
             "y": 0
         },
         {
@@ -421,51 +391,6 @@
             "y": 0
         },
         {
-            "id": "LOCALID_ROCK_SMASH_2",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_18",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 15,
-            "z": 16,
-            "y": 0
-        },
-        {
-            "id": "LOCALID_ROCK_SMASH_3",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_19",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 16,
-            "z": 19,
-            "y": 0
-        },
-        {
-            "id": "LOCALID_ROCK_SMASH_4",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_20",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 17,
-            "z": 19,
-            "y": 0
-        },
-        {
             "id": "LOCALID_ROCK_SMASH_5",
             "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
             "movement_type": "MOVEMENT_TYPE_NONE",
@@ -493,21 +418,6 @@
             "movement_range_z": 0,
             "x": 41,
             "z": 31,
-            "y": 0
-        },
-        {
-            "id": "LOCALID_ROCK_SMASH_7",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_23",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 9,
-            "z": 10,
             "y": 0
         }
     ],
