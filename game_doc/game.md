@@ -20,3 +20,4 @@ This documentation was made to highlight the mechanics and features that were ad
 - Encounter can happen only on full steps. [more](encounters.md#encounter-mechanics)
 - Reduced encounters rate while biking. [more](encounters.md#bicycle-encounter-change)
 - Removed a lot of unnecessary obstacles. [more](other.md#map-obstacles-changes)
+- Changed escape chances. [more](other.md#changed-battle-escape-formula)

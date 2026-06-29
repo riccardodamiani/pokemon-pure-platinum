@@ -3283,7 +3283,7 @@ BOOL Battler_CanEscape(BattleSystem *battleSys, BattleContext *battleCtx, int ba
         result = TRUE;
     } else {
         if (battleCtx->battleMons[battler].speed < battleCtx->battleMons[battler ^ 1].speed) {
-            u8 escape = battleCtx->battleMons[battler].speed * 128 / battleCtx->battleMons[battler ^ 1].speed + battleCtx->runAttempts * 30;
+            u32 escape = ((u32)battleCtx->battleMons[battler].speed * 255 / battleCtx->battleMons[battler ^ 1].speed) + 15 * battleCtx->runAttempts;
 
             if (escape > BattleSystem_RandNext(battleSys) % 256) {
                 result = TRUE;
