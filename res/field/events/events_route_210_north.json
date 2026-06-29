@@ -239,21 +239,6 @@
             "y": 0
         },
         {
-            "id": "LOCALID_ROCK_SMASH_1",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_2",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 497,
-            "z": 540,
-            "y": 0
-        },
-        {
             "id": "LOCALID_CUT_TREE_1",
             "graphics_id": "OBJ_EVENT_GFX_CUT_TREE",
             "movement_type": "MOVEMENT_TYPE_NONE",
@@ -379,21 +364,6 @@
             "movement_range_z": 0,
             "x": 495,
             "z": 520,
-            "y": 0
-        },
-        {
-            "id": "LOCALID_ROCK_SMASH_2",
-            "graphics_id": "OBJ_EVENT_GFX_ROCK_SMASH",
-            "movement_type": "MOVEMENT_TYPE_NONE",
-            "trainer_type": "TRAINER_TYPE_NONE",
-            "hidden_flag": "FLAG_HIDE_OBSTACLE_3",
-            "script": 10001,
-            "initial_dir": 0,
-            "data": [],
-            "movement_range_x": 0,
-            "movement_range_z": 0,
-            "x": 498,
-            "z": 541,
             "y": 0
         },
         {
