@@ -15,8 +15,8 @@ A Pokémon will begin to disobey if its level is at least two levels higher than
 
 The table below shows the chance of a Pokémon disobeying based on how far it exceeds the current level cap.
 | Overlevel | Disobey chances |
-| :--- | :---: |
-| Level cap | 0% |
+| :---: | :---: |
+| Leader Max Level | 0% |
 | +1 | 0% |
 | +2 | 20% |
 | +3 | 40% |
