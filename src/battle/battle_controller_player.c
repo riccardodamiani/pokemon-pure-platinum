@@ -2126,36 +2126,28 @@ static int BattleControllerPlayer_CheckObedience(BattleSystem *battleSys, Battle
         && BattleSystem_GetBattlerType(battleSys, battleCtx->attacker) == BATTLER_TYPE_PLAYER_SIDE_SLOT_2) {
         return OBEY_CHECK_SUCCESS;
     }
-    if (BattleSystem_TrainerIsOT(battleSys, battleCtx) == TRUE) {
-        return OBEY_CHECK_SUCCESS;
-    }
     if (Battler_CanPickCommand(battleCtx, battleCtx->attacker) == FALSE) {
         return OBEY_CHECK_SUCCESS;
     }
     if (battleCtx->moveCur == MOVE_BIDE && (battleCtx->battleStatusMask & SYSCTL_LAST_OF_MULTI_TURN)) {
         return OBEY_CHECK_SUCCESS;
     }
-    if (TrainerInfo_BadgeCount(trInfo) >= 8) {
+
+    if(TrainerInfo_IsMainStoryCleared(trInfo) == TRUE) {
         return OBEY_CHECK_SUCCESS;
     }
-
-    maxLevel = 10;
-    if (TrainerInfo_BadgeCount(trInfo) >= 2) {
-        maxLevel = 30;
-    }
-    if (TrainerInfo_BadgeCount(trInfo) >= 4) {
-        maxLevel = 50;
-    }
-    if (TrainerInfo_BadgeCount(trInfo) >= 6) {
-        maxLevel = 70;
-    }
+    maxLevel = BattleMonObeyTable[TrainerInfo_BadgeCount(trInfo)];
 
     if (ATTACKING_MON.level <= maxLevel) {
         return OBEY_CHECK_SUCCESS;
     }
 
-    rand1 = ((BattleSystem_RandNext(battleSys) & 0xFF) * (ATTACKING_MON.level + maxLevel)) >> 8;
-    if (rand1 < maxLevel) {
+    u8 disobedienceLevel = ATTACKING_MON.level - BattleMonObeyTable[TrainerInfo_BadgeCount(trInfo)];
+
+    u16 rand = BattleSystem_RandNext(battleSys) % 100;
+    u16 disobedienceThreshold = disobedienceLevel * 25; //25% for each over level
+
+    if (rand > disobedienceThreshold) {
         return OBEY_CHECK_SUCCESS;
     }
 
@@ -2163,24 +2155,27 @@ static int BattleControllerPlayer_CheckObedience(BattleSystem *battleSys, Battle
         ATTACKING_MON.statusVolatile &= ~VOLATILE_CONDITION_RAGE;
     }
 
-    if ((ATTACKING_MON.status & MON_CONDITION_SLEEP)
-        && (battleCtx->moveCur == MOVE_SNORE || battleCtx->moveCur == MOVE_SLEEP_TALK)) {
-        *nextSeq = subscript_disobey_while_asleep;
-        return OBEY_CHECK_DO_NOTHING;
-    }
+    rand = BattleSystem_RandNext(battleSys) % 4;
 
-    rand1 = ((BattleSystem_RandNext(battleSys) & 0xFF) * (ATTACKING_MON.level + maxLevel)) >> 8;
-    if (rand1 < maxLevel) {
-        rand1 = BattleSystem_CheckInvalidMoves(battleSys, battleCtx, battleCtx->attacker, FlagIndex(ATTACKER_MOVE_SLOT), CHECK_INVALID_ALL);
+    switch(rand){
+    case 0:
+        if ((ATTACKING_MON.status & MON_CONDITION_SLEEP)
+            && (battleCtx->moveCur == MOVE_SNORE || battleCtx->moveCur == MOVE_SLEEP_TALK)) {
+            *nextSeq = subscript_disobey_while_asleep;
+            return OBEY_CHECK_DO_NOTHING;
+        }
+        break;
+    case 1:
+    {
+        u16 invalidMoves = BattleSystem_CheckInvalidMoves(battleSys, battleCtx, battleCtx->attacker, FlagIndex(ATTACKER_MOVE_SLOT), CHECK_INVALID_ALL);
 
-        if (rand1 == STRUGGLING_ALL) {
+        if (invalidMoves == STRUGGLING_ALL) {
             *nextSeq = subscript_disobey_do_nothing;
             return OBEY_CHECK_DO_NOTHING;
         }
-
         do {
             rand2 = BattleSystem_RandNext(battleSys) & 3;
-        } while (rand1 & FlagIndex(rand2));
+        } while (invalidMoves & FlagIndex(rand2));
 
         ATTACKER_MOVE_SLOT = rand2;
         battleCtx->moveTemp = ATTACKING_MON.moves[ATTACKER_MOVE_SLOT];
@@ -2197,19 +2192,20 @@ static int BattleControllerPlayer_CheckObedience(BattleSystem *battleSys, Battle
         battleCtx->multiHitCheckFlags |= SYSCTL_SKIP_OBEDIENCE_CHECK;
         return OBEY_CHECK_DIFFERENT_MOVE;
     }
+        break;
 
-    maxLevel = ATTACKING_MON.level - maxLevel;
-    rand1 = BattleSystem_RandNext(battleSys) & 0xFF;
-    if ((rand1 < maxLevel && (ATTACKING_MON.status & MON_CONDITION_ANY) == FALSE)
-        && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_VITAL_SPIRIT
-        && Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_INSOMNIA
-        && (battleCtx->fieldConditionsMask & FIELD_CONDITION_UPROAR) == FALSE) {
-        *nextSeq = subscript_disobey_sleep;
-        return OBEY_CHECK_DO_NOTHING;
-    }
+    case 2:
+        if ((ATTACKING_MON.status & MON_CONDITION_ANY) == FALSE &&
+            Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_VITAL_SPIRIT &&
+            Battler_Ability(battleCtx, battleCtx->attacker) != ABILITY_INSOMNIA &&
+            (battleCtx->fieldConditionsMask & FIELD_CONDITION_UPROAR) == FALSE) {
+            
+            *nextSeq = subscript_disobey_sleep;
+            return OBEY_CHECK_DO_NOTHING;
+        }
+        break;
 
-    rand1 -= maxLevel;
-    if (rand1 < maxLevel) {
+    case 3:
         battleCtx->defender = battleCtx->attacker;
         battleCtx->msgBattlerTemp = battleCtx->defender;
 

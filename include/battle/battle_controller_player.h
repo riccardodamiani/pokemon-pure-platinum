@@ -91,6 +91,18 @@ enum BattleControllerPlayerInput {
     PLAYER_INPUT_CANCEL = 0xFF,
 };
 
+static const u8 BattleMonObeyTable[9] = {
+    15, //0 badges
+    23,
+    20,
+    33,
+    37,
+    42,
+    45,
+    51,
+    63  // 8 badges
+};
+
 /**
  * @brief Create a new BattleContext struct from the given BattleSystem.
  *
