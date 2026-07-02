@@ -9759,6 +9759,9 @@ static void BattleScript_GetExpTask(SysTask *task, void *inData)
                 totalExp = totalExp * 150 / 100;
             }
 
+            // exp boost for rebalance
+            totalExp = totalExp * 130 / 100;
+
             if (BattleSystem_PokemonIsOT(data->battleSys, mon) == FALSE) {
                 if (Pokemon_GetValue(mon, MON_DATA_LANGUAGE, NULL) != gGameLanguage) {
                     totalExp = totalExp * 170 / 100;

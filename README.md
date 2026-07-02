@@ -34,7 +34,7 @@ There are numerous features and changes I want to add in this mod. This table ke
 | Improve pokemon move pools | Concept |
 | Decide whether to keep a captured pokemon or send it to the pc | Testing |
 | More NPC selling useful items | Concept |
-| Improve leveling experience | Concept |
+| Improve leveling experience | In-progress |
 | Add EV training NPC | Concept |
 | Improve menu navigation | In-Progress |
 | Re-use prompt when repel wore off | Testing |
