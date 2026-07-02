@@ -1983,6 +1983,7 @@ void BattleContext_Init(BattleContext *battleCtx)
     battleCtx->moveEffectChance = 0;
     battleCtx->moveStatusFlags = 0;
     battleCtx->faintedMon = BATTLER_NONE;
+    battleCtx->caughtMon = BATTLER_NONE;
     battleCtx->sideEffectDirectFlags = MOVE_SUBSCRIPT_PTR_NONE;
     battleCtx->sideEffectIndirectFlags = MOVE_SUBSCRIPT_PTR_NONE;
     battleCtx->sideEffectAbilityFlags = MOVE_SUBSCRIPT_PTR_NONE;

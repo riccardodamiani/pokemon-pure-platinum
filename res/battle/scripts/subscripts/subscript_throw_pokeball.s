@@ -9,9 +9,9 @@ _000:
     WaitCatchMonTask 
     UpdateVarFromVar OPCODE_GET, BTLVAR_RESULT_MASK, BTLVAR_SCRIPT_TEMP
     UpdateVar OPCODE_BITWISE_AND, BTLVAR_SCRIPT_TEMP, 255
-    CompareVarToValue OPCODE_NEQ, BTLVAR_SCRIPT_TEMP, 4, _029
-    TryRestoreStatusOnSwitch BTLSCR_PLAYER, _029
+    CompareVarToValue OPCODE_NEQ, BTLVAR_SCRIPT_TEMP, 4, _end
+    TryRestoreStatusOnSwitch BTLSCR_PLAYER, _end
     UpdateMonData OPCODE_SET, BTLSCR_PLAYER, BATTLEMON_STATUS, MON_CONDITION_NONE
 
-_029:
+_end:
     End 

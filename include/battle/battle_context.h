@@ -115,6 +115,7 @@ typedef struct BattleScriptTaskData {
     int ball;
     int tmpData[8];
     void *tmpPtr[2];
+    struct BattleScriptTaskData *parentTaskData;
 } BattleScriptTaskData;
 
 struct BattleContext {
@@ -153,6 +154,7 @@ struct BattleContext {
     int defender;
     int defenderTemp;
     int faintedMon;
+    int caughtMon;
     int switchedMon;
     int switchedMonTemp;
     int abilityMon;
