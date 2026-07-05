@@ -3345,6 +3345,7 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
     if (battleCtx->damage) {
         int itemEffect = Battler_HeldItemEffect(battleCtx, battleCtx->defender);
         int itemPower = Battler_HeldItemPower(battleCtx, battleCtx->defender, 0);
+        u8 ability = Battler_Ability(battleCtx, battleCtx->defender);
 
         GF_ASSERT(battleCtx->damage < 0);
 
@@ -3388,6 +3389,10 @@ static void BattleControllerPlayer_UpdateHP(BattleSystem *battleSys, BattleConte
 
             if (itemEffect == HOLD_EFFECT_ENDURE && DEFENDING_MON.curHP == DEFENDING_MON.maxHP) {
                 DEFENDER_SELF_TURN_FLAGS.focusItemActivated = TRUE;
+            }
+
+            if(ability == ABILITY_STURDY && DEFENDING_MON.curHP == DEFENDING_MON.maxHP) {
+                DEFENDER_TURN_FLAGS.enduring = TRUE;
             }
         }
 
