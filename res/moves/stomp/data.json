@@ -7,7 +7,7 @@
         "target flinch.\n"
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_GROUND",
     "power": 65,
     "accuracy": 100,
     "pp": 20,
