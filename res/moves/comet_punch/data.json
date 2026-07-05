@@ -7,13 +7,13 @@
         "five times in a row.\n"
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 18,
-    "accuracy": 85,
+    "type": "TYPE_STEEL",
+    "power": 60,
+    "accuracy": 100,
     "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_MULTI_HIT",
-        "chance": 0
+        "type": "BATTLE_EFFECT_CONFUSE_HIT",
+        "chance": 20
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,
