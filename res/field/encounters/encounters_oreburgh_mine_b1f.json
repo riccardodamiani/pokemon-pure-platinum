@@ -2,57 +2,57 @@
     "land_rate": 10,
     "land_encounters": [
         {
-            "level": 5,
+            "level": 8,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 6,
-            "species": "SPECIES_GEODUDE"
+            "level": 8,
+            "species": "SPECIES_TYROGUE"
         },
         {
-            "level": 5,
-            "species": "SPECIES_ZUBAT"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_ZUBAT"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_ONIX"
+            "level": 8,
+            "species": "SPECIES_MACHOP"
         },
         {
             "level": 8,
             "species": "SPECIES_ONIX"
         },
         {
-            "level": 8,
+            "level": 9,
+            "species": "SPECIES_TYROGUE"
+        },
+        {
+            "level": 9,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 9,
+            "species": "SPECIES_MACHOP"
         },
         {
-            "level": 8,
+            "level": 9,
+            "species": "SPECIES_ONIX"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_TYROGUE"
+        },
+        {
+            "level": 10,
+            "species": "SPECIES_ONIX"
+        },
+        {
+            "level": 10,
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 10,
+            "species": "SPECIES_TYROGUE"
         }
     ],
     "swarms": [
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE"
+        "SPECIES_TYROGUE",
+        "SPECIES_TYROGUE"
     ],
     "day": [
         "SPECIES_ZUBAT",
