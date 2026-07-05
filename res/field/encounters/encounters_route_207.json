@@ -2,52 +2,52 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 7,
-            "species": "SPECIES_MACHOP"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_PONYTA"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_PONYTA"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_MACHOP"
-        },
-        {
             "level": 8,
             "species": "SPECIES_MACHOP"
         },
         {
-            "level": 6,
-            "species": "SPECIES_GEODUDE"
+            "level": 8,
+            "species": "SPECIES_BELLSPROUT"
         },
         {
-            "level": 7,
+            "level": 8,
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
+            "level": 8,
+            "species": "SPECIES_EKANS"
         },
         {
-            "level": 7,
+            "level": 9,
+            "species": "SPECIES_EKANS"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_BELLSPROUT"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_MACHOP"
+        },
+        {
+            "level": 9,
             "species": "SPECIES_PONYTA"
         },
         {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
+            "level": 9,
+            "species": "SPECIES_BELLSPROUT"
+        },
+        {
+            "level": 10,
+            "species": "SPECIES_EKANS"
+        },
+        {
+            "level": 10,
+            "species": "SPECIES_PONYTA"
+        },
+        {
+            "level": 10,
+            "species": "SPECIES_BELLSPROUT"
         }
     ],
     "swarms": [
@@ -55,12 +55,12 @@
         "SPECIES_PHANPY"
     ],
     "day": [
-        "SPECIES_PONYTA",
+        "SPECIES_EKANS",
         "SPECIES_MACHOP"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
-        "SPECIES_ZUBAT"
+        "SPECIES_CATERPIE",
+        "SPECIES_CATERPIE"
     ],
     "radar": [
         "SPECIES_STANTLER",
