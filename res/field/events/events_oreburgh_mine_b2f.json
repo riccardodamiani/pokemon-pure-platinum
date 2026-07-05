@@ -79,12 +79,14 @@
         {
             "id": "LOCALID_WORKER_COLIN",
             "graphics_id": "OBJ_EVENT_GFX_WORKER",
-            "movement_type": "MOVEMENT_TYPE_LOOK_NORTH",
+            "movement_type": "MOVEMENT_TYPE_LOOK_SOUTH",
             "trainer_type": "TRAINER_TYPE_NORMAL",
             "hidden_flag": "0",
             "script": "TRAINER_WORKER_COLIN",
-            "initial_dir": 0,
-            "data": [],
+            "initial_dir": 1,
+            "data": [
+                3
+            ],
             "movement_range_x": 0,
             "movement_range_z": 0,
             "x": 8,
@@ -94,12 +96,14 @@
         {
             "id": "LOCALID_WORKER_MASON",
             "graphics_id": "OBJ_EVENT_GFX_WORKER",
-            "movement_type": "MOVEMENT_TYPE_LOOK_WEST",
+            "movement_type": "MOVEMENT_TYPE_LOOK_EAST",
             "trainer_type": "TRAINER_TYPE_NORMAL",
             "hidden_flag": "0",
             "script": "TRAINER_WORKER_MASON",
-            "initial_dir": 2,
-            "data": [],
+            "initial_dir": 3,
+            "data": [
+                3
+            ],
             "movement_range_x": 0,
             "movement_range_z": 0,
             "x": 26,
