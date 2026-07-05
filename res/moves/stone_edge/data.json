@@ -9,8 +9,8 @@
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ROCK",
     "power": 100,
-    "accuracy": 80,
-    "pp": 5,
+    "accuracy": 90,
+    "pp": 10,
     "effect": {
         "type": "BATTLE_EFFECT_HIGH_CRITICAL",
         "chance": 0
