@@ -2,28 +2,16 @@
     "land_rate": 10,
     "land_encounters": [
         {
-            "level": 5,
+            "level": 7,
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 5,
+            "level": 7,
             "species": "SPECIES_PSYDUCK"
         },
         {
-            "level": 6,
-            "species": "SPECIES_ZUBAT"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_PSYDUCK"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_ZUBAT"
+            "level": 7,
+            "species": "SPECIES_SPOINK"
         },
         {
             "level": 7,
@@ -34,19 +22,31 @@
             "species": "SPECIES_GEODUDE"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 8,
+            "species": "SPECIES_SPOINK"
         },
         {
             "level": 8,
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "level": 8,
+            "species": "SPECIES_GEODUDE"
         },
         {
             "level": 8,
+            "species": "SPECIES_ZUBAT"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_SPOINK"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_PSYDUCK"
+        },
+        {
+            "level": 9,
             "species": "SPECIES_ZUBAT"
         }
     ],
@@ -55,11 +55,11 @@
         "SPECIES_PSYDUCK"
     ],
     "day": [
-        "SPECIES_ZUBAT",
+        "SPECIES_GEODUDE",
         "SPECIES_PSYDUCK"
     ],
     "night": [
-        "SPECIES_ZUBAT",
+        "SPECIES_ONIX",
         "SPECIES_PSYDUCK"
     ],
     "radar": [
