@@ -2,14 +2,6 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
             "level": 3,
             "species": "SPECIES_STARLY"
         },
@@ -23,7 +15,15 @@
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_KRICKETOT"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_RATTATA"
+        },
+        {
+            "level": 3,
+            "species": "SPECIES_RALTS"
         },
         {
             "level": 3,
@@ -31,23 +31,23 @@
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_RATTATA"
         },
         {
-            "level": 2,
+            "level": 4,
             "species": "SPECIES_STARLY"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 4,
+            "species": "SPECIES_RALTS"
         },
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 4,
+            "species": "SPECIES_KRICKETOT"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 4,
+            "species": "SPECIES_RATTATA"
         }
     ],
     "swarms": [
@@ -59,7 +59,7 @@
         "SPECIES_BIDOOF"
     ],
     "night": [
-        "SPECIES_KRICKETOT",
+        "SPECIES_BIDOOF",
         "SPECIES_BIDOOF"
     ],
     "radar": [
