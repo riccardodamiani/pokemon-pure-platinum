@@ -201,6 +201,7 @@ ScriptCommand(SCRCMD_USEROCKCLIMB,                                         ScrCm
 ScriptCommand(SCRCMD_USESURF,                                              ScrCmd_UseSurf)
 ScriptCommand(SCRCMD_USEWATERFALL,                                         ScrCmd_UseWaterfall)
 ScriptCommand(SCRCMD_USEFLY,                                               ScrCmd_UseFly)
+ScriptCommand(SCRCMD_SETFIELDWEATHER,                                      ScrCmd_SetFieldWeather)
 ScriptCommand(SCRCMD_0C3,                                                  ScrCmd_0C3)
 ScriptCommand(SCRCMD_0C4,                                                  ScrCmd_0C4)
 ScriptCommand(SCRCMD_0C5,                                                  ScrCmd_0C5)

@@ -407,6 +407,7 @@ static BOOL ScrCmd_UseRockClimb(ScriptContext *ctx);
 static BOOL ScrCmd_UseSurf(ScriptContext *ctx);
 static BOOL ScrCmd_UseWaterfall(ScriptContext *ctx);
 static BOOL ScrCmd_UseFly(ScriptContext *ctx);
+static BOOL ScrCmd_SetFieldWeather(ScriptContext *ctx);
 static BOOL ScrCmd_0C3(ScriptContext *ctx);
 static BOOL ScrCmd_0C4(ScriptContext *ctx);
 static BOOL ScrCmd_0C5(ScriptContext *ctx);
@@ -3692,6 +3693,14 @@ static BOOL ScrCmd_UseFly(ScriptContext *ctx)
     u16 z = ScriptContext_GetVar(ctx);
 
     FieldTask_StartMapChangeFly(ctx->fieldSystem, mapID, -1, x, z, FACE_DOWN);
+    return TRUE;
+}
+
+static BOOL ScrCmd_SetFieldWeather(ScriptContext *ctx)
+{
+    FieldOverworldState *fieldState = SaveData_GetFieldOverworldState(ctx->fieldSystem->saveData);
+    u16 weather = ScriptContext_ReadHalfWord(ctx);
+    FieldOverworldState_SetWeather(fieldState, weather);
     return TRUE;
 }
 

@@ -1,11 +1,15 @@
 #include "macros/scrcmd.inc"
 #include "res/text/bank/oreburgh_city_gym.h"
 
-
+    ScriptEntry OreburghGym_OnTransition
     ScriptEntry OreburghGym_Roark
     ScriptEntry OreburghGym_GymGuide
     ScriptEntry OreburghGym_GymStatue
     ScriptEntryEnd
+
+OreburghGym_OnTransition:
+    ScrCmd_SetFieldWeather 10
+    End
 
 OreburghGym_Roark:
     PlaySE SEQ_SE_CONFIRM
