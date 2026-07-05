@@ -1244,6 +1244,11 @@
     .short \z
     .endm
 
+    .macro ScrCmd_SetFieldWeather weather
+    .short SCRCMD_SETFIELDWEATHER
+    .short \weather
+    .endm
+
     .macro ScrCmd_0C3
     .short SCRCMD_0C3
     .endm
