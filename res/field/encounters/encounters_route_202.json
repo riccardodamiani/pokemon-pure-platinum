@@ -2,27 +2,11 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 3,
-            "species": "SPECIES_SHINX"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
             "level": 4,
             "species": "SPECIES_SHINX"
         },
         {
-            "level": 3,
+            "level": 4,
             "species": "SPECIES_BIDOOF"
         },
         {
@@ -31,22 +15,38 @@
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_ZIGZAGOON"
         },
         {
-            "level": 2,
+            "level": 4,
+            "species": "SPECIES_SHINX"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_RATTATA"
+        },
+        {
+            "level": 5,
             "species": "SPECIES_STARLY"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
+            "level": 5,
+            "species": "SPECIES_RATTATA"
         },
         {
-            "level": 2,
+            "level": 5,
+            "species": "SPECIES_RATTATA"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_ZIGZAGOON"
+        },
+        {
+            "level": 5,
             "species": "SPECIES_STARLY"
         },
         {
-            "level": 2,
+            "level": 5,
             "species": "SPECIES_BIDOOF"
         }
     ],
@@ -60,7 +60,7 @@
     ],
     "night": [
         "SPECIES_KRICKETOT",
-        "SPECIES_BIDOOF"
+        "SPECIES_KRICKETOT"
     ],
     "radar": [
         "SPECIES_SENTRET",
