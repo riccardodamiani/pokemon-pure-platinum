@@ -2669,7 +2669,7 @@ static BOOL BattleControllerPlayer_CheckStatusDisruption(BattleSystem *battleSys
                 battleCtx->msgBattlerTemp = LowestBit(
                     (ATTACKING_MON.statusVolatile & VOLATILE_CONDITION_ATTRACT) >> VOLATILE_CONDITION_ATTRACT_SHIFT);
 
-                if (BattleSystem_RandNext(battleSys) & 1) {
+                if (BattleSystem_RandNext(battleSys) % 100 <= 33) {
                     LOAD_SUBSEQ(subscript_infatuated);
                     battleCtx->commandNext = battleCtx->command;
                     battleCtx->command = BATTLE_CONTROL_EXEC_SCRIPT;
