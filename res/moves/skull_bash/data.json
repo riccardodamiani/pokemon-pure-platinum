@@ -8,13 +8,13 @@
         "foe on the next turn."
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 100,
+    "type": "TYPE_STEEL",
+    "power": 55,
     "accuracy": 100,
     "pp": 15,
     "effect": {
-        "type": "BATTLE_EFFECT_CHARGE_TURN_DEF_UP",
-        "chance": 100
+        "type": "BATTLE_EFFECT_HIT",
+        "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,
