@@ -2,14 +2,6 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
             "level": 3,
             "species": "SPECIES_STARLY"
         },
@@ -23,7 +15,7 @@
         },
         {
             "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_LOTAD"
         },
         {
             "level": 4,
@@ -35,15 +27,23 @@
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_LOTAD"
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_CATERPIE"
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_CATERPIE"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_LOTAD"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_LOTAD"
         },
         {
             "level": 4,
@@ -51,16 +51,16 @@
         }
     ],
     "swarms": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_LOTAD",
+        "SPECIES_LOTAD"
     ],
     "day": [
         "SPECIES_STARLY",
         "SPECIES_BIDOOF"
     ],
     "night": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_LOTAD",
+        "SPECIES_LOTAD"
     ],
     "radar": [
         "SPECIES_WOBBUFFET",
@@ -127,12 +127,12 @@
         {
             "level_max": 6,
             "level_min": 4,
-            "species": "SPECIES_MAGIKARP"
+            "species": "SPECIES_LOTAD"
         },
         {
             "level_max": 7,
-            "level_min": 3,
-            "species": "SPECIES_MAGIKARP"
+            "level_min": 4,
+            "species": "SPECIES_LOTAD"
         },
         {
             "level_max": 10,
