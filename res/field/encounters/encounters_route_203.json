@@ -2,52 +2,52 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 4,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_SHINX"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_ABRA"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_ABRA"
-        },
-        {
-            "level": 5,
-            "species": "SPECIES_SHINX"
+            "level": 6,
+            "species": "SPECIES_POOCHYENA"
         },
         {
             "level": 6,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_PSYDUCK"
         },
         {
             "level": 6,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_ABRA"
+        },
+        {
+            "level": 6,
+            "species": "SPECIES_PSYDUCK"
+        },
+        {
+            "level": 6,
+            "species": "SPECIES_ZUBAT"
         },
         {
             "level": 7,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_ABRA"
         },
         {
             "level": 7,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_PSYDUCK"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_SUNKERN"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_SUNKERN"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_ABRA"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_POOCHYENA"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_ZUBAT"
         }
     ],
     "swarms": [
@@ -55,18 +55,18 @@
         "SPECIES_CUBONE"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_PSYDUCK",
+        "SPECIES_SUNKERN"
     ],
     "night": [
         "SPECIES_KRICKETOT",
         "SPECIES_ZUBAT"
     ],
     "radar": [
-        "SPECIES_BIDOOF",
+        "SPECIES_SMOOCHUM",
         "SPECIES_ABRA",
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_SMOOCHUM",
+        "SPECIES_SMOOCHUM"
     ],
     "rate_form0": 0,
     "rate_form1": 0,
@@ -130,14 +130,14 @@
             "species": "SPECIES_MAGIKARP"
         },
         {
-            "level_max": 7,
+            "level_max": 6,
             "level_min": 3,
-            "species": "SPECIES_MAGIKARP"
+            "species": "SPECIES_REMORAID"
         },
         {
-            "level_max": 10,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 6,
+            "level_min": 3,
+            "species": "SPECIES_REMORAID"
         },
         {
             "level_max": 10,
