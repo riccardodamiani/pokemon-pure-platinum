@@ -21,6 +21,7 @@
                 "MOVE_WOOD_HAMMER"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

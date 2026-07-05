@@ -19,6 +19,7 @@
                 "MOVE_ATTRACT"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -43,6 +44,7 @@
                 "MOVE_LIGHT_SCREEN"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -67,6 +69,7 @@
                 "MOVE_CAPTIVATE"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 15,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -19,6 +19,7 @@
                 "MOVE_WATER_SPORT"
             ],
             "iv_scale": 20,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -42,6 +43,7 @@
                 "MOVE_WATER_SPORT"
             ],
             "iv_scale": 20,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -65,6 +67,7 @@
                 "MOVE_WATER_SPORT"
             ],
             "iv_scale": 20,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

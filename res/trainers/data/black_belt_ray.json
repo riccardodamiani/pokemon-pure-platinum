@@ -20,6 +20,7 @@
                 "MOVE_SPORE"
             ],
             "iv_scale": 30,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -44,6 +45,7 @@
                 "MOVE_DARK_PULSE"
             ],
             "iv_scale": 30,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

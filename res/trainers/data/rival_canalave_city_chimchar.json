@@ -21,6 +21,7 @@
                 "MOVE_DOUBLE_TEAM"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_GRASS_WHISTLE"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -69,6 +71,7 @@
                 "MOVE_HORN_ATTACK"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -93,6 +96,7 @@
                 "MOVE_TAIL_WHIP"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -117,6 +121,7 @@
                 "MOVE_FURY_ATTACK"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 10,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

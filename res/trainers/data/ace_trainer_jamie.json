@@ -21,6 +21,7 @@
                 "MOVE_MAGNET_RISE"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 11,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

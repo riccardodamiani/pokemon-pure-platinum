@@ -21,6 +21,7 @@
                 "MOVE_PAYBACK"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 12,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

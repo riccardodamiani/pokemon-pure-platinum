@@ -1,33 +1,32 @@
 {
     "name": "Roark",
     "class": "TRAINER_CLASS_LEADER_ROARK",
-    "items": [
-        "ITEM_POTION",
-        "ITEM_POTION"
-    ],
+    "items": [],
     "ai_flags": [
         "AI_FLAG_BASIC",
         "AI_FLAG_EVAL_ATTACK",
-        "AI_FLAG_EXPERT"
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_SETUP_FIRST_TURN"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_GEODUDE",
+            "species": "SPECIES_SHUCKLE",
             "form": 0,
-            "level": 12,
-            "item": null,
+            "level": 13,
+            "item": "ITEM_LIECHI_BERRY",
             "moves": [
                 "MOVE_STEALTH_ROCK",
-                "MOVE_ROCK_THROW"
+                "MOVE_ROLLOUT"
             ],
-            "iv_scale": 50,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_GLUTTONY",
+            "nature": "NATURE_BRAVE",
             "evFlags": {
                 "hp": false,
-                "attack": false,
+                "attack": true,
                 "defense": false,
                 "speed": false,
                 "special_attack": false,
@@ -35,47 +34,48 @@
             }
         },
         {
-            "species": "SPECIES_ONIX",
+            "species": "SPECIES_CORSOLA",
             "form": 0,
-            "level": 12,
-            "item": null,
+            "level": 13,
+            "item": "ITEM_RINDO_BERRY",
             "moves": [
-                "MOVE_STEALTH_ROCK",
+                "MOVE_BUBBLE",
                 "MOVE_ROCK_THROW",
-                "MOVE_SCREECH"
+                "MOVE_RECOVER"
             ],
-            "iv_scale": 50,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_NATURAL_CURE",
+            "nature": "NATURE_ADAMANT",
             "evFlags": {
                 "hp": false,
-                "attack": false,
+                "attack": true,
                 "defense": false,
                 "speed": false,
                 "special_attack": false,
-                "special_defense": false
+                "special_defense": true
             }
         },
         {
             "species": "SPECIES_CRANIDOS",
             "form": 0,
             "level": 14,
-            "item": null,
+            "item": "ITEM_CHESTO_BERRY",
             "moves": [
                 "MOVE_HEADBUTT",
-                "MOVE_PURSUIT",
-                "MOVE_LEER"
+                "MOVE_PURSUIT"
             ],
-            "iv_scale": 50,
+            "iv_scale": 150,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_MOLD_BREAKER",
+            "nature": "NATURE_HASTY",
             "evFlags": {
                 "hp": false,
-                "attack": false,
+                "attack": true,
                 "defense": false,
-                "speed": false,
+                "speed": true,
                 "special_attack": false,
                 "special_defense": false
             }

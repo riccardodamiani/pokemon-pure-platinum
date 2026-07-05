@@ -21,6 +21,7 @@
                 "MOVE_FAKE_OUT"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_FOCUS_ENERGY"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -69,6 +71,7 @@
                 "MOVE_BONE_RUSH"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

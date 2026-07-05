@@ -21,6 +21,7 @@
                 "MOVE_PSYCHIC"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 27,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -19,6 +19,7 @@
                 "MOVE_DEFENSE_CURL"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -43,6 +44,7 @@
                 "MOVE_SONIC_BOOM"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

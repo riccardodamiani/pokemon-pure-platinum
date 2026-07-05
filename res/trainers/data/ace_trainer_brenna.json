@@ -21,6 +21,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -44,6 +45,7 @@
                 "MOVE_HAIL"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -68,6 +70,7 @@
                 "MOVE_GRASS_WHISTLE"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -22,6 +22,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -46,6 +47,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -70,6 +72,7 @@
                 "MOVE_HYPNOSIS"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

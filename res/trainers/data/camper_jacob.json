@@ -19,6 +19,7 @@
                 "MOVE_TACKLE"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

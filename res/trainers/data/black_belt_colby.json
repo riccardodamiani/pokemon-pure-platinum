@@ -19,6 +19,7 @@
                 "MOVE_FORESIGHT"
             ],
             "iv_scale": 40,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -41,6 +42,7 @@
                 "MOVE_FORESIGHT"
             ],
             "iv_scale": 40,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -64,6 +66,7 @@
                 "MOVE_FORESIGHT"
             ],
             "iv_scale": 40,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

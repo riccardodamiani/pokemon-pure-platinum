@@ -21,6 +21,7 @@
                 "MOVE_AERIAL_ACE"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_LIGHT_SCREEN"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -68,6 +70,7 @@
                 "MOVE_CURSE"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

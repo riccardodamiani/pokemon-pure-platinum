@@ -21,6 +21,7 @@
                 "MOVE_IRON_TAIL"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_LIGHT_SCREEN"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

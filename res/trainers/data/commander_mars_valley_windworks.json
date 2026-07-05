@@ -20,6 +20,7 @@
                 "MOVE_TOXIC"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -43,6 +44,7 @@
                 "MOVE_FAKE_OUT"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

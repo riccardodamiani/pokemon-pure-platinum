@@ -24,6 +24,7 @@
                 "MOVE_U_TURN"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -48,6 +49,7 @@
                 "MOVE_BRICK_BREAK"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -72,6 +74,7 @@
                 "MOVE_ROCK_SLIDE"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -96,6 +99,7 @@
                 "MOVE_WILL_O_WISP"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -120,6 +124,7 @@
                 "MOVE_REST"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -144,6 +149,7 @@
                 "MOVE_LEECH_SEED"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 24,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

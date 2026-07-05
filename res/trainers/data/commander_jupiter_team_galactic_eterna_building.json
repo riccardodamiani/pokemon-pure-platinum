@@ -20,6 +20,7 @@
                 "MOVE_BITE"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -44,6 +45,7 @@
                 "MOVE_SMOKE_SCREEN"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -24,6 +24,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -48,6 +49,7 @@
                 "MOVE_SHADOW_CLAW"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -72,6 +74,7 @@
                 "MOVE_BULLET_PUNCH"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -96,6 +99,7 @@
                 "MOVE_THUNDER_FANG"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -120,6 +124,7 @@
                 "MOVE_BLAZE_KICK"
             ],
             "iv_scale": 200,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -21,6 +21,7 @@
                 "MOVE_WILL_O_WISP"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_CRUNCH"
             ],
             "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 23,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -19,6 +19,7 @@
                 "MOVE_CONFUSION"
             ],
             "iv_scale": 20,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -21,6 +21,7 @@
                 "MOVE_DOUBLE_TEAM"
             ],
             "iv_scale": 80,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_GROWL"
             ],
             "iv_scale": 80,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -69,6 +71,7 @@
                 "MOVE_MAGICAL_LEAF"
             ],
             "iv_scale": 80,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -93,6 +96,7 @@
                 "MOVE_LEER"
             ],
             "iv_scale": 80,
+            "friendship": 0,
             "ball_seal": 10,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

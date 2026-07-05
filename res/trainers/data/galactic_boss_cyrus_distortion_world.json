@@ -24,6 +24,7 @@
                 "MOVE_THUNDER_FANG"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -48,6 +49,7 @@
                 "MOVE_PSYCHIC"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -72,6 +74,7 @@
                 "MOVE_CONFUSE_RAY"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -96,6 +99,7 @@
                 "MOVE_EARTHQUAKE"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -120,6 +124,7 @@
                 "MOVE_X_SCISSOR"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

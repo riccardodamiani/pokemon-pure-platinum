@@ -21,6 +21,7 @@
                 "MOVE_SILVER_WIND"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_QUICK_ATTACK"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -69,6 +71,7 @@
                 "MOVE_AERIAL_ACE"
             ],
             "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

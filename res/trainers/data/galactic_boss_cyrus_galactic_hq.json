@@ -24,6 +24,7 @@
                 "MOVE_SCREECH"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -48,6 +49,7 @@
                 "MOVE_SUPERSONIC"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -72,6 +74,7 @@
                 "MOVE_FAINT_ATTACK"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

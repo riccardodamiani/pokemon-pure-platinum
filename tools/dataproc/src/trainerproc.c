@@ -202,6 +202,7 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
         }
         u16 ability = dp_u16(dp_lookup(dp_objmemb(party_member, "ability"), "enum Ability"));
         u16 nature  = dp_u16(dp_lookup(dp_objmemb(party_member, "nature"), "enum Nature"));
+        u16 friendship = dp_u16(dp_objmemb(party_member, "friendship"));
         trparty.party[i] = (TrainerMonWithMovesAndItem){
             .ivScale = dp_u16(dp_objmemb(party_member, "iv_scale")),
             .level   = dp_u16(dp_objmemb(party_member, "level")),
@@ -209,6 +210,7 @@ Container proc_trainer(datafile_t *df, enum TrainerID trainer) {
             .ev      = ev,
             .ability = ability,
             .nature  = nature,
+            .friendship = friendship,
             .cbSeal  = dp_u16(dp_objmemb(party_member, "ball_seal")),
         };
 

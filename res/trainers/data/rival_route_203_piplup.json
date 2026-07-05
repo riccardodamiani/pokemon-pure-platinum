@@ -12,21 +12,22 @@
         {
             "species": "SPECIES_STARLY",
             "form": 0,
-            "level": 7,
+            "level": 9,
             "item": null,
             "moves": [
                 "MOVE_QUICK_ATTACK",
-                "MOVE_GROWL"
+                "MOVE_WING_ATTACK"
             ],
-            "iv_scale": 30,
+            "iv_scale": 10,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "nature": "NATURE_NAUGHTY",
             "evFlags": {
                 "hp": false,
                 "attack": false,
                 "defense": false,
-                "speed": false,
+                "speed": true,
                 "special_attack": false,
                 "special_defense": false
             }
@@ -38,18 +39,19 @@
             "item": null,
             "moves": [
                 "MOVE_TACKLE",
-                "MOVE_WITHDRAW"
+                "MOVE_ABSORB"
             ],
-            "iv_scale": 30,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "nature": "NATURE_MILD",
             "evFlags": {
                 "hp": false,
                 "attack": false,
                 "defense": false,
                 "speed": false,
-                "special_attack": false,
+                "special_attack": true,
                 "special_defense": false
             }
         }

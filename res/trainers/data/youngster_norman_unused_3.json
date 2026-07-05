@@ -19,6 +19,7 @@
                 "MOVE_PECK"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -43,6 +44,7 @@
                 "MOVE_HELPING_HAND"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -20,6 +20,7 @@
                 "MOVE_THUNDER_PUNCH"
             ],
             "iv_scale": 30,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

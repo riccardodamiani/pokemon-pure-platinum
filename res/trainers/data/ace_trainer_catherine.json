@@ -21,6 +21,7 @@
                 "MOVE_CURSE"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -45,6 +46,7 @@
                 "MOVE_SPITE"
             ],
             "iv_scale": 60,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

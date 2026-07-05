@@ -17,6 +17,7 @@
                 "MOVE_ROCK_THROW"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -40,6 +41,7 @@
                 "MOVE_DOUBLE_SLAP"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

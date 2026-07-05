@@ -17,6 +17,7 @@
                 "MOVE_MAGNITUDE"
             ],
             "iv_scale": 10,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

@@ -20,6 +20,7 @@
                 "MOVE_DRAIN_PUNCH"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -44,6 +45,7 @@
                 "MOVE_SHOCK_WAVE"
             ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",

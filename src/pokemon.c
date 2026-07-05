@@ -252,7 +252,7 @@ enum TrainerClassFilesTypes {
     TRAINER_CLASS_NUM_FILETYPES,
 };
 
-static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID);
+static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, u8 friendship, int monOTIDSource, u32 monOTID);
 static u32 Pokemon_GetDataInternal(Pokemon *mon, enum PokemonDataParam param, void *dest);
 static u32 BoxPokemon_GetDataInternal(BoxPokemon *boxMon, enum PokemonDataParam param, void *dest);
 static void Pokemon_SetDataInternal(Pokemon *mon, enum PokemonDataParam param, const void *value);
@@ -411,11 +411,11 @@ static void Pokemon_SetEvFromFlags(Pokemon *mon, u16 evFlags)
     }
 }
 
-void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, u16 evFlags, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
+void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, u16 evFlags, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, u8 friendship, int monOTIDSource, u32 monOTID)
 {
     Pokemon_Init(mon);
 
-    sub_02073E18(&mon->box, monSpecies, monLevel, monIVs, ability, useMonPersonalityParam, monPersonality, monOTIDSource, monOTID);
+    sub_02073E18(&mon->box, monSpecies, monLevel, monIVs, ability, useMonPersonalityParam, monPersonality, friendship, monOTIDSource, monOTID);
     Pokemon_EncryptData(&mon->party, sizeof(PartyPokemon), 0);
     Pokemon_EncryptData(&mon->party, sizeof(PartyPokemon), mon->box.personality);
     Pokemon_SetValue(mon, MON_DATA_LEVEL, &monLevel);
@@ -436,7 +436,7 @@ void Pokemon_InitWith(Pokemon *mon, int monSpecies, int monLevel, int monIVs, u1
     Pokemon_CalcLevelAndStats(mon);
 }
 
-static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, int monOTIDSource, u32 monOTID)
+static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int monIVs, u8 ability, BOOL useMonPersonalityParam, u32 monPersonality, u8 friendship, int monOTIDSource, u32 monOTID)
 {
     BoxPokemon_Init(boxMon);
 
@@ -466,8 +466,13 @@ static void sub_02073E18(BoxPokemon *boxMon, int monSpecies, int monLevel, int m
     v1 = Pokemon_GetSpeciesBaseExpAt(monSpecies, monLevel);
     BoxPokemon_SetValue(boxMon, MON_DATA_EXPERIENCE, &v1);
 
-    v1 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_BASE_FRIENDSHIP);
-    BoxPokemon_SetValue(boxMon, MON_DATA_FRIENDSHIP, &v1);
+    if(friendship == 0){
+        v1 = SpeciesData_GetSpeciesValue(monSpecies, SPECIES_DATA_BASE_FRIENDSHIP);
+        BoxPokemon_SetValue(boxMon, MON_DATA_FRIENDSHIP, &v1);
+    }else{
+        v1 = (u32)friendship;
+        BoxPokemon_SetValue(boxMon, MON_DATA_FRIENDSHIP, &v1);
+    }
 
     BoxPokemon_SetValue(boxMon, MON_DATA_MET_LEVEL, &monLevel);
     BoxPokemon_SetValue(boxMon, MON_DATA_MET_GAME, &gGameVersion);
@@ -536,7 +541,7 @@ void sub_02074044(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 monNa
         monPersonality = (LCRNG_Next() | (LCRNG_Next() << 16));
     } while (monNature != Pokemon_GetNatureOf(monPersonality));
 
-    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, 0, OTID_NOT_SET, 0);
 }
 
 void sub_02074088(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 gender, u8 param5, u8 param6)
@@ -554,7 +559,7 @@ void sub_02074088(Pokemon *mon, u16 monSpecies, u8 monLevel, u8 monIVs, u8 gende
         monPersonality = sub_02074128(monSpecies, gender, param5);
     }
 
-    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, monIVs, 0, 0, TRUE, monPersonality, 0, OTID_NOT_SET, 0);
 }
 
 u32 sub_02074128(u16 monSpecies, u8 gender, u8 param2)
@@ -584,7 +589,7 @@ u32 sub_02074128(u16 monSpecies, u8 gender, u8 param2)
 // only used when encountering a roamer
 void Pokemon_InitAndCalcStats(Pokemon *mon, u16 monSpecies, u8 monLevel, u32 monCombinedIVs, u32 monPersonality)
 {
-    Pokemon_InitWith(mon, monSpecies, monLevel, 0, 0, 0, TRUE, monPersonality, OTID_NOT_SET, 0);
+    Pokemon_InitWith(mon, monSpecies, monLevel, 0, 0, 0, TRUE, monPersonality, 0, OTID_NOT_SET, 0);
     Pokemon_SetValue(mon, MON_DATA_COMBINED_IVS, &monCombinedIVs);
     Pokemon_CalcLevelAndStats(mon);
 }

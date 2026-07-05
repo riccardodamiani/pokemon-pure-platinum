@@ -25,6 +25,7 @@
                 "MOVE_LIGHT_SCREEN"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -49,6 +50,7 @@
                 "MOVE_SIGNAL_BEAM"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -73,6 +75,7 @@
                 "MOVE_CALM_MIND"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -97,6 +100,7 @@
                 "MOVE_RECOVER"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -121,6 +125,7 @@
                 "MOVE_STONE_EDGE"
             ],
             "iv_scale": 250,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
