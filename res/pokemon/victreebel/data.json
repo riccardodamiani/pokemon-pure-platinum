@@ -34,15 +34,21 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_STOCKPILE" ],
-            [ 1, "MOVE_SWALLOW" ],
-            [ 1, "MOVE_SPIT_UP" ],
-            [ 1, "MOVE_VINE_WHIP" ],
-            [ 1, "MOVE_SLEEP_POWDER" ],
             [ 1, "MOVE_SWEET_SCENT" ],
-            [ 1, "MOVE_RAZOR_LEAF" ],
-            [ 47, "MOVE_LEAF_STORM" ],
-            [ 47, "MOVE_LEAF_BLADE" ]
+            [ 1, "MOVE_POISON_POWDER" ],
+            [ 1, "MOVE_SLEEP_POWDER" ],
+            [ 1, "MOVE_STUN_SPORE" ],
+            [ 1, "MOVE_LEECH_SEED" ],
+            [ 1, "MOVE_GIGA_DRAIN" ],
+            [ 21, "MOVE_RAZOR_LEAF" ],
+            [ 24, "MOVE_SLUDGE" ],
+            [ 27, "MOVE_KNOCK_OFF" ],
+            [ 31, "MOVE_GRASS_KNOT" ],
+            [ 34, "MOVE_GROWTH" ],
+            [ 37, "MOVE_SLUDGE_BOMB"],
+            [ 40, "MOVE_LEAF_BLADE" ],
+            [ 44, "MOVE_WRING_OUT" ],
+            [ 47, "MOVE_LEAF_STORM" ]
         ],
         "by_tm": [
             "TM06",
