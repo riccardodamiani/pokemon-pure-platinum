@@ -36,7 +36,7 @@
         "by_level": [
             [ 1, "MOVE_GROWL" ],
             [ 1, "MOVE_BIDE" ],
-            [ 16, "MOVE_BUG_BITE" ]
+            [ 12, "MOVE_BUG_BITE" ]
         ],
         "by_tm": [  ],
         "by_tutor": [
