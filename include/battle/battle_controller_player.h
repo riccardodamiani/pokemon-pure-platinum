@@ -92,15 +92,15 @@ enum BattleControllerPlayerInput {
 };
 
 static const u8 BattleMonObeyTable[9] = {
-    15, //0 badges
-    23,
-    27,
-    33,
-    38,
-    42,
-    45,
-    51,
-    63  // 8 badges
+    16, //0 badges
+    24,
+    28,
+    34,
+    39,
+    43,
+    46,
+    52,
+    64  // 8 badges
 };
 
 /**

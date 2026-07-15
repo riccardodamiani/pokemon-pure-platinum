@@ -2142,10 +2142,10 @@ static int BattleControllerPlayer_CheckObedience(BattleSystem *battleSys, Battle
         return OBEY_CHECK_SUCCESS;
     }
 
-    u8 disobedienceLevel = ATTACKING_MON.level - BattleMonObeyTable[TrainerInfo_BadgeCount(trInfo)];
+    u8 disobedienceLevel = ATTACKING_MON.level - BattleMonObeyTable[TrainerInfo_BadgeCount(trInfo)] - 1;
 
     u16 rand = BattleSystem_RandNext(battleSys) % 100;
-    u16 disobedienceThreshold = disobedienceLevel * 25; //25% for each over level
+    u16 disobedienceThreshold = 10 + disobedienceLevel * 20; //10% base + 20% for each over level
 
     if (rand > disobedienceThreshold) {
         return OBEY_CHECK_SUCCESS;
