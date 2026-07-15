@@ -8,10 +8,10 @@
         "five turns."
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 15,
-    "accuracy": 75,
-    "pp": 20,
+    "type": "TYPE_DARK",
+    "power": 35,
+    "accuracy": 85,
+    "pp": 15,
     "effect": {
         "type": "BATTLE_EFFECT_BIND_HIT",
         "chance": 0
