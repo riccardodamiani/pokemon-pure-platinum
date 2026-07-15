@@ -38,7 +38,12 @@
             [ 1, "MOVE_CHARM" ],
             [ 5, "MOVE_COPYCAT" ],
             [ 9, "MOVE_REFRESH" ],
-            [ 12, "MOVE_SWEET_KISS" ]
+            [ 12, "MOVE_SWEET_KISS" ],
+            [ 15, "MOVE_SING" ],
+            [ 18, "MOVE_COTTON_SPORE"],
+            [ 21, "MOVE_DOUBLE_SLAP"],
+            [ 25, "MOVE_FLAIL" ],
+            [ 29, "MOVE_UPROAR"]
         ],
         "by_tm": [
             "TM03",
