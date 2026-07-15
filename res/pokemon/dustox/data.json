@@ -34,17 +34,22 @@
     "icon_palette": 1,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_CONFUSION" ],
-            [ 10, "MOVE_CONFUSION" ],
+            [ 10, "MOVE_LEECH_LIFE" ],
             [ 13, "MOVE_GUST" ],
-            [ 17, "MOVE_PROTECT" ],
-            [ 20, "MOVE_MOONLIGHT" ],
-            [ 24, "MOVE_PSYBEAM" ],
-            [ 27, "MOVE_WHIRLWIND" ],
-            [ 31, "MOVE_LIGHT_SCREEN" ],
-            [ 34, "MOVE_SILVER_WIND" ],
-            [ 38, "MOVE_TOXIC" ],
-            [ 41, "MOVE_BUG_BUZZ" ]
+            [ 17, "MOVE_TOXIC" ],
+            [ 20, "MOVE_BUG_BITE"],
+            [ 23, "MOVE_MOONLIGHT" ],
+            [ 27, "MOVE_AIR_CUTTER"],
+            [ 29, "MOVE_CONFUSION" ],
+            [ 31, "MOVE_WHIRLWIND" ],
+            [ 33, "MOVE_WILL_O_WISP" ],
+            [ 35, "MOVE_SILVER_WIND" ],
+            [ 37, "MOVE_BUG_BUZZ" ],
+            [ 40, "MOVE_GIGA_DRAIN" ],
+            [ 43, "MOVE_PSYCHIC"],
+            [ 46, "MOVE_TAILWIND" ],
+            [ 49, "MOVE_AEROBLAST"],
+            [ 52, "MOVE_DRAGON_PULSE" ]
         ],
         "by_tm": [
             "TM06",
