@@ -36,16 +36,16 @@
         "by_level": [
             [ 1, "MOVE_TACKLE" ],
             [ 5, "MOVE_GROWL" ],
-            [ 9, "MOVE_DEFENSE_CURL" ],
-            [ 13, "MOVE_ROLLOUT" ],
-            [ 17, "MOVE_HEADBUTT" ],
-            [ 21, "MOVE_HYPER_FANG" ],
-            [ 25, "MOVE_YAWN" ],
-            [ 29, "MOVE_AMNESIA" ],
-            [ 33, "MOVE_TAKE_DOWN" ],
-            [ 37, "MOVE_SUPER_FANG" ],
-            [ 41, "MOVE_SUPERPOWER" ],
-            [ 45, "MOVE_CURSE" ]
+            [ 8, "MOVE_DEFENSE_CURL" ],
+            [ 11, "MOVE_ROLLOUT" ],
+            [ 14, "MOVE_WRAP" ],
+            [ 17, "MOVE_PAY_DAY"],
+            [ 19, "MOVE_YAWN" ],
+            [ 21, "MOVE_ENDURE" ],
+            [ 25, "MOVE_HEADBUTT" ],
+            [ 30, "MOVE_HYPER_FANG" ],
+            [ 34, "MOVE_BLOCK" ],
+            [ 37, "MOVE_SUPER_FANG" ]
         ],
         "by_tm": [
             "TM06",
