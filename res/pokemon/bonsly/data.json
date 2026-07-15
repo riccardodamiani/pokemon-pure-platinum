@@ -99,8 +99,8 @@
     },
     "evolutions": [
         [
-            "EVO_LEVEL_KNOW_MOVE",
-            "MOVE_MIMIC",
+            "EVO_LEVEL",
+            17,
             "SPECIES_SUDOWOODO"
         ]
     ],
