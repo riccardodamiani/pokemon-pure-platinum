@@ -35,11 +35,12 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_POUND" ],
-            [ 1, "MOVE_GROWL" ],
+            [ 1, "MOVE_CHARM" ],
+            [ 1, "MOVE_MAGICAL_LEAF" ],
             [ 4, "MOVE_ENCORE" ],
             [ 7, "MOVE_SING" ],
-            [ 10, "MOVE_DOUBLE_SLAP" ],
-            [ 13, "MOVE_DEFENSE_CURL" ],
+            [ 10, "MOVE_SWEET_KISS" ],
+            [ 13, "MOVE_COPYCAT" ],
             [ 16, "MOVE_FOLLOW_ME" ],
             [ 19, "MOVE_MINIMIZE" ],
             [ 22, "MOVE_WAKE_UP_SLAP" ],
@@ -49,8 +50,10 @@
             [ 34, "MOVE_GRAVITY" ],
             [ 37, "MOVE_MOONLIGHT" ],
             [ 40, "MOVE_LIGHT_SCREEN" ],
-            [ 43, "MOVE_METEOR_MASH" ],
-            [ 46, "MOVE_HEALING_WISH" ]
+            [ 43, "MOVE_REFLECT" ],
+            [ 46, "MOVE_HEALING_WISH" ],
+            [ 49, "MOVE_BODY_SLAM" ]
+
         ],
         "by_tm": [
             "TM01",
