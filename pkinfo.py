@@ -36,10 +36,27 @@ for a in data["abilities"]:
         print(a)
 
 print("\n=== LEARNSET BY LEVEL ===")
+print(f"{'Lv':<6} {'Move':<30} {'Class':<20} {'Power':<8} {'Accuracy':<10} {'PP':<6} {'Effect'}")
+print("-" * 85)
 for level, move in data["learnset"]["by_level"]:
-    print(f"Lv {level:3}: {move}")
+    move_name = move.removeprefix("MOVE_").lower()
+    move_path = f"res/moves/{move_name}/data.json"
+    try:
+        with open(move_path) as f:
+            move_data = json.load(f)
+        cls = move_data.get("class", "")
+        power = move_data.get("power", 0)
+        accuracy = move_data.get("accuracy", 0)
+        pp = move_data.get("pp", 0)
+        effect = move_data.get("effect", {})
+        effect_type = effect.get("type", "") if isinstance(effect, dict) else ""
+    except FileNotFoundError:
+        cls = power = accuracy = pp = effect_type = ""
+    print(f"{'Lv '+str(level):<6} {move:<30} {cls:<20} {power:<8} {accuracy:<10} {pp:<6} {effect_type}")
 
 print("\n=== LEARNSET BY TM ===")
+print(f"{'TM':<8} {'Move':<30} {'Class':<20} {'Power':<8} {'Accuracy':<10} {'PP':<6} {'Effect'}")
+print("-" * 87)
 for tm in data["learnset"]["by_tm"]:
     tm_path = f"res/items/data/{tm.lower()}.json"
     try:
@@ -48,4 +65,17 @@ for tm in data["learnset"]["by_tm"]:
         move = tm_data.get("teachesMove", "")
     except FileNotFoundError:
         move = ""
-    print(f"  {tm:<6}  {move}")
+    move_name = move.removeprefix("MOVE_").lower()
+    move_path = f"res/moves/{move_name}/data.json"
+    try:
+        with open(move_path) as f:
+            move_data = json.load(f)
+        cls = move_data.get("class", "")
+        power = move_data.get("power", 0)
+        accuracy = move_data.get("accuracy", 0)
+        pp = move_data.get("pp", 0)
+        effect = move_data.get("effect", {})
+        effect_type = effect.get("type", "") if isinstance(effect, dict) else ""
+    except FileNotFoundError:
+        cls = power = accuracy = pp = effect_type = ""
+    print(f"{tm:<8} {move:<30} {cls:<20} {power:<8} {accuracy:<10} {pp:<6} {effect_type}")
