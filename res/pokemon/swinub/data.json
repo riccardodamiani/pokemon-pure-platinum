@@ -38,16 +38,15 @@
             [ 1, "MOVE_ODOR_SLEUTH" ],
             [ 4, "MOVE_MUD_SPORT" ],
             [ 8, "MOVE_POWDER_SNOW" ],
-            [ 13, "MOVE_MUD_SLAP" ],
-            [ 16, "MOVE_ENDURE" ],
+            [ 11, "MOVE_MUD_SLAP" ],
+            [ 14, "MOVE_ENDURE" ],
+            [ 17, "MOVE_BARRAGE"],
             [ 20, "MOVE_MUD_BOMB" ],
-            [ 25, "MOVE_ICY_WIND" ],
-            [ 28, "MOVE_ICE_SHARD" ],
+            [ 23, "MOVE_ICE_SHARD" ],
+            [ 27, "MOVE_HAIL"],
             [ 32, "MOVE_TAKE_DOWN" ],
             [ 37, "MOVE_EARTHQUAKE" ],
-            [ 40, "MOVE_MIST" ],
-            [ 44, "MOVE_BLIZZARD" ],
-            [ 49, "MOVE_AMNESIA" ]
+            [ 40, "MOVE_MIST" ]
         ],
         "by_tm": [
             "TM05",
