@@ -9,15 +9,15 @@
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ICE",
-    "power": 60,
+    "power": 90,
     "accuracy": 100,
     "pp": 10,
     "effect": {
-        "type": "BATTLE_EFFECT_DOUBLE_POWER_IF_HIT",
+        "type": "BATTLE_EFFECT_HIT",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
-    "priority": -4,
+    "priority": 0,
     "flags": [
         "MOVE_FLAG_MAKES_CONTACT",
         "MOVE_FLAG_CAN_PROTECT",
