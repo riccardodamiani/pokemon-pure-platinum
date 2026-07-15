@@ -106,7 +106,7 @@
     "evolutions": [
         [
             "EVO_LEVEL",
-            33,
+            27,
             "SPECIES_PILOSWINE"
         ]
     ],
