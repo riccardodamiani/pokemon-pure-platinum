@@ -35,18 +35,20 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_TACKLE" ],
-            [ 1, "MOVE_WITHDRAW" ],
             [ 5, "MOVE_WITHDRAW" ],
             [ 9, "MOVE_ABSORB" ],
-            [ 13, "MOVE_RAZOR_LEAF" ],
-            [ 17, "MOVE_CURSE" ],
-            [ 22, "MOVE_BITE" ],
-            [ 27, "MOVE_MEGA_DRAIN" ],
-            [ 32, "MOVE_LEECH_SEED" ],
-            [ 37, "MOVE_SYNTHESIS" ],
-            [ 42, "MOVE_CRUNCH" ],
-            [ 47, "MOVE_GIGA_DRAIN" ],
-            [ 52, "MOVE_LEAF_STORM" ]
+            [ 12, "MOVE_RAZOR_LEAF" ],
+            [ 15, "MOVE_CURSE" ],
+            [ 18, "MOVE_BITE" ],
+            [ 21, "MOVE_MEGA_DRAIN" ],
+            [ 24, "MOVE_SAND_TOMB" ],
+            [ 27, "MOVE_BUG_BITE" ],
+            [ 30, "MOVE_LEECH_SEED" ],
+            [ 33, "MOVE_SYNTHESIS" ],
+            [ 36, "MOVE_SEED_BOMB" ],
+            [ 39, "MOVE_CRUNCH" ],
+            [ 42, "MOVE_SLUDGE_BOMB" ],
+            [ 45, "MOVE_GIGA_DRAIN" ]
         ],
         "by_tm": [
             "TM06",
