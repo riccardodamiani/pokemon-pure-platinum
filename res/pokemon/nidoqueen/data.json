@@ -34,13 +34,26 @@
     "icon_palette": 2,
     "learnset": {
         "by_level": [
+            [ 1, "MOVE_MUD_SPORT"],
+            [ 1, "MOVE_GROWL" ],
             [ 1, "MOVE_SCRATCH" ],
-            [ 1, "MOVE_TAIL_WHIP" ],
-            [ 1, "MOVE_DOUBLE_KICK" ],
-            [ 1, "MOVE_POISON_STING" ],
-            [ 23, "MOVE_BODY_SLAM" ],
-            [ 43, "MOVE_EARTH_POWER" ],
-            [ 58, "MOVE_SUPERPOWER" ]
+            [ 7, "MOVE_TAIL_WHIP" ],
+            [ 9, "MOVE_DOUBLE_KICK" ],
+            [ 13, "MOVE_POISON_STING" ],
+            [ 16, "MOVE_FURY_SWIPES" ],
+            [ 19, "MOVE_BITE" ],
+            [ 22, "MOVE_STOMP" ],
+            [ 25, "MOVE_POISON_FANG"],
+            [ 28, "MOVE_TOXIC_SPIKES" ],
+            [ 31, "MOVE_CRUNCH" ],
+            [ 33, "MOVE_THRASH" ],
+            [ 36, "MOVE_POISON_JAB" ],
+            [ 39, "MOVE_EARTH_POWER"],
+            [ 42, "MOVE_TAKE_DOWN"],
+            [ 45, "MOVE_CROSS_CHOP"],
+            [ 48, "MOVE_GUNK_SHOT" ],
+            [ 51, "MOVE_MEGAHORN" ],
+            [ 54, "MOVE_SUPERPOWER" ]
         ],
         "by_tm": [
             "TM01",
