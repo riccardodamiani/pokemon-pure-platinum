@@ -3,10 +3,6 @@
 L_0:
     LoadParticleResource 0, fly_spa
     LoadParticleResource 1, bounce_spa
-    BtlAnimCmd_013 L_1, L_2
-    End
-
-L_1:
     ResetVars
     SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
     SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
@@ -21,24 +17,8 @@ L_1:
     Func_HideBattler BATTLE_ANIM_ATTACKER, TRUE
     WaitForAnimTasks
     WaitForAllEmitters
-    UnloadParticleSystem 0
-    UnloadParticleSystem 1
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
-    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
-    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, 32
-    RestoreBg 55, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_STOP
-    WaitForBgSwitch
-    End
-
-L_2:
-    ResetVars
-    SetVar BATTLE_ANIM_VAR_BG_FADE_TYPE, 1
-    SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_X, 0
+    Delay 10
     SetVar BATTLE_ANIM_VAR_BG_MOVE_STEP_Y, -32
-    SwitchBg 55, BATTLE_BG_SWITCH_MODE_FADE | BATTLE_BG_SWITCH_FLAG_MOVE
-    PlaySoundEffectR SEQ_SE_DP_W327
-    WaitForBgSwitch
     CreateEmitter 0, 3, EMITTER_CB_SET_POS_TO_ATTACKER
     Func_MoveEmitterViewportTop 0, EMITTER_ANIMATION_MODE_DEF_TO_ATK, EMITTER_ANIMATION_FROM_TOP, 10, 4
     Delay 10
