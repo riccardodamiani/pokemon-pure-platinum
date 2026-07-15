@@ -8,7 +8,7 @@
         "to scale rocky walls."
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
+    "type": "TYPE_ROCK",
     "power": 90,
     "accuracy": 85,
     "pp": 20,
