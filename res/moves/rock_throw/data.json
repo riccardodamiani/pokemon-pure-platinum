@@ -8,8 +8,8 @@
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_ROCK",
-    "power": 50,
-    "accuracy": 90,
+    "power": 45,
+    "accuracy": 95,
     "pp": 15,
     "effect": {
         "type": "BATTLE_EFFECT_HIT",
