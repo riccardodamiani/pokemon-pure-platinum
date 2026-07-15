@@ -2,10 +2,10 @@
     "base_stats": {
         "hp": 71,
         "attack": 82,
-        "defense": 64,
-        "speed": 112,
+        "defense": 70,
+        "speed": 102,
         "special_attack": 64,
-        "special_defense": 59
+        "special_defense": 64
     },
     "types": [ "TYPE_NORMAL", "TYPE_NORMAL" ],
     "catch_rate": 75,
