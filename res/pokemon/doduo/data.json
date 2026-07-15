@@ -38,14 +38,16 @@
             [ 1, "MOVE_GROWL" ],
             [ 5, "MOVE_QUICK_ATTACK" ],
             [ 10, "MOVE_RAGE" ],
-            [ 14, "MOVE_FURY_ATTACK" ],
-            [ 19, "MOVE_PURSUIT" ],
+            [ 13, "MOVE_FURY_ATTACK" ],
+            [ 16, "MOVE_PURSUIT" ],
+            [ 20, "MOVE_PLUCK"],
             [ 23, "MOVE_UPROAR" ],
-            [ 28, "MOVE_ACUPRESSURE" ],
-            [ 32, "MOVE_DOUBLE_HIT" ],
-            [ 37, "MOVE_AGILITY" ],
-            [ 41, "MOVE_DRILL_PECK" ],
-            [ 46, "MOVE_ENDEAVOR" ]
+            [ 26, "MOVE_ACUPRESSURE" ],
+            [ 29, "MOVE_DOUBLE_HIT" ],
+            [ 32, "MOVE_FACADE"],
+            [ 35, "MOVE_DRILL_PECK" ],
+            [ 38, "MOVE_AGILITY" ],
+            [ 41, "MOVE_ENDEAVOR" ]
         ],
         "by_tm": [
             "TM06",
