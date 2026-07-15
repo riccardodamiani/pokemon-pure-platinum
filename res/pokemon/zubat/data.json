@@ -38,13 +38,14 @@
             [ 5, "MOVE_SUPERSONIC" ],
             [ 9, "MOVE_ASTONISH" ],
             [ 13, "MOVE_BITE" ],
-            [ 17, "MOVE_WING_ATTACK" ],
-            [ 21, "MOVE_CONFUSE_RAY" ],
-            [ 25, "MOVE_AIR_CUTTER" ],
-            [ 29, "MOVE_MEAN_LOOK" ],
+            [ 16, "MOVE_WING_ATTACK" ],
+            [ 19, "MOVE_POISON_STING"],
+            [ 22, "MOVE_CONFUSE_RAY" ],
+            [ 25, "MOVE_SWIFT" ],
+            [ 28, "MOVE_MEAN_LOOK" ],
+            [ 31, "MOVE_AIR_SLASH" ],
             [ 33, "MOVE_POISON_FANG" ],
-            [ 37, "MOVE_HAZE" ],
-            [ 41, "MOVE_AIR_SLASH" ]
+            [ 36, "MOVE_HAZE" ]
         ],
         "by_tm": [
             "TM06",
