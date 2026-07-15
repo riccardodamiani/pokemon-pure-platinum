@@ -9,7 +9,7 @@
     },
     "types": [ "TYPE_ROCK", "TYPE_ROCK" ],
     "catch_rate": 65,
-    "base_exp_reward": 135,
+    "base_exp_reward": 155,
     "ev_yields": {
         "hp": 0,
         "attack": 0,
