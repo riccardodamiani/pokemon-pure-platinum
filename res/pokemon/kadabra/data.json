@@ -36,18 +36,18 @@
         "by_level": [
             [ 1, "MOVE_TELEPORT" ],
             [ 1, "MOVE_KINESIS" ],
-            [ 1, "MOVE_CONFUSION" ],
             [ 16, "MOVE_CONFUSION" ],
-            [ 18, "MOVE_DISABLE" ],
+            [ 19, "MOVE_DISABLE" ],
             [ 22, "MOVE_MIRACLE_EYE" ],
-            [ 24, "MOVE_PSYBEAM" ],
-            [ 28, "MOVE_REFLECT" ],
-            [ 30, "MOVE_RECOVER" ],
-            [ 34, "MOVE_PSYCHO_CUT" ],
-            [ 36, "MOVE_ROLE_PLAY" ],
+            [ 25, "MOVE_PSYBEAM" ],
+            [ 27, "MOVE_REFLECT" ],
+            [ 31, "MOVE_RECOVER" ],
+            [ 34, "MOVE_SIGNAL_BEAM" ],
+            [ 37, "MOVE_CALM_MIND" ],
             [ 40, "MOVE_PSYCHIC" ],
-            [ 42, "MOVE_FUTURE_SIGHT" ],
-            [ 46, "MOVE_TRICK" ]
+            [ 43, "MOVE_LIGHT_SCREEN" ],
+            [ 45, "MOVE_FUTURE_SIGHT" ],
+            [ 48, "MOVE_TRICK" ]
         ],
         "by_tm": [
             "TM01",
