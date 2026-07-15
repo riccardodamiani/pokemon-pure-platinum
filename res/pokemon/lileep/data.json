@@ -9,7 +9,7 @@
     },
     "types": [ "TYPE_ROCK", "TYPE_GRASS" ],
     "catch_rate": 45,
-    "base_exp_reward": 99,
+    "base_exp_reward": 121,
     "ev_yields": {
         "hp": 0,
         "attack": 0,
