@@ -34,17 +34,22 @@
     "icon_palette": 0,
     "learnset": {
         "by_level": [
-            [ 1, "MOVE_ABSORB" ],
-            [ 10, "MOVE_ABSORB" ],
+            [ 10, "MOVE_LEECH_LIFE" ],
             [ 13, "MOVE_GUST" ],
             [ 17, "MOVE_STUN_SPORE" ],
-            [ 20, "MOVE_MORNING_SUN" ],
-            [ 24, "MOVE_MEGA_DRAIN" ],
-            [ 27, "MOVE_WHIRLWIND" ],
-            [ 31, "MOVE_ATTRACT" ],
-            [ 34, "MOVE_SILVER_WIND" ],
-            [ 38, "MOVE_GIGA_DRAIN" ],
-            [ 41, "MOVE_BUG_BUZZ" ]
+            [ 20, "MOVE_BUG_BITE"],
+            [ 23, "MOVE_MORNING_SUN" ],
+            [ 27, "MOVE_AIR_CUTTER"],
+            [ 29, "MOVE_MEGA_DRAIN" ],
+            [ 31, "MOVE_WHIRLWIND" ],
+            [ 33, "MOVE_ATTRACT" ],
+            [ 35, "MOVE_SILVER_WIND" ],
+            [ 37, "MOVE_BUG_BUZZ" ],
+            [ 40, "MOVE_GIGA_DRAIN" ],
+            [ 43, "MOVE_GASTRO_ACID"],
+            [ 46, "MOVE_TAILWIND" ],
+            [ 49, "MOVE_AEROBLAST"],
+            [ 52, "MOVE_ENERGY_BALL" ]
         ],
         "by_tm": [
             "TM06",
