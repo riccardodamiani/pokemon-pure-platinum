@@ -103,8 +103,8 @@
     },
     "evolutions": [
         [
-            "EVO_LEVEL_KNOW_MOVE",
-            "MOVE_ANCIENT_POWER",
+            "EVO_LEVEL",
+            38,
             "SPECIES_MAMOSWINE"
         ]
     ],
