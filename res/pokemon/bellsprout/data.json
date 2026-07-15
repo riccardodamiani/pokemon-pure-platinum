@@ -35,18 +35,21 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_VINE_WHIP" ],
-            [ 7, "MOVE_GROWTH" ],
-            [ 11, "MOVE_WRAP" ],
-            [ 13, "MOVE_SLEEP_POWDER" ],
+            [ 1, "MOVE_SWEET_SCENT" ],
+            [ 5, "MOVE_TACKLE"],
+            [ 10, "MOVE_WRAP" ],
+            [ 13, "MOVE_ACID"],
             [ 15, "MOVE_POISON_POWDER" ],
-            [ 17, "MOVE_STUN_SPORE" ],
-            [ 23, "MOVE_ACID" ],
-            [ 27, "MOVE_KNOCK_OFF" ],
-            [ 29, "MOVE_SWEET_SCENT" ],
-            [ 35, "MOVE_GASTRO_ACID" ],
-            [ 39, "MOVE_RAZOR_LEAF" ],
-            [ 41, "MOVE_SLAM" ],
-            [ 47, "MOVE_WRING_OUT" ]
+            [ 17, "MOVE_SLEEP_POWDER" ],
+            [ 19, "MOVE_STUN_SPORE" ],
+            [ 21, "MOVE_RAZOR_LEAF" ],
+            [ 25, "MOVE_KNOCK_OFF" ],
+            [ 28, "MOVE_SLUDGE" ],
+            [ 31, "MOVE_GRASS_KNOT" ],
+            [ 34, "MOVE_GROWTH" ],
+            [ 37, "MOVE_GIGA_DRAIN" ],
+            [ 40, "MOVE_LEECH_SEED" ],
+            [ 45, "MOVE_SLAM" ]
         ],
         "by_tm": [
             "TM06",
