@@ -11,7 +11,7 @@
         },
         {
             "level": 7,
-            "species": "SPECIES_SPOINK"
+            "species": "SPECIES_ABRA"
         },
         {
             "level": 7,
@@ -23,7 +23,7 @@
         },
         {
             "level": 8,
-            "species": "SPECIES_SPOINK"
+            "species": "SPECIES_ABRA"
         },
         {
             "level": 8,
@@ -39,7 +39,7 @@
         },
         {
             "level": 9,
-            "species": "SPECIES_SPOINK"
+            "species": "SPECIES_ABRA"
         },
         {
             "level": 9,
@@ -63,10 +63,10 @@
         "SPECIES_PSYDUCK"
     ],
     "radar": [
-        "SPECIES_GEODUDE",
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT"
+        "SPECIES_SPOINK",
+        "SPECIES_SPOINK",
+        "SPECIES_SPOINK",
+        "SPECIES_SPOINK"
     ],
     "rate_form0": 0,
     "rate_form1": 0,
