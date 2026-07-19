@@ -38,7 +38,7 @@
             [ 4, "MOVE_HARDEN" ],
             [ 7, "MOVE_BUBBLE" ],
             [ 10, "MOVE_ROCK_THROW" ],
-            [ 14, "MOVE_RECOVER" ],
+            [ 13, "MOVE_RECOVER" ],
             [ 16, "MOVE_ICY_WIND" ],
             [ 19, "MOVE_BUBBLE_BEAM" ],
             [ 22, "MOVE_ROCK_BLAST" ],
