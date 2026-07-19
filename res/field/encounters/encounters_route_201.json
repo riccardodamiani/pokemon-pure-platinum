@@ -11,11 +11,11 @@
         },
         {
             "level": 3,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_CATERPIE"
         },
         {
             "level": 3,
-            "species": "SPECIES_KRICKETOT"
+            "species": "SPECIES_CATERPIE"
         },
         {
             "level": 3,
@@ -55,12 +55,12 @@
         "SPECIES_DODUO"
     ],
     "day": [
-        "SPECIES_STARLY",
+        "SPECIES_BIDOOF",
         "SPECIES_BIDOOF"
     ],
     "night": [
-        "SPECIES_BIDOOF",
-        "SPECIES_BIDOOF"
+        "SPECIES_CATERPIE",
+        "SPECIES_CATERPIE"
     ],
     "radar": [
         "SPECIES_NIDORAN_M",
