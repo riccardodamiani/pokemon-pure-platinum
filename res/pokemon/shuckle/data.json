@@ -36,7 +36,6 @@
         "by_level": [
             [ 1, "MOVE_WITHDRAW" ],
             [ 1, "MOVE_CONSTRICT" ],
-            [ 1, "MOVE_BIDE" ],
             [ 5, "MOVE_WRAP"],
             [ 7, "MOVE_ROLLOUT" ],
             [ 10, "MOVE_STRING_SHOT"],
@@ -48,10 +47,13 @@
             [ 28, "MOVE_ROCK_SLIDE" ],
             [ 31, "MOVE_SKULL_BASH" ],
             [ 34, "MOVE_GASTRO_ACID" ],
-            [ 37, "MOVE_POWER_TRICK" ],
-            [ 40, "MOVE_ENCORE" ],
-            [ 43, "MOVE_STONE_EDGE" ],
-            [ 45, "MOVE_SPIDER_WEB"]
+            [ 37, "MOVE_U_TURN" ],
+            [ 40, "MOVE_POWER_TRICK" ],
+            [ 43, "MOVE_ENCORE" ],
+            [ 46, "MOVE_ZEN_HEADBUTT" ],
+            [ 49, "MOVE_STONE_EDGE" ],
+            [ 52, "MOVE_SPIDER_WEB"],
+            [ 56, "MOVE_IRON_DEFENSE" ]
         ],
         "by_tm": [
             "TM06",
