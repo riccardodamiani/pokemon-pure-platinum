@@ -3,7 +3,7 @@
     "land_encounters": [
         {
             "level": 7,
-            "species": "SPECIES_ZUBAT"
+            "species": "SPECIES_ONIX"
         },
         {
             "level": 7,
@@ -43,7 +43,7 @@
         },
         {
             "level": 9,
-            "species": "SPECIES_PSYDUCK"
+            "species": "SPECIES_SPOINK"
         },
         {
             "level": 9,
