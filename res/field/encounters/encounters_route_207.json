@@ -3,14 +3,6 @@
     "land_encounters": [
         {
             "level": 8,
-            "species": "SPECIES_MACHOP"
-        },
-        {
-            "level": 8,
-            "species": "SPECIES_BELLSPROUT"
-        },
-        {
-            "level": 8,
             "species": "SPECIES_PONYTA"
         },
         {
@@ -18,12 +10,12 @@
             "species": "SPECIES_EKANS"
         },
         {
-            "level": 9,
-            "species": "SPECIES_EKANS"
+            "level": 8,
+            "species": "SPECIES_BELLSPROUT"
         },
         {
-            "level": 9,
-            "species": "SPECIES_BELLSPROUT"
+            "level": 8,
+            "species": "SPECIES_EKANS"
         },
         {
             "level": 9,
@@ -35,15 +27,23 @@
         },
         {
             "level": 9,
-            "species": "SPECIES_BELLSPROUT"
+            "species": "SPECIES_MACHOP"
         },
         {
-            "level": 10,
-            "species": "SPECIES_EKANS"
+            "level": 9,
+            "species": "SPECIES_SLOWPOKE"
+        },
+        {
+            "level": 9,
+            "species": "SPECIES_PHANPY"
         },
         {
             "level": 10,
             "species": "SPECIES_PONYTA"
+        },
+        {
+            "level": 10,
+            "species": "SPECIES_EKANS"
         },
         {
             "level": 10,
@@ -55,12 +55,12 @@
         "SPECIES_PHANPY"
     ],
     "day": [
-        "SPECIES_EKANS",
-        "SPECIES_MACHOP"
+        "SPECIES_BELLSPROUT",
+        "SPECIES_BELLSPROUT"
     ],
     "night": [
         "SPECIES_CATERPIE",
-        "SPECIES_CATERPIE"
+        "SPECIES_SLOWPOKE"
     ],
     "radar": [
         "SPECIES_STANTLER",
