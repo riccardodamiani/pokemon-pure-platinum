@@ -3,7 +3,7 @@
     "land_encounters": [
         {
             "level": 6,
-            "species": "SPECIES_SWINUB"
+            "species": "SPECIES_GEODUDE"
         },
         {
             "level": 6,
@@ -15,19 +15,11 @@
         },
         {
             "level": 6,
-            "species": "SPECIES_TYROGUE"
+            "species": "SPECIES_SWINUB"
         },
         {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_GEODUDE"
+            "level": 6,
+            "species": "SPECIES_ZUBAT"
         },
         {
             "level": 7,
@@ -35,11 +27,7 @@
         },
         {
             "level": 7,
-            "species": "SPECIES_DUNSPARCE"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_DUNSPARCE"
+            "species": "SPECIES_ZUBAT"
         },
         {
             "level": 7,
@@ -47,12 +35,24 @@
         },
         {
             "level": 7,
+            "species": "SPECIES_SWINUB"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_DUNSPARCE"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_ZUBAT"
+        },
+        {
+            "level": 8,
             "species": "SPECIES_SWINUB"
         }
     ],
     "swarms": [
-        "SPECIES_ZUBAT",
-        "SPECIES_PSYDUCK"
+        "SPECIES_DUNSPARCE",
+        "SPECIES_SWINUB"
     ],
     "day": [
         "SPECIES_PSYDUCK",
