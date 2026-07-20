@@ -125,29 +125,29 @@
     "old_rod_rate": 40,
     "old_rod_encounters": [
         {
-            "level_max": 6,
-            "level_min": 4,
+            "level_max": 10,
+            "level_min": 6,
             "species": "SPECIES_MAGIKARP"
         },
         {
             "level_max": 7,
-            "level_min": 3,
-            "species": "SPECIES_MAGIKARP"
+            "level_min": 6,
+            "species": "SPECIES_LOTAD"
         },
         {
-            "level_max": 10,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 7,
+            "level_min": 6,
+            "species": "SPECIES_LOTAD"
         },
         {
-            "level_max": 10,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 7,
+            "level_min": 6,
+            "species": "SPECIES_LOTAD"
         },
         {
-            "level_max": 15,
-            "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "level_max": 7,
+            "level_min": 6,
+            "species": "SPECIES_LOTAD"
         }
     ],
     "good_rod_rate": 70,
