@@ -7,7 +7,7 @@
         },
         {
             "level": 8,
-            "species": "SPECIES_TRAPINCH"
+            "species": "SPECIES_TYROGUE"
         },
         {
             "level": 8,
@@ -19,7 +19,7 @@
         },
         {
             "level": 9,
-            "species": "SPECIES_TRAPINCH"
+            "species": "SPECIES_TYROGUE"
         },
         {
             "level": 9,
@@ -35,7 +35,7 @@
         },
         {
             "level": 9,
-            "species": "SPECIES_MACHOP"
+            "species": "SPECIES_TRAPINCH"
         },
         {
             "level": 10,
@@ -43,24 +43,24 @@
         },
         {
             "level": 10,
-            "species": "SPECIES_GEODUDE"
+            "species": "SPECIES_TRAPINCH"
         },
         {
             "level": 10,
-            "species": "SPECIES_ONIX"
+            "species": "SPECIES_TRAPINCH"
         }
     ],
     "swarms": [
-        "SPECIES_GEODUDE",
-        "SPECIES_GEODUDE"
-    ],
-    "day": [
         "SPECIES_ONIX",
         "SPECIES_ONIX"
     ],
+    "day": [
+        "SPECIES_GEODUDE",
+        "SPECIES_GEODUDE"
+    ],
     "night": [
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT"
+        "SPECIES_TRAPINCH",
+        "SPECIES_TRAPINCH"
     ],
     "radar": [
         "SPECIES_GEODUDE",
