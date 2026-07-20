@@ -2,28 +2,12 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 2,
-            "species": "SPECIES_STARLY"
+            "level": 4,
+            "species": "SPECIES_CATERPIE"
         },
         {
-            "level": 2,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_BIDOOF"
+            "level": 4,
+            "species": "SPECIES_LOTAD"
         },
         {
             "level": 4,
@@ -43,24 +27,40 @@
         },
         {
             "level": 4,
-            "species": "SPECIES_STARLY"
+            "species": "SPECIES_PSYDUCK"
         },
         {
             "level": 4,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_PSYDUCK"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_CATERPIE"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_LOTAD"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_STARLY"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_LOTAD"
         }
     ],
     "swarms": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_PSYDUCK",
+        "SPECIES_PSYDUCK"
     ],
     "day": [
-        "SPECIES_STARLY",
-        "SPECIES_BIDOOF"
+        "SPECIES_CATERPIE",
+        "SPECIES_CATERPIE"
     ],
     "night": [
-        "SPECIES_BIDOOF",
-        "SPECIES_BIDOOF"
+        "SPECIES_LOTAD",
+        "SPECIES_LOTAD"
     ],
     "radar": [
         "SPECIES_WOBBUFFET",
