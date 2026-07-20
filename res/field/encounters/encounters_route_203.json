@@ -3,15 +3,7 @@
     "land_encounters": [
         {
             "level": 6,
-            "species": "SPECIES_POOCHYENA"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_PSYDUCK"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_ABRA"
+            "species": "SPECIES_SUNKERN"
         },
         {
             "level": 6,
@@ -22,32 +14,40 @@
             "species": "SPECIES_ZUBAT"
         },
         {
-            "level": 7,
-            "species": "SPECIES_ABRA"
-        },
-        {
-            "level": 7,
+            "level": 6,
             "species": "SPECIES_PSYDUCK"
         },
         {
-            "level": 7,
-            "species": "SPECIES_SUNKERN"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_SUNKERN"
-        },
-        {
-            "level": 8,
+            "level": 6,
             "species": "SPECIES_ABRA"
         },
         {
-            "level": 8,
+            "level": 6,
+            "species": "SPECIES_POOCHYENA"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_ZUBAT"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_SUNKERN"
+        },
+        {
+            "level": 7,
             "species": "SPECIES_POOCHYENA"
         },
         {
             "level": 8,
-            "species": "SPECIES_ZUBAT"
+            "species": "SPECIES_CUBONE"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_ABRA"
+        },
+        {
+            "level": 8,
+            "species": "SPECIES_ABRA"
         }
     ],
     "swarms": [
@@ -55,7 +55,7 @@
         "SPECIES_CUBONE"
     ],
     "day": [
-        "SPECIES_PSYDUCK",
+        "SPECIES_ABRA",
         "SPECIES_SUNKERN"
     ],
     "night": [
