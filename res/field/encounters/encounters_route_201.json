@@ -2,44 +2,8 @@
     "land_rate": 30,
     "land_encounters": [
         {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_KRICKETOT"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_CATERPIE"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_CATERPIE"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_RATTATA"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_RALTS"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 3,
-            "species": "SPECIES_RATTATA"
-        },
-        {
             "level": 4,
-            "species": "SPECIES_STARLY"
-        },
-        {
-            "level": 4,
-            "species": "SPECIES_RALTS"
+            "species": "SPECIES_RATTATA"
         },
         {
             "level": 4,
@@ -47,7 +11,43 @@
         },
         {
             "level": 4,
+            "species": "SPECIES_STARLY"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_CATERPIE"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_KRICKETOT"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_RALTS"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_STARLY"
+        },
+        {
+            "level": 5,
             "species": "SPECIES_RATTATA"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_CATERPIE"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_RALTS"
+        },
+        {
+            "level": 4,
+            "species": "SPECIES_DODUO"
+        },
+        {
+            "level": 5,
+            "species": "SPECIES_DODUO"
         }
     ],
     "swarms": [
