@@ -821,27 +821,27 @@ static u8 GetGroundEncounterSlot(void)
 {
     u8 roll = LCRNG_RandMod(100);
 
-    if (roll < 20) {
+    if (roll < 15) {
         return 0;
-    } else if (roll >= 20 && roll < 40) {
+    } else if (roll >= 15 && roll < 30) {
         return 1;
-    } else if (roll >= 40 && roll < 50) {
+    } else if (roll >= 30 && roll < 40) {
         return 2;
-    } else if (roll >= 50 && roll < 60) {
+    } else if (roll >= 40 && roll < 50) {
         return 3;
-    } else if (roll >= 60 && roll < 70) {
+    } else if (roll >= 50 && roll < 60) {
         return 4;
-    } else if (roll >= 70 && roll < 80) {
+    } else if (roll >= 60 && roll < 70) {
         return 5;
-    } else if (roll >= 80 && roll < 85) {
+    } else if (roll >= 70 && roll < 78) {
         return 6;
-    } else if (roll >= 85 && roll < 90) {
+    } else if (roll >= 78 && roll < 86) {
         return 7;
-    } else if (roll >= 90 && roll < 94) {
+    } else if (roll >= 86 && roll < 91) {
         return 8;
-    } else if (roll >= 94 && roll < 98) {
+    } else if (roll >= 91 && roll < 96) {
         return 9;
-    } else if (roll == 98) {
+    } else if (roll >= 96 && roll < 98) {
         return 10;
     }
 
