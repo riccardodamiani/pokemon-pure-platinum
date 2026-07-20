@@ -10,12 +10,16 @@
             "species": "SPECIES_BIDOOF"
         },
         {
-            "level": 6,
+            "level": 7,
             "species": "SPECIES_WURMPLE"
         },
         {
             "level": 6,
-            "species": "SPECIES_SKITTY"
+            "species": "SPECIES_SHINX"
+        },
+        {
+            "level": 6,
+            "species": "SPECIES_SHINX"
         },
         {
             "level": 6,
@@ -23,23 +27,7 @@
         },
         {
             "level": 7,
-            "species": "SPECIES_SHINX"
-        },
-        {
-            "level": 7,
             "species": "SPECIES_BUDEW"
-        },
-        {
-            "level": 6,
-            "species": "SPECIES_SHINX"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_WURMPLE"
-        },
-        {
-            "level": 7,
-            "species": "SPECIES_SKITTY"
         },
         {
             "level": 7,
@@ -47,7 +35,19 @@
         },
         {
             "level": 7,
-            "species": "SPECIES_BIDOOF"
+            "species": "SPECIES_WURMPLE"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_STARLY"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_PINECO"
+        },
+        {
+            "level": 7,
+            "species": "SPECIES_PINECO"
         }
     ],
     "swarms": [
