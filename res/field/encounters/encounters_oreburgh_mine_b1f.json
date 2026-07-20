@@ -51,12 +51,12 @@
         }
     ],
     "swarms": [
-        "SPECIES_TYROGUE",
-        "SPECIES_TYROGUE"
+        "SPECIES_ONIX",
+        "SPECIES_ONIX"
     ],
     "day": [
-        "SPECIES_ZUBAT",
-        "SPECIES_ZUBAT"
+        "SPECIES_GEODUDE",
+        "SPECIES_GEODUDE"
     ],
     "night": [
         "SPECIES_ZUBAT",
