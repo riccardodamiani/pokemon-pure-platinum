@@ -135,9 +135,9 @@
             "species": "SPECIES_MAGIKARP"
         },
         {
-            "level_max": 10,
+            "level_max": 7,
             "level_min": 5,
-            "species": "SPECIES_MAGIKARP"
+            "species": "SPECIES_FINNEON"
         },
         {
             "level_max": 10,
