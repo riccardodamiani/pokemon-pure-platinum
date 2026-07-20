@@ -47,7 +47,7 @@
         "if you make them sleep or something\f",
         "by using a Pokémon’s move.\r",
         "OK, {STRVAR_1 3, 0, 0}, to get you\n",
-        "started, I’ll give you five\f",
+        "started, I’ll give you some\f",
         "Poké Balls!\r"
       ]
     },
@@ -107,7 +107,7 @@
         "catch if you make one of your\f",
         "Pokémon put them to sleep or such.\r",
         "Here, {STRVAR_1 3, 0, 0}, I’ll give you\n",
-        "five Poké Balls to get you started.\r"
+        "some Poké Balls to get you started.\r"
       ]
     },
     {
