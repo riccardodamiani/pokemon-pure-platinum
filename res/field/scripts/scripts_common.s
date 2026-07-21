@@ -117,6 +117,8 @@ CommonScript_NurseDeclineHealPokemon:
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain1
     WaitButton
     CloseMessage
+    ApplyMovement LOCALID_PLAYER, CommonScript_NurseFarewellLookSouth
+    WaitMovement
     ReleaseAll
     ReturnCommonScript
     End
@@ -163,9 +165,15 @@ CommonScript_NurseFarewellAfterHeal:
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain1
     WaitButton
     CloseMessage
+    ApplyMovement LOCALID_PLAYER, CommonScript_NurseFarewellLookSouth
+    WaitMovement
     ReleaseAll
     ReturnCommonScript
     End
+
+CommonScript_NurseFarewellLookSouth:
+    WalkOnSpotNormalSouth
+    EndMovement
 
 CommonScript_NurseFarewellAfterHealGoldCard:
     Message CommonStrings_Text_PokecenterThankYouForWaiting
@@ -178,6 +186,8 @@ CommonScript_NurseFarewellAfterHealGoldCard:
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain2
     WaitButton
     CloseMessage
+    ApplyMovement LOCALID_PLAYER, CommonScript_NurseFarewellLookSouth
+    WaitMovement
     ReleaseAll
     ReturnCommonScript
     End
@@ -211,6 +221,8 @@ CommonScript_NurseGoldCard:
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain2
     WaitButton
     CloseMessage
+    ApplyMovement LOCALID_PLAYER, CommonScript_NurseFarewellLookSouth
+    WaitMovement
     ReleaseAll
     ReturnCommonScript
     End
@@ -223,6 +235,8 @@ CommonScript_NurseGoldCardPreviouslySeen:
     Message CommonStrings_Text_PokecenterHopeToSeeYouAgain2
     WaitButton
     CloseMessage
+    ApplyMovement LOCALID_PLAYER, CommonScript_NurseFarewellLookSouth
+    WaitMovement
     ReleaseAll
     ReturnCommonScript
     End
