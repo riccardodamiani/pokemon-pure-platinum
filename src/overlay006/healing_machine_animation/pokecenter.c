@@ -94,46 +94,27 @@ static BOOL FieldTask_PlayHealingAnimation_Pokecenter(FieldTask *param0)
         screenRenderObj = MapProp_GetRenderObj(screenMapProp);
 
         MapPropOneShotAnimationManager_LoadPropAnimations(fieldSystem->mapPropAnimMan, fieldSystem->mapPropOneShotAnimMan, HEALING_MACHINE_ANIMATION_SCREEN_TAG, pokecenter_healing_machine_tv_nsbmd, screenRenderObj, screenModel, AreaDataManager_GetMapPropTexture(fieldSystem->areaDataManager), 1, 1, 0);
-        (animation->state)++;
-        break;
-    }
-    case HEALING_MACHINE_ANIMATION_STATE_ADD_POKEBALL: {
+        
         MapProp *pokeballMapProp;
         NNSG3dRenderObj *pokeballRenderObj;
         VecFx32 pokeballPosition;
         VecFx32 pokeballRotation = { 0, 0, 0 };
+        int i;
 
-        pokeballPosition.x = animation->position.x + PokecenterHealingAnimation_PokeballOffsets[animation->currentPokeballIndex].x;
-        pokeballPosition.y = animation->position.y + PokecenterHealingAnimation_PokeballOffsets[animation->currentPokeballIndex].y;
-        pokeballPosition.z = animation->position.z + PokecenterHealingAnimation_PokeballOffsets[animation->currentPokeballIndex].z;
+        for(i = 0; i < animation->pokeballCount; i++){
+            pokeballPosition.x = animation->position.x + PokecenterHealingAnimation_PokeballOffsets[i].x;
+            pokeballPosition.y = animation->position.y + PokecenterHealingAnimation_PokeballOffsets[i].y;
+            pokeballPosition.z = animation->position.z + PokecenterHealingAnimation_PokeballOffsets[i].z;
+            animation->pokeballLoadedPropIDs[i] = MapPropManager_LoadOne(fieldSystem->mapPropManager, fieldSystem->areaDataManager, pokecenter_healing_machine_mini_pokeball_nsbmd, &pokeballPosition, &pokeballRotation, fieldSystem->mapPropAnimMan);
+            pokeballMapProp = MapPropManager_GetLoadedPropSafely(fieldSystem->mapPropManager, animation->pokeballLoadedPropIDs[i]);
+            pokeballRenderObj = MapProp_GetRenderObj(pokeballMapProp);
+            MapPropOneShotAnimationManager_SetAnimationRenderObj(fieldSystem->mapPropOneShotAnimMan, HEALING_MACHINE_ANIMATION_POKEBALL_TAG, i, pokeballRenderObj);
+        }
+        animation->currentPokeballIndex = i;
 
-        Sound_PlayEffect(SEQ_SE_DP_BOWA);
-
-        animation->pokeballLoadedPropIDs[animation->currentPokeballIndex] = MapPropManager_LoadOne(fieldSystem->mapPropManager, fieldSystem->areaDataManager, pokecenter_healing_machine_mini_pokeball_nsbmd, &pokeballPosition, &pokeballRotation, fieldSystem->mapPropAnimMan);
-
-        pokeballMapProp = MapPropManager_GetLoadedPropSafely(fieldSystem->mapPropManager, animation->pokeballLoadedPropIDs[animation->currentPokeballIndex]);
-        pokeballRenderObj = MapProp_GetRenderObj(pokeballMapProp);
-        MapPropOneShotAnimationManager_SetAnimationRenderObj(fieldSystem->mapPropOneShotAnimMan, HEALING_MACHINE_ANIMATION_POKEBALL_TAG, animation->currentPokeballIndex, pokeballRenderObj);
-        (animation->state)++;
+        animation->state = HEALING_MACHINE_ANIMATION_STATE_PLAY_FINAL_ANIMATION;
         break;
     }
-    case HEALING_MACHINE_ANIMATION_STATE_WAIT_FOR_POKEBALL:
-        if (animation->pokeballTicks < HEALING_MACHINE_ANIMATION_POKEBALL_MAX_TICKS) {
-            animation->pokeballTicks++;
-            break;
-        } else {
-            animation->pokeballTicks = 0;
-        }
-
-        animation->currentPokeballIndex++;
-
-        if (animation->currentPokeballIndex < animation->pokeballCount) {
-            (animation->state) = HEALING_MACHINE_ANIMATION_STATE_ADD_POKEBALL;
-        } else {
-            (animation->state)++;
-        }
-
-        break;
     case HEALING_MACHINE_ANIMATION_STATE_PLAY_FINAL_ANIMATION:
         MapPropOneShotAnimationManager_PlayAnimation(fieldSystem->mapPropOneShotAnimMan, HEALING_MACHINE_ANIMATION_POKEBALL_TAG, 0);
         MapPropOneShotAnimationManager_PlayAnimation(fieldSystem->mapPropOneShotAnimMan, HEALING_MACHINE_ANIMATION_SCREEN_TAG, 0);
