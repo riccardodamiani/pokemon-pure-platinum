@@ -52,6 +52,26 @@
       ]
     },
     {
+      "id": "Route202_Text_DawnTakeThisAsWell",
+      "en_US": [
+        "Dawn: And take this as well!\r"
+      ]
+    },
+    {
+      "id": "Route202_Text_LucasTakeThisAsWell",
+      "en_US": [
+        "Lucas: And take this as well!\r"
+      ]
+    },
+    {
+      "id": "Route202_Text_SometimesItsDifficultToTrainPokemon",
+      "en_US": [
+        "Sometimes it’s difficult to train weak\n",
+        "Pokémons.\r",
+        "This will make life much easier!\r"
+      ]
+    },
+    {
       "id": "Route202_Text_DawnByeNow",
       "en_US": [
         "If you have lots of Pokémon with you,\n",

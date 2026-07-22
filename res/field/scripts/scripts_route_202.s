@@ -136,9 +136,27 @@ Route202_GivePokeballs:
     SetVar VAR_0x8005, 10
     Common_GiveItemQuantity
     GetPlayerGender VAR_RESULT
+    GoToIfEq VAR_RESULT, GENDER_MALE, Route202_DawnTakeThis
+    GoToIfEq VAR_RESULT, GENDER_FEMALE, Route202_LucasTakeThis
+    End
+
+Route202_GiveExpShare:
+    SetVar VAR_0x8004, ITEM_EXP_SHARE
+    SetVar VAR_0x8005, 1
+    Common_GiveItemQuantity
+    Message Route202_Text_SometimesItsDifficultToTrainPokemon
     GoToIfEq VAR_RESULT, GENDER_MALE, Route202_DawnLeave
     GoToIfEq VAR_RESULT, GENDER_FEMALE, Route202_LucasLeave
     End
+
+Route202_DawnTakeThis:
+    BufferPlayerName 0
+    Message Route202_Text_DawnTakeThisAsWell
+    GoTo Route202_GiveExpShare
+
+Route202_LucasTakeThis:
+    Message Route202_Text_LucasTakeThisAsWell
+    GoTo Route202_GiveExpShare
 
 Route202_DawnLeave:
     BufferPlayerName 0
