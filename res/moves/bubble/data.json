@@ -9,9 +9,9 @@
     ],
     "class": "CLASS_SPECIAL",
     "type": "TYPE_WATER",
-    "power": 35,
+    "power": 40,
     "accuracy": 100,
-    "pp": 30,
+    "pp": 25,
     "effect": {
         "type": "BATTLE_EFFECT_LOWER_SPEED_HIT",
         "chance": 10
