@@ -37,7 +37,7 @@
             [ 1, "MOVE_ABSORB" ],
             [ 1, "MOVE_SWEET_SCENT" ],
             [ 4, "MOVE_GROWTH" ],
-            [ 7, "MOVE_WATER_SPORT" ],
+            [ 7, "MOVE_ACID" ],
             [ 10, "MOVE_STUN_SPORE" ],
             [ 13, "MOVE_MEGA_DRAIN" ],
             [ 19, "MOVE_LEECH_SEED" ],
