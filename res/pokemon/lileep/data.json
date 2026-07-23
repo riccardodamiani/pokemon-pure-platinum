@@ -36,7 +36,7 @@
         "by_level": [
             [ 1, "MOVE_ASTONISH" ],
             [ 1, "MOVE_CONSTRICT" ],
-            [ 6, "MOVE_ROCK_BLAST" ],
+            [ 6, "MOVE_ROCK_THROW" ],
             [ 9, "MOVE_INGRAIN" ],
             [ 12, "MOVE_MEGA_DRAIN"],
             [ 16, "MOVE_ACID" ],

@@ -39,7 +39,7 @@
             [ 6, "MOVE_ACID" ],
             [ 9, "MOVE_MEGA_DRAIN"],
             [ 12, "MOVE_INGRAIN" ],
-            [ 16, "MOVE_ROCK_BLAST" ],
+            [ 16, "MOVE_ROCK_THROW" ],
             [ 20, "MOVE_CONFUSE_RAY" ],
             [ 23, "MOVE_AMNESIA" ],
             [ 27, "MOVE_GASTRO_ACID" ],
