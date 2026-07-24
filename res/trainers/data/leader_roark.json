@@ -13,7 +13,7 @@
         {
             "species": "SPECIES_SHUCKLE",
             "form": 0,
-            "level": 13,
+            "level": 12,
             "item": "ITEM_LIECHI_BERRY",
             "moves": [
                 "MOVE_STEALTH_ROCK",
@@ -26,7 +26,7 @@
             "nature": "NATURE_BRAVE",
             "evFlags": {
                 "hp": false,
-                "attack": true,
+                "attack": false,
                 "defense": false,
                 "speed": false,
                 "special_attack": false,
@@ -43,18 +43,18 @@
                 "MOVE_ROCK_THROW",
                 "MOVE_RECOVER"
             ],
-            "iv_scale": 100,
+            "iv_scale": 150,
             "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NATURAL_CURE",
             "nature": "NATURE_ADAMANT",
             "evFlags": {
                 "hp": false,
-                "attack": true,
+                "attack": false,
                 "defense": false,
                 "speed": false,
                 "special_attack": false,
-                "special_defense": true
+                "special_defense": false
             }
         },
         {
