@@ -3,17 +3,46 @@
     "class": "TRAINER_CLASS_WORKER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
         {
             "species": "SPECIES_GEODUDE",
             "form": 0,
-            "level": 6,
-            "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "level": 8,
+            "item": "ITEM_IRON_BALL",
+            "moves": [
+                "MOVE_FLING",
+                "MOVE_ROCK_BLAST"
+            ],
+            "iv_scale": 50,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_STURDY",
+            "nature": "NATURE_BRAVE",
+            "evFlags": {
+                "hp": false,
+                "attack": true,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_MACHOP",
+            "form": 0,
+            "level": 9,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_LOW_KICK",
+                "MOVE_SECRET_POWER"
+            ],
+            "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -27,15 +56,43 @@
             }
         },
         {
-            "species": "SPECIES_MACHOP",
+            "species": "SPECIES_TRAPINCH",
             "form": 0,
-            "level": 8,
-            "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_MUD_SLAP",
+                "MOVE_SAND_ATTACK"
+            ],
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_ARENA_TRAP",
+            "nature": "NATURE_MODEST",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": true,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_MAGNEMITE",
+            "form": 0,
+            "level": 11,
+            "item": "ITEM_MAGNET",
+            "moves": [
+                "MOVE_THUNDER_SHOCK",
+                "MOVE_SUPERSONIC",
+                "MOVE_TACKLE"
+            ],
+            "iv_scale": 100,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_STURDY",
+            "nature": "NATURE_HASTY",
             "evFlags": {
                 "hp": false,
                 "attack": false,
