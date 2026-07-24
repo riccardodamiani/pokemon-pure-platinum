@@ -9,15 +9,42 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_BUDEW",
+            "species": "SPECIES_WURMPLE",
             "form": 0,
-            "level": 7,
+            "level": 8,
             "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "moves": [
+                "MOVE_POISON_STING",
+                "MOVE_STRING_SHOT"
+            ],
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_ZUBAT",
+            "form": 0,
+            "level": 8,
+            "item": null,
+            "moves": [
+                "MOVE_SUPERSONIC",
+                "MOVE_LEECH_LIFE"
+            ],
+            "iv_scale": 150,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_LONELY",
             "evFlags": {
                 "hp": false,
                 "attack": false,
