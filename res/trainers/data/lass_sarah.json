@@ -11,10 +11,37 @@
         {
             "species": "SPECIES_SHINX",
             "form": 0,
+            "level": 6,
+            "item": null,
+            "moves": [
+                "MOVE_TACKLE"
+            ],
+            "iv_scale": 0,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_NONE",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_LOTAD",
+            "form": 0,
             "level": 7,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_ABSORB",
+                "MOVE_ASTONISH",
+                "MOVE_BUBBLE"
+            ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
