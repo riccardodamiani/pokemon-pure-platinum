@@ -3,20 +3,48 @@
     "class": "TRAINER_CLASS_WORKER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_GEODUDE",
+            "species": "SPECIES_EKANS",
             "form": 0,
-            "level": 9,
-            "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "level": 11,
+            "item": "ITEM_POISON_BARB",
+            "moves": [
+                "MOVE_BITE",
+                "MOVE_POISON_STING"
+            ],
+            "iv_scale": 150,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_INTIMIDATE",
+            "nature": "NATURE_NAUGHTY",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_MUNCHLAX",
+            "form": 0,
+            "level": 12,
+            "item": "ITEM_SITRUS_BERRY",
+            "moves": [
+                "MOVE_RETURN"
+            ],
+            "iv_scale": 150,
+            "friendship": 150,
+            "ball_seal": 0,
+            "ability": "ABILITY_THICK_FAT",
+            "nature": "NATURE_RELAXED",
             "evFlags": {
                 "hp": false,
                 "attack": false,
