@@ -1519,7 +1519,7 @@ static s32 UpdateGauge(s32 max, s32 cur, s32 diff, s32 *temp, u8 size, u16 fillO
     }
 
     if (max < corrected) {
-        ratio = max * 0x100 / corrected;
+        ratio = max * 0x200 / corrected;
 
         if (diff < 0) {
             *temp += ratio;
