@@ -16,7 +16,7 @@
             "item": null,
             "moves": [
                 "MOVE_QUICK_ATTACK",
-                "MOVE_WING_ATTACK"
+                "MOVE_PECK"
             ],
             "iv_scale": 10,
             "friendship": 0,
