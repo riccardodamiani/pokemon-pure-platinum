@@ -9,11 +9,15 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_BIDOOF",
+            "species": "SPECIES_GEODUDE",
             "form": 0,
-            "level": 4,
+            "level": 9,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_TACKLE",
+                "MOVE_DEFENSE_CURL",
+                "MOVE_ROCK_BLAST"
+            ],
             "iv_scale": 0,
             "friendship": 0,
             "ball_seal": 0,
@@ -31,9 +35,13 @@
         {
             "species": "SPECIES_BUDEW",
             "form": 0,
-            "level": 4,
+            "level": 10,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_STUN_SPORE",
+                "MOVE_GROWTH",
+                "MOVE_ABSORB"
+            ],
             "iv_scale": 0,
             "friendship": 0,
             "ball_seal": 0,
@@ -49,31 +57,16 @@
             }
         },
         {
-            "species": "SPECIES_STARLY",
+            "species": "SPECIES_PONYTA",
             "form": 0,
-            "level": 4,
+            "level": 10,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_TACKLE",
+                "MOVE_EMBER"
+            ],
             "iv_scale": 0,
-            "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
-            "evFlags": {
-                "hp": false,
-                "attack": false,
-                "defense": false,
-                "speed": false,
-                "special_attack": false,
-                "special_defense": false
-            }
-        },
-        {
-            "species": "SPECIES_ABRA",
-            "form": 0,
-            "level": 4,
-            "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
