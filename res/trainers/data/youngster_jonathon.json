@@ -3,7 +3,10 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_SETUP_FIRST_TURN",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
@@ -11,15 +14,63 @@
             "species": "SPECIES_GEODUDE",
             "form": 0,
             "level": 11,
-            "item": null,
+            "item": "ITEM_CHOICE_BAND",
             "moves": [
-                "MOVE_TACKLE",
-                "MOVE_DEFENSE_CURL"
+                "MOVE_ROCK_BLAST",
+                "MOVE_TACKLE"
             ],
-            "iv_scale": 10,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_STURDY",
+            "nature": "NATURE_HARDY",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_BONSLY",
+            "form": 0,
+            "level": 12,
+            "item": "ITEM_CHESTO_BERRY",
+            "moves": [
+                "MOVE_LOW_KICK",
+                "MOVE_ROCK_THROW"
+            ],
+            "iv_scale": 150,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_ROCK_HEAD",
+            "nature": "NATURE_MILD",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_LILEEP",
+            "form": 0,
+            "level": 13,
+            "item": "ITEM_BIG_ROOT",
+            "moves": [
+                "MOVE_ROCK_THROW",
+                "MOVE_MEGA_DRAIN",
+                "MOVE_INGRAIN"
+            ],
+            "iv_scale": 100,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_SUCTION_CUPS",
+            "nature": "NATURE_RASH",
             "evFlags": {
                 "hp": false,
                 "attack": false,
