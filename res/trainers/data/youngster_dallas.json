@@ -3,20 +3,26 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_SHINX",
+            "species": "SPECIES_KRABBY",
             "form": 0,
-            "level": 8,
-            "item": null,
-            "moves": null,
+            "level": 10,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_VICE_GRIP",
+                "MOVE_BUBBLE"
+            ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_HYPER_CUTTER",
+            "nature": "NATURE_BRAVE",
             "evFlags": {
                 "hp": false,
                 "attack": false,
@@ -31,7 +37,7 @@
         {
             "type": "TRMSG_PRE_BATTLE",
             "en_US": [
-                "I’m never apart from my SHINX.\n",
+                "I’m never apart from my KRABBY.\n",
                 "Our bond is strong!\r"
             ]
         },
