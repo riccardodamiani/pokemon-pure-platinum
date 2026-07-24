@@ -9,14 +9,43 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_PSYDUCK",
+            "species": "SPECIES_CLEFFA",
             "form": 0,
-            "level": 8,
-            "item": null,
-            "moves": null,
-            "iv_scale": 0,
+            "level": 12,
+            "item": "ITEM_SITRUS_BERRY",
+            "moves": [
+                "MOVE_POUND",
+                "MOVE_ENCORE",
+                "MOVE_SING",
+                "MOVE_SWEET_KISS"
+            ],
+            "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
+            "ability": "ABILITY_CUTE_CHARM",
+            "nature": "NATURE_NONE",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_HAPPINY",
+            "form": 0,
+            "level": 12,
+            "item": "ITEM_SITRUS_BERRY",
+            "moves": [
+                "MOVE_COPYCAT",
+                "MOVE_SWEET_KISS"
+            ],
+            "iv_scale": 50,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_SERENE_GRACE",
             "nature": "NATURE_NONE",
             "evFlags": {
                 "hp": false,
