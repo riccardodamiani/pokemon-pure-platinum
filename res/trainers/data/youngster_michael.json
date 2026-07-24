@@ -3,17 +3,24 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_KRICKETOT",
+            "species": "SPECIES_PINECO",
             "form": 0,
-            "level": 7,
+            "level": 8,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_TACKLE",
+                "MOVE_SPIKES",
+                "MOVE_PROTECT"
+            ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
@@ -21,23 +28,28 @@
                 "hp": false,
                 "attack": false,
                 "defense": false,
-                "speed": false,
+                "speed": true,
                 "special_attack": false,
                 "special_defense": false
             }
         },
         {
-            "species": "SPECIES_ZUBAT",
+            "species": "SPECIES_SUNKERN",
             "form": 0,
-            "level": 6,
+            "level": 9,
             "item": null,
-            "moves": null,
+            "moves": [
+                "MOVE_GROWTH",
+                "MOVE_MEGA_DRAIN",
+                "MOVE_INGRAIN"
+            ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
             "evFlags": {
-                "hp": false,
+                "hp": true,
                 "attack": false,
                 "defense": false,
                 "speed": false,
@@ -52,8 +64,7 @@
             "en_US": [
                 "I get my get-up-and-go from my\n",
                 "Pokémon!\r",
-                "Here we go!\n",
-                "KRICKETOT! ZUBAT!\r"
+                "Here we go!\r"
             ]
         },
         {
