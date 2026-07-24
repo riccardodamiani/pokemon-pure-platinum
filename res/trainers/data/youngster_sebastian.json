@@ -3,20 +3,48 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EXPERT",
+        "AI_FLAG_EVAL_ATTACK",
+        "AI_FLAG_SETUP_FIRST_TURN"
     ],
     "double_battle": false,
     "party": [
         {
             "species": "SPECIES_MACHOP",
             "form": 0,
-            "level": 8,
+            "level": 9,
             "item": null,
             "moves": [
                 "MOVE_LOW_KICK",
-                "MOVE_LEER"
+                "MOVE_LEER",
+                "MOVE_FOCUS_ENERGY"
             ],
-            "iv_scale": 0,
+            "iv_scale": 50,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_GUTS",
+            "nature": "NATURE_HARDY",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_PSYDUCK",
+            "form": 0,
+            "level": 9,
+            "item": null,
+            "moves": [
+                "MOVE_SCRATCH",
+                "MOVE_WATER_GUN"
+            ],
+            "iv_scale": 50,
+            "friendship": 0,
             "ball_seal": 0,
             "ability": "ABILITY_NONE",
             "nature": "NATURE_NONE",
