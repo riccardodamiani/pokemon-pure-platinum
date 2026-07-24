@@ -3,55 +3,61 @@
     "class": "TRAINER_CLASS_YOUNGSTER",
     "items": [],
     "ai_flags": [
-        "AI_FLAG_BASIC"
+        "AI_FLAG_BASIC",
+        "AI_FLAG_EVAL_ATTACK",
+        "AI_FLAG_EXPERT"
     ],
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_GEODUDE",
+            "species": "SPECIES_ARON",
             "form": 0,
-            "level": 9,
-            "item": null,
+            "level": 13,
+            "item": "ITEM_SOFT_SAND",
             "moves": [
+                "MOVE_METAL_CLAW",
                 "MOVE_TACKLE",
-                "MOVE_DEFENSE_CURL"
+                "MOVE_MUD_SLAP"
             ],
-            "iv_scale": 10,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_STURDY",
+            "nature": "NATURE_HARDY",
             "evFlags": {
                 "hp": false,
                 "attack": false,
                 "defense": false,
                 "speed": false,
-                "special_attack": false,
+                "special_attack": true,
                 "special_defense": false
             }
         },
         {
             "species": "SPECIES_ONIX",
             "form": 0,
-            "level": 9,
-            "item": null,
+            "level": 13,
+            "item": "ITEM_WIDE_LENS",
             "moves": [
                 "MOVE_ROCK_THROW",
-                "MOVE_TACKLE",
-                "MOVE_HARDEN"
+                "MOVE_SAND_TOMB",
+                "MOVE_SCREECH"
             ],
-            "iv_scale": 10,
+            "iv_scale": 100,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_ROCK_HEAD",
+            "nature": "NATURE_LONELY",
             "evFlags": {
                 "hp": false,
-                "attack": false,
+                "attack": true,
                 "defense": false,
                 "speed": false,
                 "special_attack": false,
                 "special_defense": false
             }
         }
+        
     ],
     "messages": [
         {
