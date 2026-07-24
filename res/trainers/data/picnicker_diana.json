@@ -10,15 +10,42 @@
     "double_battle": false,
     "party": [
         {
-            "species": "SPECIES_BIDOOF",
+            "species": "SPECIES_GEODUDE",
             "form": 0,
-            "level": 9,
-            "item": null,
-            "moves": null,
+            "level": 11,
+            "item": "ITEM_QUICK_CLAW",
+            "moves": [
+                "MOVE_ROCK_BLAST",
+                "MOVE_TACKLE",
+                "MOVE_ROCK_POLISH"
+            ],
             "iv_scale": 0,
+            "friendship": 0,
             "ball_seal": 0,
-            "ability": "ABILITY_NONE",
-            "nature": "NATURE_NONE",
+            "ability": "ABILITY_STURDY",
+            "nature": "NATURE_CAREFUL",
+            "evFlags": {
+                "hp": false,
+                "attack": false,
+                "defense": false,
+                "speed": false,
+                "special_attack": false,
+                "special_defense": false
+            }
+        },
+        {
+            "species": "SPECIES_SPOINK",
+            "form": 0,
+            "level": 12,
+            "item": "ITEM_NONE",
+            "moves": [
+                "MOVE_PSYWAVE"
+            ],
+            "iv_scale": 0,
+            "friendship": 0,
+            "ball_seal": 0,
+            "ability": "ABILITY_THICK_FAT",
+            "nature": "NATURE_BOLD",
             "evFlags": {
                 "hp": false,
                 "attack": false,
