@@ -1890,6 +1890,18 @@ VisibleItems_JubilifeCity_Potion:
     GoTo VisibleItems_TryGiveItem
     End
 
+VisibleItems_JubilifeCity_RareCandy:
+    SetVar VAR_0x8008, ITEM_RARE_CANDY
+    SetVar VAR_0x8009, 1
+    GoTo VisibleItems_TryGiveItem
+    End
+
+VisibleItems_JubilifeCity_Repel:
+    SetVar VAR_0x8008, ITEM_REPEL
+    SetVar VAR_0x8009, 1
+    GoTo VisibleItems_TryGiveItem
+    End
+
 VisibleItems_TrainersSchool_XAttack:
     SetVar VAR_0x8008, ITEM_X_ATTACK
     SetVar VAR_0x8009, 1
