@@ -333,6 +333,7 @@
     ScriptEntry VisibleItems_JubilifeCity_RareCandy
     ScriptEntry VisibleItems_JubilifeCity_Repel
     ScriptEntry VisibleItems_OreburghCity_RareCandy
+    ScriptEntry VisibleItems_JubilifeCity_Blackglasses
     ScriptEntry VisibleItems_TryGiveItem
     ScriptEntryEnd
 
@@ -1898,6 +1899,12 @@ VisibleItems_JubilifeCity_RareCandy:
 
 VisibleItems_JubilifeCity_Repel:
     SetVar VAR_0x8008, ITEM_REPEL
+    SetVar VAR_0x8009, 1
+    GoTo VisibleItems_TryGiveItem
+    End
+
+VisibleItems_JubilifeCity_Blackglasses:
+    SetVar VAR_0x8008, ITEM_BLACKGLASSES
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
