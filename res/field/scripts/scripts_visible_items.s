@@ -126,7 +126,7 @@
     ScriptEntry VisibleItems_FuegoIronworksBuilding_RockIncense
     ScriptEntry VisibleItems_FuegoIronworksBuilding_Calcium
     ScriptEntry VisibleItems_FuegoIronworksBuilding_FireStone
-    ScriptEntry VisibleItems_Route219_Antidote
+    ScriptEntry VisibleItems_Route219_RareCandy
     ScriptEntry VisibleItems_Route220_SplashPlate
     ScriptEntry VisibleItems_Route205South_Repel
     ScriptEntry VisibleItems_Route220_Carbos
@@ -1087,8 +1087,8 @@ VisibleItems_FuegoIronworksBuilding_FireStone:
     GoTo VisibleItems_TryGiveItem
     End
 
-VisibleItems_Route219_Antidote:
-    SetVar VAR_0x8008, ITEM_ANTIDOTE
+VisibleItems_Route219_RareCandy:
+    SetVar VAR_0x8008, ITEM_RARE_CANDY
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
