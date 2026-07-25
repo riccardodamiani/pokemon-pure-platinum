@@ -12,7 +12,7 @@
     "palette": "super_repel_NCLR"
   },
   "gbaID": "GBA_ITEM_SUPER_REPEL",
-  "price": 500,
+  "price": 350,
   "effectParam": 200,
   "holdEffect": "HOLD_EFFECT_NONE",
   "pluckEffect": "PLUCK_EFFECT_NONE",
