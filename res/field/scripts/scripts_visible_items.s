@@ -332,6 +332,7 @@
     ScriptEntry VisibleItems_Route204South_Antidote
     ScriptEntry VisibleItems_JubilifeCity_RareCandy
     ScriptEntry VisibleItems_JubilifeCity_Repel
+    ScriptEntry VisibleItems_OreburghCity_RareCandy
     ScriptEntry VisibleItems_TryGiveItem
     ScriptEntryEnd
 
@@ -1903,6 +1904,12 @@ VisibleItems_OreburghCity_DireHit:
 
 VisibleItems_OreburghCity_YellowShard:
     SetVar VAR_0x8008, ITEM_YELLOW_SHARD
+    SetVar VAR_0x8009, 1
+    GoTo VisibleItems_TryGiveItem
+    End
+
+VisibleItems_OreburghCity_RareCandy:
+    SetVar VAR_0x8008, ITEM_RARE_CANDY
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
