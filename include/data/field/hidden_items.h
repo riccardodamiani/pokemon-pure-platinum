@@ -275,6 +275,7 @@ const HiddenItem gHiddenItems[] = {
     HIDDEN_ITEM_ENTRY(ITEM_NUGGET,       1, 2, 281),
     HIDDEN_ITEM_ENTRY(ITEM_NUGGET,       1, 2, 282),
     HIDDEN_ITEM_ENTRY(ITEM_NUGGET,       1, 2, 283),
+    HIDDEN_ITEM_ENTRY(ITEM_POTION,       1, 2, 284),
 };
 // clang-format on
 
