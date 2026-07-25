@@ -329,6 +329,7 @@
     ScriptEntry VisibleItems_Route228RockPeakRuins_HardStone
     ScriptEntry VisibleItems_Unused7325_Nugget
     ScriptEntry VisibleItems_Unused7326_Nugget
+    ScriptEntry VisibleItems_Route204South_Antidote
     ScriptEntry VisibleItems_TryGiveItem
     ScriptEntryEnd
 
@@ -394,6 +395,12 @@ VisibleItems_Route204South_SeaIncense:
 
 VisibleItems_Route204South_HPUp:
     SetVar VAR_0x8008, ITEM_HP_UP
+    SetVar VAR_0x8009, 1
+    GoTo VisibleItems_TryGiveItem
+    End
+
+VisibleItems_Route204South_Antidote:
+    SetVar VAR_0x8008, ITEM_ANTIDOTE
     SetVar VAR_0x8009, 1
     GoTo VisibleItems_TryGiveItem
     End
