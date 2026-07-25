@@ -330,6 +330,8 @@
     ScriptEntry VisibleItems_Unused7325_Nugget
     ScriptEntry VisibleItems_Unused7326_Nugget
     ScriptEntry VisibleItems_Route204South_Antidote
+    ScriptEntry VisibleItems_JubilifeCity_RareCandy
+    ScriptEntry VisibleItems_JubilifeCity_Repel
     ScriptEntry VisibleItems_TryGiveItem
     ScriptEntryEnd
 
