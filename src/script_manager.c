@@ -531,7 +531,11 @@ void Script_ClearTrainerDefeated(FieldSystem *fieldSystem, u16 trainerID)
 
 u16 Script_GetHiddenItemFlag(u16 scriptID)
 {
-    return scriptID - SCRIPT_ID_OFFSET_HIDDEN_ITEMS + FLAG_OFFSET_HIDDEN_ITEMS;
+    if(scriptID - SCRIPT_ID_OFFSET_HIDDEN_ITEMS <= FLAG_HIDDEN_ITEMS_FIRST_BLOCK_COUNT){
+        return scriptID - SCRIPT_ID_OFFSET_HIDDEN_ITEMS + FLAG_OFFSET_HIDDEN_ITEMS;
+    }
+    // use second memory block of flags for every additional hidden item
+    return scriptID - SCRIPT_ID_OFFSET_HIDDEN_ITEMS - (FLAG_HIDDEN_ITEMS_FIRST_BLOCK_COUNT + 1) + FLAG_OFFSET_SECOND_BLOCK_HIDDEN_ITEMS;
 }
 
 u16 Script_GetHiddenItemScript(u16 scriptID)
