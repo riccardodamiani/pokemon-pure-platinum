@@ -3695,17 +3695,10 @@ u16 Pokemon_GetEvolutionTargetSpecies(Party *party, Pokemon *mon, u8 evoClass, u
                 }
                 break;
 
-            case EVO_LEVEL_WITH_HELD_ITEM_DAY:
-                if (IsNight() == FALSE && speciesEvolutions[i].param == monHeldItem) {
+            case EVO_LEVEL_WITH_HELD_ITEM:
+                if (speciesEvolutions[i].param == monHeldItem) {
                     targetSpecies = speciesEvolutions[i].targetSpecies;
-                    *evoTypeResult = EVO_LEVEL_WITH_HELD_ITEM_DAY;
-                }
-                break;
-
-            case EVO_LEVEL_WITH_HELD_ITEM_NIGHT:
-                if (IsNight() == TRUE && speciesEvolutions[i].param == monHeldItem) {
-                    targetSpecies = speciesEvolutions[i].targetSpecies;
-                    *evoTypeResult = EVO_LEVEL_WITH_HELD_ITEM_NIGHT;
+                    *evoTypeResult = EVO_LEVEL_WITH_HELD_ITEM;
                 }
                 break;
 

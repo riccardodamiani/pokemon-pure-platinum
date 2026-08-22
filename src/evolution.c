@@ -780,8 +780,7 @@ static void Evolution_ProcessEvolutionEffects(EvolutionData *evolutionData)
         }
         break;
     case EVO_TRADE_WITH_HELD_ITEM:
-    case EVO_LEVEL_WITH_HELD_ITEM_DAY:
-    case EVO_LEVEL_WITH_HELD_ITEM_NIGHT:
+    case EVO_LEVEL_WITH_HELD_ITEM:
         i = ITEM_NONE;
         Pokemon_SetValue(evolutionData->mon, MON_DATA_HELD_ITEM, &i);
         break;

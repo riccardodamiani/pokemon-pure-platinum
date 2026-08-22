@@ -599,8 +599,7 @@ static SpeciesEvolutionList proc_evolutions(datafile_t *df) {
         case EVO_USE_ITEM:
         case EVO_USE_ITEM_MALE:
         case EVO_USE_ITEM_FEMALE:
-        case EVO_LEVEL_WITH_HELD_ITEM_DAY:
-        case EVO_LEVEL_WITH_HELD_ITEM_NIGHT:
+        case EVO_LEVEL_WITH_HELD_ITEM:
             param   = dp_lookup(dp_arrelem(entry, 1), "enum Item");
             species = dp_lookup(dp_arrelem(entry, 2), "enum Species");
             break;
