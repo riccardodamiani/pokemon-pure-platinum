@@ -14,6 +14,7 @@ ITEMS_DIR             = (WIKI_DIR / ".." / "res" / "items" / "data").resolve()
 ITEMS_ICONS_DIR       = (WIKI_DIR / ".." / "res" / "items" / "icons").resolve()
 TRAINERS_DATA_DIR     = (WIKI_DIR / ".." / "res" / "trainers" / "data").resolve()
 TRAINERS_CLASSES_DIR  = (WIKI_DIR / ".." / "res" / "trainers" / "classes").resolve()
+ENCOUNTERS_DIR        = (WIKI_DIR / ".." / "res" / "field" / "encounters").resolve()
 PORT                  = 5000
 
 _SKIP_MOVES = {"none"}
@@ -103,6 +104,9 @@ class WikiHandler(BaseHTTPRequestHandler):
         elif path.startswith("/api/items/"):     self._api_items_detail(path[11:])
         elif path == "/api/trainers":            self._api_trainers_list()
         elif path.startswith("/api/trainers/"):  self._api_trainers_detail(path[14:])
+        elif path == "/encounters":               self._serve_file("encounters.html")
+        elif path == "/api/encounters":           self._api_encounters_list()
+        elif path.startswith("/api/encounters/"): self._api_encounters_detail(path[16:])
         elif path.startswith("/trainer-icon/"):  self._trainer_icon(path[14:])
         elif path.startswith("/item-icon/"):     self._item_icon(path[11:])
         elif path.startswith("/sprites/"):
@@ -277,6 +281,31 @@ class WikiHandler(BaseHTTPRequestHandler):
         d["slug"]       = slug
         d["class_folder"] = class_folder
         d["has_icon"]   = (TRAINERS_CLASSES_DIR / class_folder / "front.png").exists()
+        self._json(d)
+
+    def _api_encounters_list(self):
+        result = []
+        for enc_file in sorted(ENCOUNTERS_DIR.glob("encounters_*.json")):
+            slug = enc_file.stem.removeprefix("encounters_")
+            if "unknown" in slug:
+                continue
+            name = slug.replace("_", " ").title()
+            d = json.loads(enc_file.read_text(encoding="utf-8"))
+            has_land  = d.get("land_rate", 0) > 0
+            has_water = d.get("surf_rate", 0) > 0
+            has_rod   = d.get("old_rod_rate", 0) > 0
+            result.append({"slug": slug, "name": name, "has_land": has_land, "has_water": has_water, "has_rod": has_rod})
+        self._json(result)
+
+    def _api_encounters_detail(self, slug: str):
+        if not self._safe(slug):
+            return self._err(400)
+        enc_file = ENCOUNTERS_DIR / f"encounters_{slug}.json"
+        if not enc_file.exists():
+            return self._err(404)
+        d = json.loads(enc_file.read_text(encoding="utf-8"))
+        d["slug"] = slug
+        d["name"] = slug.replace("_", " ").title()
         self._json(d)
 
     def _trainer_icon(self, class_folder: str):

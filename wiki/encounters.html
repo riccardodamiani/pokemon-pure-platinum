@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moves — Pure Platinum Wiki</title>
+  <title>Encounters — Pure Platinum Wiki</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,6 +19,8 @@
       --header-h:   64px;
       --radius:     10px;
       --tr:         0.3s cubic-bezier(0.4,0,0.2,1);
+      --land-color:  #4a7c4e;
+      --water-color: #2a6496;
     }
 
     body {
@@ -133,26 +135,9 @@
     /* ── TYPE FILTER ─────────────────────────────── */
     #type-filter {
       display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 16px;
-    }
-    .tf-btn {
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: .07em; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 5px;
-      border: 2px solid transparent;
-      cursor: pointer; color: #fff;
-      opacity: 0.5; transition: opacity .15s, border-color .15s;
-      user-select: none;
-    }
-    .tf-btn:hover  { opacity: 0.8; }
-    .tf-btn.active { opacity: 1; border-color: rgba(255,255,255,0.7); }
-
-    /* ── CLASS FILTER ────────────────────────────── */
-    #class-filter {
-      display: flex; gap: 6px;
       margin-bottom: 24px;
     }
-    .cf-btn {
+    .tf-btn {
       font-size: 0.7rem; font-weight: 700;
       letter-spacing: .07em; text-transform: uppercase;
       padding: 4px 12px; border-radius: 5px;
@@ -161,11 +146,11 @@
       opacity: 0.5; transition: opacity .15s, border-color .15s;
       user-select: none;
     }
-    .cf-btn:hover  { opacity: 0.8; }
-    .cf-btn.active { opacity: 1; border-color: rgba(255,255,255,0.7); }
-    .cf-btn-physical { background: #c03028; }
-    .cf-btn-special  { background: #6890f0; }
-    .cf-btn-status   { background: #555;    }
+    .tf-btn:hover  { opacity: 0.8; }
+    .tf-btn.active { opacity: 1; border-color: rgba(255,255,255,0.7); }
+    .tf-land  { background: var(--land-color); }
+    .tf-water { background: var(--water-color); }
+    .tf-rod   { background: #8b4513; }
 
     /* ── GRID ────────────────────────────────────── */
     #grid {
@@ -173,75 +158,36 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 12px;
     }
-    .mv-card {
+    .enc-card {
       background: var(--surface);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: var(--radius);
-      padding: 14px 16px;
-      display: flex; flex-direction: column; gap: 8px;
+      padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
       cursor: pointer;
       transition: border-color .2s, transform .2s, background .2s;
     }
-    .mv-card:hover {
+    .enc-card:hover {
       border-color: rgba(255,255,255,0.2);
       transform: translateY(-3px);
       background: var(--surface2);
     }
-    .mv-name {
-      font-size: 0.9rem; font-weight: 700;
+    .enc-name {
+      font-size: 0.88rem; font-weight: 700;
       letter-spacing: .02em; color: var(--text);
-      margin-bottom: 2px;
+      line-height: 1.3;
     }
-    .mv-desc {
-      font-size: 0.72rem; color: var(--text-muted);
-      line-height: 1.45; flex: 1;
+    .enc-flags {
+      display: flex; gap: 6px; flex-wrap: wrap;
     }
-    .mv-card-info {
-      display: flex; flex-direction: column; gap: 6px;
+    .enc-flag {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; padding: 2px 8px;
+      border-radius: 4px; color: #fff;
     }
-    .mv-card-info .row { display: flex; gap: 14px; align-items: center; }
-    .mv-card-info .row-spread { display: flex; justify-content: space-between; align-items: center; }
-    .mv-card-info .col { display: flex; flex-direction: column; gap: 3px; }
-    .mv-card-info .col-right { display: flex; flex-direction: column; gap: 3px; align-items: flex-end; }
-    .mv-card-info .mk {
-      color: var(--text-muted); font-size: 0.68rem; font-weight: 600;
-      letter-spacing: .07em; text-transform: uppercase;
-      display: block; margin-bottom: 2px;
-    }
-    .mv-card-info .mv { font-weight: 600; color: var(--text); white-space: nowrap; }
-
-    /* ── TYPE COLORS ─────────────────────────────── */
-    .type-normal   { background: #9a9a7a; }
-    .type-fire     { background: #f08030; }
-    .type-water    { background: #6890f0; }
-    .type-electric { background: #f8d030; color: #333; }
-    .type-grass    { background: #78c850; }
-    .type-ice      { background: #98d8d8; color: #333; }
-    .type-fighting { background: #c03028; }
-    .type-poison   { background: #a040a0; }
-    .type-ground   { background: #e0c068; color: #333; }
-    .type-flying   { background: #a890f0; }
-    .type-psychic  { background: #f85888; }
-    .type-bug      { background: #a8b820; }
-    .type-rock     { background: #b8a038; }
-    .type-ghost    { background: #705898; }
-    .type-dragon   { background: #7038f8; }
-    .type-dark     { background: #705848; }
-    .type-steel    { background: #b8b8d0; color: #333; }
-    .type-unknown  { background: #68a090; }
-    .type-badge {
-      font-size: 0.63rem; font-weight: 700;
-      letter-spacing: .07em; text-transform: uppercase;
-      padding: 2px 7px; border-radius: 4px; color: #fff;
-    }
-
-    .move-class {
-      font-size: 0.62rem; font-weight: 700; letter-spacing: .06em;
-      text-transform: uppercase; padding: 2px 6px; border-radius: 3px;
-    }
-    .move-class-physical { background: #c03028; color: #fff; }
-    .move-class-special  { background: #6890f0; color: #fff; }
-    .move-class-status   { background: #555; color: #ccc; }
+    .enc-flag.land  { background: var(--land-color); }
+    .enc-flag.water { background: var(--water-color); }
+    .enc-flag.rod   { background: #8b4513; }
 
     /* ── DETAIL MODAL ────────────────────────────── */
     #detail-backdrop {
@@ -256,7 +202,7 @@
       background: var(--surface);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      width: min(680px, calc(100vw - 32px));
+      width: min(900px, calc(100vw - 32px));
       max-height: calc(100vh - 48px);
       overflow-y: auto;
       padding: 28px;
@@ -277,47 +223,91 @@
     }
     #detail-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
 
-    .detail-move-name {
-      font-size: 1.6rem; font-weight: 800;
-      margin-bottom: 20px; padding-right: 40px;
+    .detail-header-row {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-right: 40px; flex-wrap: wrap;
     }
-    .detail-badges {
-      display: grid; grid-template-columns: 1fr 1fr;
-      margin-bottom: 20px;
-    }
-    .detail-badges .col { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+    .detail-title { font-size: 1.4rem; font-weight: 800; }
 
-    .section-title {
-      font-size: 0.7rem; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--text-muted); margin-bottom: 6px;
-    }
+    .badge-land  { background: var(--land-color); }
+    .badge-water { background: var(--water-color); }
+    .badge-rod   { background: #8b4513; }
 
-    .detail-meta {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 8px 16px; margin-bottom: 20px;
+    /* ── Two-column layout ───────────────────────── */
+    .detail-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
-    .meta-item { font-size: 0.8rem; }
-    .meta-item .mk {
-      color: var(--text-muted); font-size: 0.68rem; font-weight: 600;
-      letter-spacing: .07em; text-transform: uppercase;
-      display: block; margin-bottom: 2px;
-    }
-    .meta-item .mv { font-weight: 600; }
-
-    .detail-desc {
-      font-size: 0.8rem; color: var(--text-muted);
-      line-height: 1.5; margin-bottom: 20px;
+    @media (max-width: 560px) {
+      .detail-columns { grid-template-columns: 1fr; }
     }
 
-    .flags-list {
-      display: flex; flex-wrap: wrap; gap: 5px;
+    .col-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; padding: 2px 9px; border-radius: 4px;
+      color: #fff; display: inline-block; margin-bottom: 12px;
     }
-    .flag-badge {
-      font-size: 0.66rem; font-weight: 600;
-      padding: 2px 8px; border-radius: 4px;
-      background: var(--surface2); color: #c8ccd8;
-      letter-spacing: .04em;
+
+    /* ── Land controls ───────────────────────────── */
+    .land-controls { margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .ctrl-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .time-btn {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 5px; border: 2px solid rgba(255,255,255,0.12);
+      background: transparent; color: var(--text-muted); cursor: pointer;
+      transition: all .15s;
+    }
+    .time-btn.active { background: var(--land-color); border-color: var(--land-color); color: #fff; }
+    .time-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: var(--text); }
+    .chk-label {
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+      display: flex; align-items: center; gap: 5px; cursor: pointer; user-select: none;
+    }
+    .chk-label input { accent-color: var(--land-color); width: 13px; height: 13px; }
+    .chk-label:hover { color: var(--text); }
+
+    /* ── Water tabs ────────────────────────────────────────── */
+    .water-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .water-tab {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 5px; border: 2px solid rgba(255,255,255,0.12);
+      background: transparent; color: var(--text-muted); cursor: pointer; transition: all .15s;
+    }
+    .water-tab:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+    .water-tab.active-surf { background: var(--water-color); border-color: var(--water-color); color: #fff; }
+    .water-tab.active-rod  { background: #8b4513;            border-color: #8b4513;            color: #fff; }
+
+    .enc-rate-line {
+      font-size: 0.7rem; color: var(--text-muted); margin-bottom: 10px;
+    }
+
+    /* ── Rate rows ───────────────────────────────── */
+    .rate-row {
+      display: grid; grid-template-columns: 1fr auto auto;
+      align-items: center; gap: 2px 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .rate-row:last-child { border-bottom: none; }
+    .rate-species { font-size: 0.82rem; font-weight: 600; }
+    .rate-lvl     { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+    .rate-pct     { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; min-width: 34px; text-align: right; }
+    .rate-bar-wrap {
+      grid-column: 1 / -1;
+      height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px;
+    }
+    .rate-bar { height: 100%; border-radius: 2px; transition: width .2s; }
+    .bar-land  { background: var(--land-color); }
+    .bar-water { background: var(--water-color); }
+    .bar-rod   { background: #8b4513; }
+
+    /* ── Water/rod subsections ───────────────────── */
+    .water-section { margin-bottom: 16px; }
+    .water-section-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px; color: #fff;
+      display: inline-block; margin-bottom: 8px;
     }
 
     #loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
@@ -370,12 +360,12 @@
         <line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
       </svg>Items
     </a>
-    <a class="nav-item active" href="/moves">
+    <a class="nav-item" href="/moves">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
       </svg>Moves
     </a>
-    <a class="nav-item" href="/encounters">
+    <a class="nav-item active" href="/encounters">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <path d="M9 22V12h6v10"/>
@@ -403,18 +393,16 @@
 <!-- ── Main ─────────────────────────────────────────────── -->
 <main id="main">
   <div class="toolbar">
-    <h1>Move <span>Dex</span></h1>
-    <input id="search" type="text" placeholder="Search…" autocomplete="off" />
+    <h1>Encounter <span>Areas</span></h1>
+    <input id="search" type="text" placeholder="Search area…" autocomplete="off" />
     <span id="count"></span>
   </div>
-  <div id="type-filter"></div>
-  <div id="class-filter">
-    <button class="cf-btn cf-btn-physical" data-class="CLASS_PHYSICAL">Physical</button>
-    <button class="cf-btn cf-btn-special"  data-class="CLASS_SPECIAL">Special</button>
-    <button class="cf-btn cf-btn-status"   data-class="CLASS_STATUS">Status</button>
+  <div id="type-filter">
+    <button class="tf-btn tf-land"  data-type="land">Land</button>
+    <button class="tf-btn tf-water" data-type="water">Water</button>
   </div>
-  <div id="loading">Loading moves…</div>
-  <div id="empty">No moves match your search.</div>
+  <div id="loading">Loading areas…</div>
+  <div id="empty">No areas match your search.</div>
   <div id="grid"></div>
 </main>
 
@@ -440,71 +428,29 @@ const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList
 btn.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
 overlay.addEventListener('click', closeSidebar);
 
-// ── type helpers ──────────────────────────────────────────────────────────
-const TYPE_RE = /^TYPE_(.+)$/;
-function typeKey(raw)   { const m = (raw||'').match(TYPE_RE); return m ? m[1].toLowerCase() : 'unknown'; }
-function typeLabel(raw) { const k = typeKey(raw); return k.charAt(0).toUpperCase() + k.slice(1); }
-function typeClass(raw) { return 'type-' + typeKey(raw); }
-function typeBadge(raw) {
-  return `<span class="type-badge ${typeClass(raw)}">${typeLabel(raw)}</span>`;
-}
-
-// ── class helpers ─────────────────────────────────────────────────────────
-const CLASS_MAP = {
-  CLASS_PHYSICAL: 'physical',
-  CLASS_SPECIAL:  'special',
-  CLASS_STATUS:   'status',
-};
-function classBadge(cls) {
-  const k = CLASS_MAP[cls] || 'status';
-  return `<span class="move-class move-class-${k}">${k.charAt(0).toUpperCase()+k.slice(1)}</span>`;
-}
-
-// ── misc helpers ──────────────────────────────────────────────────────────
-function fmtConst(s) {
-  return (s || '').replace(/^[A-Z]+?_/, '').replace(/_/g, ' ')
+// ── species formatting ────────────────────────────────────────────────────
+function fmtSpecies(s) {
+  return (s || '').replace(/^SPECIES_/, '').replace(/_/g, ' ')
     .toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
 }
 
 // ── type filter ───────────────────────────────────────────────────────────
-const ALL_TYPES = [
-  'normal','fire','water','electric','grass','ice',
-  'fighting','poison','ground','flying','psychic','bug',
-  'rock','ghost','dragon','dark','steel',
-];
-let activeType  = null;
-let activeClass = null;
+let activeType = null;
 
-const typeFilterRow = document.getElementById('type-filter');
-ALL_TYPES.forEach(t => {
-  const b = document.createElement('button');
-  b.className = `tf-btn type-${t}`;
-  b.textContent = t.charAt(0).toUpperCase() + t.slice(1);
-  b.dataset.type = t;
-  b.addEventListener('click', () => {
-    activeType = activeType === t ? null : t;
-    typeFilterRow.querySelectorAll('.tf-btn').forEach(x =>
-      x.classList.toggle('active', x.dataset.type === activeType)
-    );
-    applyFilters();
-  });
-  typeFilterRow.appendChild(b);
-});
-
-document.getElementById('class-filter').addEventListener('click', e => {
-  const btn = e.target.closest('.cf-btn');
-  if (!btn) return;
-  const cls = btn.dataset.class;
-  activeClass = activeClass === cls ? null : cls;
-  document.querySelectorAll('.cf-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.class === activeClass)
+document.getElementById('type-filter').addEventListener('click', e => {
+  const b = e.target.closest('.tf-btn');
+  if (!b) return;
+  const t = b.dataset.type;
+  activeType = activeType === t ? null : t;
+  document.querySelectorAll('.tf-btn').forEach(x =>
+    x.classList.toggle('active', x.dataset.type === activeType)
   );
   applyFilters();
 });
 
 // ── detail modal ──────────────────────────────────────────────────────────
-const backdrop     = document.getElementById('detail-backdrop');
-const detailContent= document.getElementById('detail-content');
+const backdrop      = document.getElementById('detail-backdrop');
+const detailContent = document.getElementById('detail-content');
 document.getElementById('detail-close').addEventListener('click', closeDetail);
 backdrop.addEventListener('click', e => { if (e.target === backdrop) closeDetail(); });
 document.addEventListener('keydown', e => {
@@ -516,92 +462,222 @@ document.addEventListener('keydown', e => {
 function openDetail(slug) { backdrop.classList.add('open'); loadDetail(slug); }
 function closeDetail()    { backdrop.classList.remove('open'); }
 
+// ── encounter rate constants ──────────────────────────────────────────────
+const SLOT_PROBS = [20, 20, 10, 10, 10, 10, 5, 5, 4, 4, 1, 1];
+const SURF_PROBS = [60, 30, 5, 4, 1];
+const ROD_PROBS  = { old: [60, 30, 5, 4, 1], good: [40, 40, 15, 4, 1], super: [40, 40, 15, 4, 1] };
+
+function calcLandRates(d, timeMode, useSwarm, useRadar) {
+  const base   = d.land_encounters || [];
+  const slots  = base.map(e => e.species);
+  const levels = base.map(e => e.level);
+
+  if (timeMode === 'day'   && d.day?.length   >= 2) { slots[2] = d.day[0];   slots[3] = d.day[1]; }
+  if (timeMode === 'night' && d.night?.length >= 2) { slots[2] = d.night[0]; slots[3] = d.night[1]; }
+  if (useSwarm && d.swarms?.length >= 2) { slots[0] = d.swarms[0]; slots[1] = d.swarms[1]; }
+  if (useRadar && d.radar?.length  >= 4) {
+    slots[4] = d.radar[0]; slots[5] = d.radar[1]; slots[10] = d.radar[2]; slots[11] = d.radar[3];
+  }
+
+  const totals = {}, lvlSets = {};
+  slots.forEach((sp, i) => {
+    if (sp === 'SPECIES_NONE') return;
+    totals[sp] = (totals[sp] || 0) + SLOT_PROBS[i];
+    if (!lvlSets[sp]) lvlSets[sp] = new Set();
+    if (levels[i] != null) lvlSets[sp].add(levels[i]);
+  });
+  return Object.entries(totals).sort((a, b) => b[1] - a[1]).map(([sp, pct]) => {
+    const lvls = [...lvlSets[sp]].sort((a, b) => a - b);
+    const lvlStr = lvls.length === 0 ? '' : lvls.length === 1 ? `Lv. ${lvls[0]}` : `Lv. ${lvls[0]}–${lvls[lvls.length-1]}`;
+    return { species: sp, pct, lvlStr };
+  });
+}
+
+function calcWaterRates(encounters, probs) {
+  const totals = {}, lvlSets = {};
+  encounters.forEach((e, i) => {
+    if (e.species === 'SPECIES_NONE') return;
+    totals[e.species] = (totals[e.species] || 0) + probs[i];
+    if (!lvlSets[e.species]) lvlSets[e.species] = new Set();
+    if (e.level_min != null) lvlSets[e.species].add(e.level_min);
+    if (e.level_max != null) lvlSets[e.species].add(e.level_max);
+  });
+  return Object.entries(totals).sort((a, b) => b[1] - a[1]).map(([sp, pct]) => {
+    const lvls = [...lvlSets[sp]].sort((a, b) => a - b);
+    const lvlStr = lvls.length === 0 ? '' : lvls.length === 1 ? `Lv. ${lvls[0]}` : `Lv. ${lvls[0]}–${lvls[lvls.length-1]}`;
+    return { species: sp, pct, lvlStr };
+  });
+}
+
+function buildRateRows(rows, barCls) {
+  if (!rows.length) return '<p style="color:var(--text-muted);font-size:.8rem">No encounters.</p>';
+  return rows.map(({ species, pct, lvlStr }) =>
+    `<div class="rate-row">
+      <span class="rate-species">${fmtSpecies(species)}</span>
+      <span class="rate-lvl">${lvlStr}</span>
+      <span class="rate-pct">${pct}%</span>
+      <div class="rate-bar-wrap"><div class="rate-bar ${barCls}" style="width:${pct}%"></div></div>
+    </div>`
+  ).join('');
+}
+
+let _currentEncData = null;
+let _activeWaterKey = null;
+
+const WATER_TYPES = [
+  { key: 'surf',      label: 'Surf',      rateKey: 'surf_rate',      encKey: 'surf_encounters',      probs: SURF_PROBS,      barCls: 'bar-water', tabCls: 'active-surf' },
+  { key: 'old_rod',   label: 'Old Rod',   rateKey: 'old_rod_rate',   encKey: 'old_rod_encounters',   probs: ROD_PROBS.old,   barCls: 'bar-rod',   tabCls: 'active-rod'  },
+  { key: 'good_rod',  label: 'Good Rod',  rateKey: 'good_rod_rate',  encKey: 'good_rod_encounters',  probs: ROD_PROBS.good,  barCls: 'bar-rod',   tabCls: 'active-rod'  },
+  { key: 'super_rod', label: 'Super Rod', rateKey: 'super_rod_rate', encKey: 'super_rod_encounters', probs: ROD_PROBS.super, barCls: 'bar-rod',   tabCls: 'active-rod'  },
+];
+
+function renderLandRatesBody() {
+  const d = _currentEncData;
+  if (!d) return;
+  const timeMode = detailContent.querySelector('.time-btn.active')?.dataset.time || 'morning';
+  const useSwarm = document.getElementById('chk-swarm')?.checked || false;
+  const useRadar = document.getElementById('chk-radar')?.checked || false;
+  const el = document.getElementById('land-rates-body');
+  if (el) el.innerHTML = buildRateRows(calcLandRates(d, timeMode, useSwarm, useRadar), 'bar-land');
+}
+
+function renderWaterBody() {
+  const d = _currentEncData;
+  if (!d) return;
+  const el = document.getElementById('water-body');
+  if (!el) return;
+  const wt = WATER_TYPES.find(t => t.key === _activeWaterKey);
+  if (!wt) { el.innerHTML = ''; return; }
+  el.innerHTML =
+    `<div class="enc-rate-line">Encounter rate: ${d[wt.rateKey]}%</div>` +
+    buildRateRows(calcWaterRates(d[wt.encKey] || [], wt.probs), wt.barCls);
+}
+
+function buildWaterColumn(d) {
+  const available = WATER_TYPES.filter(t => d[t.rateKey] > 0);
+  if (!available.length) return '<p style="color:var(--text-muted);font-size:.8rem">No water encounters.</p>';
+  const tabs = available.map(t =>
+    `<button class="water-tab" data-wkey="${t.key}">${t.label}</button>`
+  ).join('');
+  return `<div class="water-tabs">${tabs}</div><div id="water-body"></div>`;
+}
+
 async function loadDetail(slug) {
   detailContent.innerHTML = '<p style="color:var(--text-muted);padding:20px 0">Loading…</p>';
   let d;
   try {
-    d = await fetch(`/api/moves/${slug}`).then(r => r.json());
+    d = await fetch(`/api/encounters/${slug}`).then(r => r.json());
   } catch {
     detailContent.innerHTML = '<p style="color:var(--text-muted)">Error loading data.</p>';
     return;
   }
+  _currentEncData = d;
 
-  const desc = (d.description || []).join('').replace(/\n/g,' ').trim();
-  const flags = (d.flags || []).map(f =>
-    `<span class="flag-badge">${fmtConst(f)}</span>`
-  ).join('');
+  const hasDay   = (d.day   || []).some(s => s !== 'SPECIES_NONE');
+  const hasNight = (d.night || []).some(s => s !== 'SPECIES_NONE');
+  const hasSwarm = (d.swarms|| []).some(s => s !== 'SPECIES_NONE');
+  const hasRadar = (d.radar || []).some(s => s !== 'SPECIES_NONE');
+  const hasWater = d.surf_rate > 0 || d.old_rod_rate > 0 || d.good_rod_rate > 0 || d.super_rod_rate > 0;
 
-  const stat = (v) => v != null ? v : '—';
-  const priorityStr = d.priority > 0 ? `+${d.priority}` : d.priority < 0 ? `${d.priority}` : '0';
+  const flagsHtml = [
+    d.land_rate > 0  ? '<span class="enc-flag land">Land</span>'  : '',
+    d.surf_rate > 0 || d.old_rod_rate > 0 || d.good_rod_rate > 0 || d.super_rod_rate > 0 ? '<span class="enc-flag water">Water</span>' : '',
+  ].join('');
 
-  const contestVal = d.contest
-    ? fmtConst(d.contest.type)
-    : '';
-  const effectVal = d.effect
-    ? fmtConst(d.effect.type) + (d.effect.chance ? ` (${d.effect.chance}%)` : '')
-    : '';
+  const landControls = d.land_rate > 0 ? `
+    <div class="ctrl-row">
+      <button class="time-btn active" data-time="morning">Morning</button>
+      ${hasDay   ? '<button class="time-btn" data-time="day">Day</button>'   : ''}
+      ${hasNight ? '<button class="time-btn" data-time="night">Night</button>' : ''}
+    </div>
+    ${hasSwarm || hasRadar ? `<div class="ctrl-row">
+      ${hasSwarm ? '<label class="chk-label"><input type="checkbox" id="chk-swarm"> Swarm</label>' : ''}
+      ${hasRadar ? '<label class="chk-label"><input type="checkbox" id="chk-radar"> Pokéradar</label>' : ''}
+    </div>` : ''}` : '';
+
+  const landCol = d.land_rate > 0 ? `
+    <div>
+      <span class="col-label badge-land">Land</span>
+      <div class="enc-rate-line">Encounter rate: ${d.land_rate}%</div>
+      <div class="land-controls">${landControls}</div>
+      <div id="land-rates-body"></div>
+    </div>` : `<div><span class="col-label badge-land">Land</span><p style="color:var(--text-muted);font-size:.8rem;margin-top:8px">No land encounters.</p></div>`;
 
   detailContent.innerHTML = `
-    <div class="detail-move-name">${d.name || slug}</div>
-    ${desc ? `<div class="detail-desc">${desc}</div>` : ''}
-    <div class="detail-badges">
-      <div class="col"><div class="section-title">Type</div>${d.type ? typeBadge(d.type) : '—'}</div>
-      <div class="col"><div class="section-title">Class</div>${d.class ? classBadge(d.class) : '—'}</div>
+    <div class="detail-header-row">
+      <span class="detail-title">${d.name}</span>
+      <div class="enc-flags">${flagsHtml}</div>
     </div>
-    <div class="section-title">Stats</div>
-    <div class="detail-meta">
-      <div class="meta-item"><span class="mk">Power</span>   <span class="mv">${stat(d.power)}</span></div>
-      <div class="meta-item"><span class="mk">Accuracy</span><span class="mv">${d.accuracy != null ? d.accuracy + '%' : '—'}</span></div>
-      <div class="meta-item"><span class="mk">PP</span>      <span class="mv">${stat(d.pp)}</span></div>
-      <div class="meta-item"><span class="mk">Priority</span><span class="mv">${priorityStr}</span></div>
-      <div class="meta-item"><span class="mk">Range</span>   <span class="mv">${fmtConst(d.range) || '—'}</span></div>
-      ${effectVal  ? `<div class="meta-item"><span class="mk">Effect</span>  <span class="mv">${effectVal}</span></div>`  : ''}
-      ${contestVal ? `<div class="meta-item"><span class="mk">Contest</span> <span class="mv">${contestVal}</span></div>` : ''}
-    </div>
-    ${flags ? `<div class="section-title" style="margin-bottom:8px">Flags</div><div class="flags-list">${flags}</div>` : ''}
-  `;
+    <div class="detail-columns">
+      ${landCol}
+      <div>
+        <span class="col-label badge-water">Water</span>
+        ${buildWaterColumn(d)}
+      </div>
+    </div>`;
+
+  renderLandRatesBody();
+
+  // water tabs
+  const available = WATER_TYPES.filter(t => d[t.rateKey] > 0);
+  _activeWaterKey = available[0]?.key || null;
+  detailContent.querySelectorAll('.water-tab').forEach(btn => {
+    const wt = WATER_TYPES.find(t => t.key === btn.dataset.wkey);
+    if (!wt) return;
+    if (btn.dataset.wkey === _activeWaterKey) btn.classList.add(wt.tabCls);
+    btn.addEventListener('click', () => {
+      detailContent.querySelectorAll('.water-tab').forEach(b => b.className = 'water-tab');
+      btn.classList.add(wt.tabCls);
+      _activeWaterKey = wt.key;
+      renderWaterBody();
+    });
+  });
+  renderWaterBody();
+
+  detailContent.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      detailContent.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderLandRatesBody();
+    });
+  });
+  ['chk-swarm', 'chk-radar'].forEach(id =>
+    document.getElementById(id)?.addEventListener('change', renderLandRatesBody)
+  );
 }
 
 // ── card builder ──────────────────────────────────────────────────────────
-function buildCard(mv) {
+function buildCard(area) {
   const card = document.createElement('div');
-  card.className = 'mv-card';
-  card.addEventListener('click', () => openDetail(mv.name));
+  card.className = 'enc-card';
+  card.addEventListener('click', () => openDetail(area.slug));
 
   const nameEl = document.createElement('div');
-  nameEl.className = 'mv-name';
-  nameEl.textContent = mv.display || mv.name;
+  nameEl.className = 'enc-name';
+  nameEl.textContent = area.name;
   card.appendChild(nameEl);
 
-  if (mv.description) {
-    const descEl = document.createElement('div');
-    descEl.className = 'mv-desc';
-    descEl.textContent = mv.description;
-    card.appendChild(descEl);
+  const flags = document.createElement('div');
+  flags.className = 'enc-flags';
+  if (area.has_land) {
+    const f = document.createElement('span');
+    f.className = 'enc-flag land';
+    f.textContent = 'Land';
+    flags.appendChild(f);
   }
-
-  const clsKey = mv.class ? (CLASS_MAP[mv.class] || 'status') : null;
-  const clsLabel = clsKey ? clsKey.charAt(0).toUpperCase() + clsKey.slice(1) : '—';
-
-  const info = document.createElement('div');
-  info.className = 'mv-card-info';
-  info.innerHTML =
-    `<div class="row-spread">
-       <div class="col"><span class="mk">Type</span><span class="mv">${mv.type ? typeBadge(mv.type) : '—'}</span></div>
-       <div class="col-right"><span class="mk">Class</span><span class="mv">${mv.class ? classBadge(mv.class) : '—'}</span></div>
-     </div>` +
-    `<div class="row">
-       <div class="col"><span class="mk">Pow</span><span class="mv">${mv.power ?? '—'}</span></div>
-       <div class="col"><span class="mk">Acc</span><span class="mv">${mv.accuracy != null ? mv.accuracy + '%' : '—'}</span></div>
-       <div class="col"><span class="mk">PP</span><span class="mv">${mv.pp ?? '—'}</span></div>
-     </div>`;
-  card.appendChild(info);
+  if (area.has_water) {
+    const f = document.createElement('span');
+    f.className = 'enc-flag water';
+    f.textContent = 'Water';
+    flags.appendChild(f);
+  }
+  if (flags.childElementCount > 0) card.appendChild(flags);
 
   return card;
 }
 
 // ── filter + render ───────────────────────────────────────────────────────
-let allMoves = [];
+let allAreas = [];
 const grid    = document.getElementById('grid');
 const loading = document.getElementById('loading');
 const empty   = document.getElementById('empty');
@@ -610,26 +686,26 @@ const search  = document.getElementById('search');
 
 function applyFilters() {
   const q = search.value.trim().toLowerCase();
-  let list = allMoves;
-  if (q)           list = list.filter(m => (m.display || m.name).toLowerCase().includes(q));
-  if (activeType)  list = list.filter(m => m.type && typeKey(m.type) === activeType);
-  if (activeClass) list = list.filter(m => m.class === activeClass);
+  let list = allAreas;
+  if (q)                      list = list.filter(a => a.name.toLowerCase().includes(q));
+  if (activeType === 'land')  list = list.filter(a => a.has_land);
+  if (activeType === 'water') list = list.filter(a => a.has_water);
   render(list);
 }
 
 function render(list) {
   grid.innerHTML = '';
   empty.style.display = list.length === 0 ? 'block' : 'none';
-  countEl.textContent = `${list.length} moves`;
-  list.forEach(mv => grid.appendChild(buildCard(mv)));
+  countEl.textContent = `${list.length} areas`;
+  list.forEach(area => grid.appendChild(buildCard(area)));
 }
 
-fetch('/api/moves')
+fetch('/api/encounters')
   .then(r => r.json())
   .then(data => {
-    allMoves = data;
+    allAreas = data;
     loading.style.display = 'none';
-    render(allMoves);
+    render(allAreas);
   })
   .catch(() => { loading.textContent = 'Failed to load data. Is the server running?'; });
 
