@@ -37,9 +37,13 @@
             [ 1, "MOVE_WRAP" ],
             [ 6, "MOVE_GROWL" ],
             [ 9, "MOVE_ASTONISH" ],
-            [ 14, "MOVE_CONFUSION" ],
-            [ 17, "MOVE_UPROAR" ],
-            [ 22, "MOVE_LAST_RESORT" ]
+            [ 12, "MOVE_CONFUSION" ],
+            [ 15, "MOVE_UPROAR" ],
+            [ 18, "MOVE_MAGICAL_LEAF"],
+            [ 21, "MOVE_COSMIC_POWER" ],
+            [ 24, "MOVE_YAWN" ],
+            [ 30, "MOVE_WEATHER_BALL" ],
+            [ 35, "MOVE_LAST_RESORT" ]
         ],
         "by_tm": [
             "TM04",
