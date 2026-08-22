@@ -1,8 +1,128 @@
 [
   {
-    "id": "tamplate-id",
-    "category": "Template-Category",
-    "title": "Template Title",
-    "description": "Template description"
+    "id": "encounter-rates",
+    "category": "Encounters",
+    "title": "Adjusted encounter rates",
+    "description": "Encounter rates were reduced on several maps to make exploration less tedious and more consistent with the rest of the game.\n\n| Map | Original Rate | New Rate |\n|-----|:---:|:---:|\n| Mt Coronet 4f room 3 | 15 | 10 |\n| Mt Coronet 5f | 15 | 10 |\n| Mt Coronet 6f | 15 | 10 |\n| Route 206 | 30 | 20 |\n| Turnback Cave | 15 | 7 |\n| Victory Road | 15 | 10 |"
+  },
+  {
+    "id": "encounter-steps",
+    "category": "Encounters",
+    "title": "Encounters only on full steps",
+    "description": "In the original game, every movement — including turning in place — could trigger a wild encounter. In the modded game, encounters can only happen when a full step is taken. This reduces the overall encounter rate across all maps, and is especially noticeable in cave puzzles that require frequent direction changes."
+  },
+  {
+    "id": "bicycle-encounter",
+    "category": "Encounters",
+    "title": "Reduced encounters while biking",
+    "description": "In the original game, riding a bike increased the base encounter chance by +30%, nearly doubling the rate compared to walking. In the modded game, the bike modifier was changed to −10%, giving you about 25% fewer encounters than on foot.\n\nReasons:\n- Many cave puzzles require the bike, causing excessive unwanted encounters in the original.\n- The bike is already clunky in tight spaces — it shouldn't also punish the player with more encounters.\n- A noisy bike would logically scare Pokémon away, not attract them."
+  },
+  {
+    "id": "exp-gain",
+    "category": "Experience",
+    "title": "Increased experience from battle",
+    "description": "A fainted Pokémon now gives 30% more experience points than in the original game, to make the leveling experience less frustrating overall."
+  },
+  {
+    "id": "exp-capture",
+    "category": "Experience",
+    "title": "Experience for capturing Pokémon",
+    "description": "Capturing a Pokémon now grants half the experience you would receive from defeating it."
+  },
+  {
+    "id": "obedience",
+    "category": "Experience",
+    "title": "Extended obedience system",
+    "description": "To balance the increased experience gain, the obedience mechanic now applies to all Pokémon (not just traded ones). A Pokémon will start to disobey if its level exceeds the highest-level Pokémon of the next Gym Leader or Champion by 2 or more.\n\n| Levels over cap | Disobey chance |\n|:---:|:---:|\n| 0 | 0% |\n| +1 | 0% |\n| +2 | 20% |\n| +3 | 40% |\n| +4 | 60% |\n| +5 | 80% |\n| >+5 | 100% |"
+  },
+  {
+    "id": "field-moves",
+    "category": "Field Moves",
+    "title": "Field moves usable without teaching",
+    "description": "A Pokémon can now use a field move outside of combat without having it in its moveset, as long as:\n1. The Pokémon is **able to learn** the move (by level-up, TM, or HM), and\n2. There is a **way to teach it right now** (Move Reminder, HM in bag, TM in bag).\n\nAll other requirements (badges, proximity to terrain) still apply. This frees up moveslots and removes the need to keep dedicated HM users in the party.\n\n**Full list of field moves:** Cut, Fly, Surf, Strength, Defog, Rock Smash, Waterfall, Rock Climb, Flash, Teleport, Dig, Sweet Scent, Chatter, Milk Drink, Softboiled."
+  },
+  {
+    "id": "waterfall",
+    "category": "Moves",
+    "title": "Descending waterfalls always allowed",
+    "description": "The HM move Waterfall, when used outside combat, is always permitted for downward movement — even without the badge or the HM. Since all waterfall blockages in the game are one-way (bottom-to-top), descending was never a meaningful restriction and only slowed down navigation."
+  },
+  {
+    "id": "hm-forgettable",
+    "category": "Moves",
+    "title": "HM moves can be forgotten",
+    "description": "All HM moves can now be overwritten by any other move without visiting the Move Deleter NPC. This removes a recurring annoyance while still leaving the Move Deleter available. Combined with the field move changes, there is almost no reason to permanently dedicate moveslots to HM moves."
+  },
+  {
+    "id": "reusable-tms",
+    "category": "Items",
+    "title": "TMs are reusable",
+    "description": "TM items are no longer consumed after use — they can be taught to any number of Pokémon. The bag screen was updated to hide the quantity counter for TMs. This gives the player full freedom in building move pools without worrying about one-time-only TMs found throughout the game."
+  },
+  {
+    "id": "tm-toss",
+    "category": "Items",
+    "title": "TMs cannot be tossed or held",
+    "description": "TM items can no longer be tossed or given to a Pokémon to hold. This is consistent with treating TMs as permanent tools rather than consumable resources."
+  },
+  {
+    "id": "auto-repel",
+    "category": "UI",
+    "title": "Auto-repel prompt",
+    "description": "When an active repel wears off, if at least one repel of the same type is in the bag, the game now asks whether you want to use another one immediately. This removes the need to manually open the bag after each repel expires."
+  },
+  {
+    "id": "move-reminder",
+    "category": "UI",
+    "title": "Move Reminder in party menu",
+    "description": "The Move Reminder NPC functionality is now integrated directly into the party menu. Selecting a Pokémon shows a new \"LEARN MOVE\" option, which opens the move reminder screen and lets you re-learn (for free) any move the Pokémon learns by level-up up to its current level. No need to travel to the NPC or pay the Heart Scale cost."
+  },
+  {
+    "id": "ev-iv-checker",
+    "category": "UI",
+    "title": "EV/IV checker in summary screen",
+    "description": "Two new pages were added to the Pokémon summary screen. On the third page, press R to view EV stats and L to go back. These hidden values are an important part of the battle system and should be visible to the player."
+  },
+  {
+    "id": "health-bar-speed",
+    "category": "UI",
+    "title": "Faster health bar animation",
+    "description": "The health bar animation speed was significantly increased across all battle screens. The bar now moves at 1 pixel per frame, so a full HP bar takes roughly 2.5 seconds to drain to zero — down from the noticeably slow original rate."
+  },
+  {
+    "id": "bag-navigation",
+    "category": "UI",
+    "title": "Improved bag menu navigation",
+    "description": "The item bag menu now supports list wraparound (moving up from the first item jumps to the last) and fast scrolling: press R to jump 5 items down, press L to jump 5 items up."
+  },
+  {
+    "id": "battle-bag-navigation",
+    "category": "UI",
+    "title": "Improved battle bag navigation",
+    "description": "During battle, the bag menu supports page-based navigation: R moves to the next item page, L moves to the previous page. Pressing X will immediately reuse the last item used in battle, saving time in repetitive item usage."
+  },
+  {
+    "id": "hide-field-moves",
+    "category": "UI",
+    "title": "Hide unusable field moves in party menu",
+    "description": "After the field move changes, a Pokémon can have 4 or more field moves simultaneously displayed in the party menu — exceeding the screen space limit. To fix this, field moves are now only shown when they can actually be used at the current moment (e.g. Surf only appears near water, Fly is hidden inside caves)."
+  },
+  {
+    "id": "honey-tree",
+    "category": "Other",
+    "title": "Honey tree encounters are instant",
+    "description": "The original 6-hour wait after spreading honey on a tree was removed. Encounters are now available immediately and remain active for the next 24 hours. This eliminates a tedious time-wasting mechanic."
+  },
+  {
+    "id": "egg-hatching",
+    "category": "Other",
+    "title": "Faster egg hatching",
+    "description": "The number of steps required to hatch an egg was reduced by approximately 6×. Each egg cycle now requires only 40 steps instead of 255.\n\nExamples:\n- Low-cycle eggs (Pichu, Cleffa, Togepi): ~400 steps\n- High-cycle eggs (Dratini, Munchlax, Lapras): ~1600 steps\n\nThe goal is to encourage passive egg hatching during normal gameplay instead of dedicated bike-grinding sessions."
+  },
+  {
+    "id": "map-obstacles",
+    "category": "Other",
+    "title": "Removed unnecessary map obstacles",
+    "description": "Obstacles that served no story or puzzle purpose were removed from the following maps:\n\n- Oreburgh Gate B1F\n- Mt. Coronet 1F South\n- Mt. Coronet 2F\n- Mt. Coronet Outside\n- Mt. Coronet 1F North Room 1\n- Mt. Coronet Tunnel Room\n- Mt. Coronet B1F\n- Ravaged Path\n- Route 210\n- Route 211\n- Route 212\n- Route 213\n- Route 214\n- Route 222"
   }
 ]
