@@ -36,18 +36,18 @@
         "by_level": [
             [ 1, "MOVE_POISON_STING" ],
             [ 1, "MOVE_STRING_SHOT" ],
+            [ 1, "MOVE_SPIDER_WEB" ],
             [ 5, "MOVE_SCARY_FACE" ],
             [ 8, "MOVE_CONSTRICT" ],
-            [ 12, "MOVE_LEECH_LIFE" ],
-            [ 15, "MOVE_NIGHT_SHADE" ],
-            [ 19, "MOVE_SHADOW_SNEAK" ],
-            [ 22, "MOVE_FURY_SWIPES" ],
-            [ 26, "MOVE_SUCKER_PUNCH" ],
-            [ 29, "MOVE_SPIDER_WEB" ],
-            [ 33, "MOVE_AGILITY" ],
-            [ 36, "MOVE_PIN_MISSILE" ],
-            [ 40, "MOVE_PSYCHIC" ],
-            [ 43, "MOVE_POISON_JAB" ]
+            [ 11, "MOVE_LEECH_LIFE" ],
+            [ 15, "MOVE_SHADOW_SNEAK" ],
+            [ 18, "MOVE_BUG_BITE" ],
+            [ 21, "MOVE_POISON_FANG" ],
+            [ 24, "MOVE_PLUCK" ],
+            [ 27, "MOVE_FURY_SWIPES"],
+            [ 30, "MOVE_SUCKER_PUNCH" ],
+            [ 33, "MOVE_THUNDER_FANG"],
+            [ 35, "MOVE_U_TURN"]
         ],
         "by_tm": [
             "TM06",
