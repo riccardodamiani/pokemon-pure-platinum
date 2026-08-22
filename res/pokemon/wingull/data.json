@@ -35,17 +35,17 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_GROWL" ],
-            [ 1, "MOVE_WATER_GUN" ],
-            [ 6, "MOVE_SUPERSONIC" ],
+            [ 5, "MOVE_WATER_GUN" ],
+            [ 8, "MOVE_SUPERSONIC" ],
             [ 11, "MOVE_WING_ATTACK" ],
-            [ 16, "MOVE_MIST" ],
-            [ 19, "MOVE_WATER_PULSE" ],
-            [ 24, "MOVE_QUICK_ATTACK" ],
-            [ 29, "MOVE_ROOST" ],
-            [ 34, "MOVE_PURSUIT" ],
-            [ 37, "MOVE_AGILITY" ],
-            [ 42, "MOVE_AERIAL_ACE" ],
-            [ 47, "MOVE_AIR_SLASH" ]
+            [ 14, "MOVE_MIST" ],
+            [ 17, "MOVE_WHIRLWIND" ],
+            [ 20, "MOVE_ICICLE_SPEAR" ],
+            [ 23, "MOVE_WATER_PULSE" ],
+            [ 26, "MOVE_AIR_CUTTER"],
+            [ 29, "MOVE_QUICK_ATTACK" ],
+            [ 31, "MOVE_ROOST" ],
+            [ 34, "MOVE_AGILITY" ]
         ],
         "by_tm": [
             "TM03",
