@@ -4,16 +4,16 @@
         "The foe is stabbed\n",
         "with a horn rotating\n",
         "like a drill.\n",
-        "The foe instantly\n",
-        "faints if it hits."
+        "It has a high\n",
+        "critical-hit ratio."
     ],
     "class": "CLASS_PHYSICAL",
-    "type": "TYPE_NORMAL",
-    "power": 1,
-    "accuracy": 30,
+    "type": "TYPE_STEEL",
+    "power": 120,
+    "accuracy": 85,
     "pp": 5,
     "effect": {
-        "type": "BATTLE_EFFECT_ONE_HIT_KO",
+        "type": "BATTLE_EFFECT_HIGH_CRITICAL",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
