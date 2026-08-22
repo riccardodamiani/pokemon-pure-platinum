@@ -4,7 +4,16 @@ Pokémon Pure Platinum is a WIP mod of Pokémon Platinum for NDS, designed to mo
 
 This project is based on the decompilation of the game made by pret. Checkout [pret/pokeplatinum](https://github.com/pret/pokeplatinum.git).  
 
-Game documentation is available [here](game_doc/game.md).  
+## Wiki
+
+The wiki is a local web server that documents Pokémon, moves, items, and trainers data from the mod.  
+Python3 is required for the Wiki.  
+
+```bash
+cd wiki
+python3 wiki.py
+```
+Then open http://localhost:5000 in your browser. Use `-p PORT` to change the port.
 
 ## Goals
 There are numerous features and changes I want to add in this mod. This table keeps track of them.  
