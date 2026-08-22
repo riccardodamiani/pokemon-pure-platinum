@@ -4,17 +4,17 @@
         "The foe is attacked\n",
         "with a blast of\n",
         "absolute-zero cold.\n",
-        "The foe instantly\n",
-        "faints if it hits."
+        "It may also freeze\n",
+        "the target solid."
     ],
     "class": "CLASS_SPECIAL",
     "type": "TYPE_ICE",
-    "power": 1,
-    "accuracy": 30,
+    "power": 140,
+    "accuracy": 70,
     "pp": 5,
     "effect": {
-        "type": "BATTLE_EFFECT_ONE_HIT_KO",
-        "chance": 0
+        "type": "BATTLE_EFFECT_FREEZE_HIT",
+        "chance": 20
     },
     "range": "RANGE_SINGLE_TARGET",
     "priority": 0,
