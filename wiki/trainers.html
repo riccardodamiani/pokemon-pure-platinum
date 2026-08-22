@@ -166,6 +166,10 @@
       letter-spacing: .02em; text-transform: capitalize;
       color: var(--text); text-align: center; line-height: 1.3;
     }
+    .tr-slug-label {
+      font-size: 0.68rem; color: var(--text-muted);
+      text-align: center; letter-spacing: .02em; font-style: italic;
+    }
     .tr-class-label {
       font-size: 0.65rem; color: var(--text-muted);
       text-align: center; letter-spacing: .04em;
@@ -212,6 +216,10 @@
     .detail-name {
       font-size: 1.6rem; font-weight: 800;
       margin-bottom: 4px; padding-right: 40px;
+    }
+    .detail-slug {
+      font-size: 1rem; font-weight: 400;
+      color: var(--text-muted); margin-left: 10px; font-style: italic;
     }
     .detail-subtitle {
       font-size: 0.85rem; color: var(--text-muted);
@@ -1072,6 +1080,11 @@ function buildCard(tr) {
   nameEl.textContent = tr.name;
   card.appendChild(nameEl);
 
+  const slugEl = document.createElement('div');
+  slugEl.className = 'tr-slug-label';
+  slugEl.textContent = fmtSlug(tr.slug);
+  card.appendChild(slugEl);
+
   const clsEl = document.createElement('div');
   clsEl.className = 'tr-class-label';
   clsEl.textContent = fmtClassName(tr.class);
@@ -1094,7 +1107,7 @@ async function loadDetail(slug) {
     return;
   }
 
-  detailName.textContent = d.name || fmtSlug(slug);
+  detailName.innerHTML = `${d.name || fmtSlug(slug)}<span class="detail-slug">(${fmtSlug(slug)})</span>`;
   detailSub.textContent  = fmtClassName(d.class);
 
   // ── TOP SECTION: icon | info | AI flags ───────────────────────
@@ -1276,11 +1289,13 @@ const search  = document.getElementById('search');
 function applyFilters() {
   const q = search.value.trim().toLowerCase();
   let list = allTrainers;
-  if (q) list = list.filter(t =>
-    t.name.toLowerCase().includes(q) ||
-    fmtClassName(t.class).toLowerCase().includes(q) ||
-    t.slug.toLowerCase().includes(q)
-  );
+  if (q) {
+    const words = q.split(/\s+/).filter(Boolean);
+    const haystack = t => [
+      t.name, fmtClassName(t.class), t.slug, fmtSlug(t.slug)
+    ].join(' ').toLowerCase();
+    list = list.filter(t => words.every(w => haystack(t).includes(w)));
+  }
   render(list);
 }
 
