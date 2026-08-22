@@ -106,7 +106,11 @@
         ]
     },
     "evolutions": [
-        [ "EVO_LEVEL_MAGNETIC_FIELD", "SPECIES_PROBOPASS" ]
+        [
+            "EVO_LEVEL",
+            37,
+            "SPECIES_PROBOPASS"
+        ]
     ],
     "offspring": "SPECIES_NOSEPASS",
     "footprint": {
