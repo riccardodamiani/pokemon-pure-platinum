@@ -3,17 +3,15 @@
     "description": [
         "The user opens up a\n",
         "fissure in the ground\n",
-        "and drops the foe in.\n",
-        "The target instantly\n",
-        "faints if it hits."
+        "and drops the foe in.\n"
     ],
     "class": "CLASS_PHYSICAL",
     "type": "TYPE_GROUND",
-    "power": 1,
-    "accuracy": 30,
+    "power": 120,
+    "accuracy": 90,
     "pp": 5,
-    "effect": {
-        "type": "BATTLE_EFFECT_ONE_HIT_KO",
+   "effect": {
+        "type": "BATTLE_EFFECT_HIT",
         "chance": 0
     },
     "range": "RANGE_SINGLE_TARGET",
