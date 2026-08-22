@@ -35,9 +35,25 @@
     "learnset": {
         "by_level": [
             [ 1, "MOVE_THUNDER_SHOCK" ],
-            [ 1, "MOVE_TAIL_WHIP" ],
-            [ 1, "MOVE_QUICK_ATTACK" ],
-            [ 1, "MOVE_THUNDERBOLT" ]
+            [ 1, "MOVE_CHARM" ],
+            [ 5, "MOVE_TAIL_WHIP" ],
+            [ 8, "MOVE_THUNDER_WAVE" ],
+            [ 11, "MOVE_QUICK_ATTACK"],
+            [ 14, "MOVE_SWEET_KISS" ],
+            [ 17, "MOVE_DOUBLE_TEAM" ],
+            [ 20, "MOVE_BUG_BITE" ],
+            [ 23, "MOVE_SLAM" ],
+            [ 26, "MOVE_FEINT" ],
+            [ 29, "MOVE_AGILITY"],
+            [ 32, "MOVE_THUNDERBOLT" ],
+            [ 35, "MOVE_FIRE_FANG" ],
+            [ 38, "MOVE_HYPER_FANG"],
+            [ 41, "MOVE_LIGHT_SCREEN" ],
+            [ 44, "MOVE_THUNDER" ],
+            [ 47, "MOVE_EXTREME_SPEED" ],
+            [ 50, "MOVE_VOLT_TACKLE"],
+            [ 54, "MOVE_U_TURN" ],
+            [ 58, "MOVE_GIGA_IMPACT"]
         ],
         "by_tm": [
             "TM01",
