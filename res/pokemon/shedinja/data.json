@@ -3,7 +3,7 @@
         "hp": 1,
         "attack": 90,
         "defense": 45,
-        "speed": 40,
+        "speed": 55,
         "special_attack": 30,
         "special_defense": 30
     },
