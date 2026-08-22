@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Items — Pure Platinum Wiki</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0f1117;
+      --surface:    #1a1d27;
+      --surface2:   #22263a;
+      --accent:     #e63946;
+      --accent2:    #457b9d;
+      --text:       #e8eaf0;
+      --text-muted: #7a7f99;
+      --sidebar-w:  260px;
+      --header-h:   64px;
+      --radius:     10px;
+      --tr:         0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh; overflow-x: hidden;
+    }
+
+    /* ── SIDEBAR OVERLAY ─────────────────────────── */
+    #overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--tr); z-index: 90;
+    }
+    #overlay.visible { opacity: 1; pointer-events: all; }
+
+    /* ── SIDEBAR ─────────────────────────────────── */
+    #sidebar {
+      position: fixed; top: 0; left: 0;
+      width: var(--sidebar-w); height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transform: translateX(calc(-1 * var(--sidebar-w)));
+      transition: transform var(--tr);
+      z-index: 100; display: flex; flex-direction: column;
+      padding-top: var(--header-h);
+    }
+    #sidebar.open { transform: translateX(0); }
+    .sidebar-header {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar-title {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .sidebar-nav { padding: 12px 0; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 13px 24px; color: var(--text-muted); cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: color .2s, background .2s, border-color .2s;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none; user-select: none;
+    }
+    .nav-item:hover, .nav-item.active {
+      background: var(--surface2); color: var(--text);
+      border-left-color: var(--accent);
+    }
+    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+    .nav-item:hover svg, .nav-item.active svg { opacity: 1; }
+
+    /* ── HEADER ──────────────────────────────────── */
+    #header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h); background: var(--surface);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center;
+      padding: 0 24px; z-index: 80; gap: 16px;
+    }
+    #logo-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 6px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .2s; flex-shrink: 0;
+    }
+    #logo-btn:hover { background: rgba(255,255,255,.07); transform: rotate(15deg); }
+    #logo-btn:active { transform: rotate(15deg) scale(.92); }
+    .pball-top    { fill: #e63946; }
+    .pball-bot    { fill: #d0d4e8; }
+    .pball-band   { fill: #111318; }
+    .pball-center { fill: #111318; stroke: #d0d4e8; stroke-width: 2.5; }
+    .pball-dot    { fill: #d0d4e8; }
+    #site-name {
+      font-size: 1.05rem; font-weight: 700;
+      letter-spacing: .04em; color: var(--text);
+      text-decoration: none; user-select: none;
+    }
+    #site-name span { color: var(--accent); }
+
+    /* ── MAIN ────────────────────────────────────── */
+    #main {
+      padding-top: calc(var(--header-h) + 28px);
+      padding-bottom: 48px; max-width: 1400px;
+      margin: 0 auto; padding-left: 24px; padding-right: 24px;
+    }
+
+    /* ── TOOLBAR ─────────────────────────────────── */
+    .toolbar {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .toolbar h1 {
+      font-size: 1.4rem; font-weight: 800;
+      letter-spacing: -.01em; flex: 1;
+    }
+    .toolbar h1 span { color: var(--accent); }
+    #search {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; color: var(--text);
+      font-size: 0.9rem; padding: 8px 14px;
+      outline: none; width: 220px;
+      transition: border-color .2s;
+    }
+    #search:focus { border-color: var(--accent); }
+    #search::placeholder { color: var(--text-muted); }
+    #count { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; }
+
+    /* ── POCKET FILTER ───────────────────────────── */
+    #pocket-filter {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 24px;
+    }
+    .pf-btn {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 5px;
+      border: 2px solid transparent;
+      cursor: pointer; color: #fff;
+      opacity: 0.5; transition: opacity .15s, border-color .15s;
+      user-select: none;
+    }
+    .pf-btn:hover  { opacity: 0.8; }
+    .pf-btn.active { opacity: 1; border-color: rgba(255,255,255,0.7); }
+    .pf-items         { background: #457b9d; }
+    .pf-medicine      { background: #e63946; }
+    .pf-tmhms         { background: #7038f8; }
+    .pf-berries       { background: #78c850; color: #333; }
+    .pf-key-items     { background: #b8a038; }
+    .pf-balls         { background: #c03028; }
+    .pf-battle-items  { background: #705848; }
+    .pf-mail          { background: #6890f0; }
+
+    /* ── GRID ────────────────────────────────────── */
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .it-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex; flex-direction: column; gap: 8px;
+      cursor: pointer;
+      transition: border-color .2s, transform .2s, background .2s;
+    }
+    .it-card:hover {
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+      background: var(--surface2);
+    }
+    .it-card-top {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .it-icon {
+      width: 32px; height: 32px;
+      image-rendering: pixelated;
+      flex-shrink: 0;
+    }
+    .it-name {
+      font-size: 0.88rem; font-weight: 700;
+      letter-spacing: .02em; color: var(--text);
+      line-height: 1.2;
+    }
+    .it-desc {
+      font-size: 0.71rem; color: var(--text-muted);
+      line-height: 1.45; flex: 1;
+    }
+    .it-pocket {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; padding: 2px 7px;
+      border-radius: 4px; align-self: flex-start;
+      color: #fff;
+    }
+
+    /* ── DETAIL MODAL ────────────────────────────── */
+    #detail-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity var(--tr);
+    }
+    #detail-backdrop.open { opacity: 1; pointer-events: all; }
+    #detail-panel {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      width: min(640px, calc(100vw - 32px));
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform var(--tr);
+    }
+    #detail-backdrop.open #detail-panel { transform: translateY(0); }
+
+    #detail-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.06);
+      border: none; border-radius: 50%;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-muted);
+      transition: background .2s, color .2s;
+    }
+    #detail-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+    .detail-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 16px; padding-right: 40px;
+    }
+    .detail-icon {
+      width: 48px; height: 48px;
+      image-rendering: pixelated; flex-shrink: 0;
+    }
+    .detail-item-name {
+      font-size: 1.5rem; font-weight: 800;
+    }
+    .detail-desc {
+      font-size: 0.82rem; color: var(--text-muted);
+      line-height: 1.5; margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+    }
+    .detail-meta {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px 16px; margin-bottom: 20px;
+    }
+    .meta-item { font-size: 0.8rem; }
+    .meta-item .mk {
+      color: var(--text-muted); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      display: block; margin-bottom: 2px;
+    }
+    .meta-item .mv { font-weight: 600; }
+    .bool-yes { color: #78c850; }
+    .bool-no  { color: var(--text-muted); }
+
+    #loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
+    #empty   { display: none; text-align: center; padding: 80px 0; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div id="overlay"></div>
+
+<!-- ── Sidebar ──────────────────────────────────────────── -->
+<nav id="sidebar">
+  <div class="sidebar-header"><span class="sidebar-title">Navigation</span></div>
+  <div class="sidebar-nav">
+    <a class="nav-item" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>Home
+    </a>
+    <a class="nav-item" href="/changes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>Changes
+    </a>
+    <a class="nav-item" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+        <line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/>
+      </svg>Map
+    </a>
+    <a class="nav-item" href="/trainers">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>Trainers
+    </a>
+    <a class="nav-item" href="/pokemon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>Pokémon
+    </a>
+    <a class="nav-item active" href="/items">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+        <path d="M16 7V5a2 2 0 0 0-4 0v2"/>
+        <line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+      </svg>Items
+    </a>
+    <a class="nav-item" href="/moves">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>Moves
+    </a>
+  </div>
+</nav>
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<header id="header">
+  <button id="logo-btn" aria-label="Toggle menu">
+    <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+      <clipPath id="clip-circle"><circle cx="18" cy="18" r="16"/></clipPath>
+      <circle cx="18" cy="18" r="16" class="pball-bot"/>
+      <rect x="2" y="2" width="32" height="16" class="pball-top" clip-path="url(#clip-circle)"/>
+      <rect x="2" y="16" width="32" height="4" class="pball-band"/>
+      <circle cx="18" cy="18" r="5" class="pball-center"/>
+      <circle cx="18" cy="18" r="2.5" class="pball-dot"/>
+    </svg>
+  </button>
+  <a id="site-name" href="/">Pure <span>Platinum</span> Wiki</a>
+</header>
+
+<!-- ── Main ─────────────────────────────────────────────── -->
+<main id="main">
+  <div class="toolbar">
+    <h1>Item <span>Dex</span></h1>
+    <input id="search" type="text" placeholder="Search…" autocomplete="off" />
+    <span id="count"></span>
+  </div>
+  <div id="pocket-filter">
+    <button class="pf-btn pf-items"        data-pocket="POCKET_ITEMS">Items</button>
+    <button class="pf-btn pf-medicine"     data-pocket="POCKET_MEDICINE">Medicine</button>
+    <button class="pf-btn pf-tmhms"        data-pocket="POCKET_TMHMS">TMs &amp; HMs</button>
+    <button class="pf-btn pf-berries"      data-pocket="POCKET_BERRIES">Berries</button>
+    <button class="pf-btn pf-key-items"    data-pocket="POCKET_KEY_ITEMS">Key Items</button>
+    <button class="pf-btn pf-balls"        data-pocket="POCKET_BALLS">Balls</button>
+    <button class="pf-btn pf-battle-items" data-pocket="POCKET_BATTLE_ITEMS">Battle Items</button>
+    <button class="pf-btn pf-mail"         data-pocket="POCKET_MAIL">Mail</button>
+  </div>
+  <div id="loading">Loading items…</div>
+  <div id="empty">No items match your search.</div>
+  <div id="grid"></div>
+</main>
+
+<!-- ── Detail modal ─────────────────────────────────────── -->
+<div id="detail-backdrop">
+  <div id="detail-panel">
+    <button id="detail-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ── sidebar ────────────────────────────────────────────────────────────────
+const btn     = document.getElementById('logo-btn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const openSidebar  = () => { sidebar.classList.add('open');    overlay.classList.add('visible'); };
+const closeSidebar = () => { sidebar.classList.remove('open'); overlay.classList.remove('visible'); };
+btn.addEventListener('click', () => sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
+overlay.addEventListener('click', closeSidebar);
+
+// ── pocket helpers ────────────────────────────────────────────────────────
+const POCKET_META = {
+  POCKET_ITEMS:         { label: 'Items',        cls: 'pf-items' },
+  POCKET_MEDICINE:      { label: 'Medicine',     cls: 'pf-medicine' },
+  POCKET_TMHMS:         { label: 'TM/HM',        cls: 'pf-tmhms' },
+  POCKET_BERRIES:       { label: 'Berry',        cls: 'pf-berries' },
+  POCKET_KEY_ITEMS:     { label: 'Key Item',     cls: 'pf-key-items' },
+  POCKET_BALLS:         { label: 'Ball',         cls: 'pf-balls' },
+  POCKET_BATTLE_ITEMS:  { label: 'Battle',       cls: 'pf-battle-items' },
+  POCKET_MAIL:          { label: 'Mail',         cls: 'pf-mail' },
+};
+
+function pocketBadge(pocket) {
+  const m = POCKET_META[pocket];
+  if (!m) return '';
+  return `<span class="it-pocket ${m.cls}" style="background:var(--${m.cls.replace('pf-','')})">${m.label}</span>`;
+}
+
+// ── misc ──────────────────────────────────────────────────────────────────
+function fmtConst(s) {
+  return (s || '').replace(/^[A-Z]+?_/, '').replace(/_/g, ' ')
+    .toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+function iconSrc(slug) { return `/item-icon/${slug}`; }
+
+// ── pocket filter ─────────────────────────────────────────────────────────
+let activePocket = null;
+
+document.getElementById('pocket-filter').addEventListener('click', e => {
+  const b = e.target.closest('.pf-btn');
+  if (!b) return;
+  const p = b.dataset.pocket;
+  activePocket = activePocket === p ? null : p;
+  document.querySelectorAll('.pf-btn').forEach(x =>
+    x.classList.toggle('active', x.dataset.pocket === activePocket)
+  );
+  applyFilters();
+});
+
+// ── detail modal ──────────────────────────────────────────────────────────
+const backdrop      = document.getElementById('detail-backdrop');
+const detailContent = document.getElementById('detail-content');
+document.getElementById('detail-close').addEventListener('click', closeDetail);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeDetail(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (backdrop.classList.contains('open')) closeDetail();
+    else closeSidebar();
+  }
+});
+function openDetail(slug) { backdrop.classList.add('open'); loadDetail(slug); }
+function closeDetail()    { backdrop.classList.remove('open'); }
+
+async function loadDetail(slug) {
+  detailContent.innerHTML = '<p style="color:var(--text-muted);padding:20px 0">Loading…</p>';
+  let d;
+  try {
+    d = await fetch(`/api/items/${slug}`).then(r => r.json());
+  } catch {
+    detailContent.innerHTML = '<p style="color:var(--text-muted)">Error loading data.</p>';
+    return;
+  }
+
+  const desc = (d.description || []).join('').replace(/\n/g,' ').trim();
+  const pocket = POCKET_META[d.fieldPocket];
+  const pocketLabel = pocket ? pocket.label : fmtConst(d.fieldPocket);
+
+  const priceStr = d.price != null ? (d.price === 0 ? 'N/A' : `₽${d.price.toLocaleString()}`) : '—';
+  const flingStr = d.flingPower ? `${fmtConst(d.flingEffect)} (${d.flingPower} BP)` : (d.flingEffect ? fmtConst(d.flingEffect) : '—');
+  const ngStr    = d.naturalGiftPower ? `${d.naturalGiftPower} BP${d.naturalGiftType ? ' · ' + fmtConst(d.naturalGiftType) : ''}` : '—';
+
+  const boolCell = (v) => v
+    ? '<span class="mv bool-yes">Yes</span>'
+    : '<span class="mv bool-no">No</span>';
+
+  const extraRows = [];
+  if (d.holdEffect && d.holdEffect !== 'HOLD_EFFECT_NONE')
+    extraRows.push(`<div class="meta-item"><span class="mk">Hold Effect</span><span class="mv">${fmtConst(d.holdEffect)}${d.effectParam ? ` (${d.effectParam})` : ''}</span></div>`);
+  if (d.teachesMove)
+    extraRows.push(`<div class="meta-item"><span class="mk">Teaches</span><span class="mv">${fmtConst(d.teachesMove)}</span></div>`);
+  if (d.pluckEffect && d.pluckEffect !== 'PLUCK_EFFECT_NONE')
+    extraRows.push(`<div class="meta-item"><span class="mk">Pluck Effect</span><span class="mv">${fmtConst(d.pluckEffect)}</span></div>`);
+  if (d.itemUseParams)
+    Object.entries(d.itemUseParams).forEach(([k, v]) => {
+      const label = k.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase());
+      extraRows.push(`<div class="meta-item"><span class="mk">${label}</span><span class="mv">${v}</span></div>`);
+    });
+
+  const iconHtml = d.has_icon
+    ? `<img class="detail-icon" src="${iconSrc(d.slug)}" alt="${d.name}" />`
+    : '';
+
+  detailContent.innerHTML = `
+    <div class="detail-header">
+      ${iconHtml}
+      <div class="detail-item-name">${d.name || slug}</div>
+    </div>
+    ${desc ? `<div class="detail-desc">${desc}</div>` : ''}
+    <div class="section-title">Info</div>
+    <div class="detail-meta">
+      <div class="meta-item"><span class="mk">Pocket</span><span class="mv">${pocketLabel}</span></div>
+      <div class="meta-item"><span class="mk">Price</span><span class="mv">${priceStr}</span></div>
+      <div class="meta-item"><span class="mk">Fling</span><span class="mv">${flingStr}</span></div>
+      <div class="meta-item"><span class="mk">Natural Gift</span><span class="mv">${ngStr}</span></div>
+      <div class="meta-item"><span class="mk">Prevent Toss</span>${boolCell(d.preventToss)}</div>
+      <div class="meta-item"><span class="mk">Registerable</span>${boolCell(d.canRegister)}</div>
+      ${extraRows.join('')}
+    </div>
+  `;
+}
+
+// ── card builder ──────────────────────────────────────────────────────────
+function buildCard(item) {
+  const card = document.createElement('div');
+  card.className = 'it-card';
+  card.addEventListener('click', () => openDetail(item.slug));
+
+  const top = document.createElement('div');
+  top.className = 'it-card-top';
+
+  if (item.has_icon) {
+    const img = document.createElement('img');
+    img.className = 'it-icon';
+    img.src = iconSrc(item.slug);
+    img.alt = item.name;
+    top.appendChild(img);
+  }
+
+  const nameEl = document.createElement('div');
+  nameEl.className = 'it-name';
+  nameEl.textContent = item.name;
+  top.appendChild(nameEl);
+  card.appendChild(top);
+
+  if (item.description) {
+    const descEl = document.createElement('div');
+    descEl.className = 'it-desc';
+    descEl.textContent = item.description;
+    card.appendChild(descEl);
+  }
+
+  const pm = POCKET_META[item.pocket];
+  if (pm) {
+    const badge = document.createElement('span');
+    badge.className = `it-pocket ${pm.cls}`;
+    badge.textContent = pm.label;
+    card.appendChild(badge);
+  }
+
+  return card;
+}
+
+// ── filter + render ───────────────────────────────────────────────────────
+let allItems = [];
+const grid    = document.getElementById('grid');
+const loading = document.getElementById('loading');
+const empty   = document.getElementById('empty');
+const countEl = document.getElementById('count');
+const search  = document.getElementById('search');
+
+function applyFilters() {
+  const q = search.value.trim().toLowerCase();
+  let list = allItems;
+  if (q)             list = list.filter(i => i.name.toLowerCase().includes(q));
+  if (activePocket)  list = list.filter(i => i.pocket === activePocket);
+  render(list);
+}
+
+function render(list) {
+  grid.innerHTML = '';
+  empty.style.display = list.length === 0 ? 'block' : 'none';
+  countEl.textContent = `${list.length} items`;
+  list.forEach(item => grid.appendChild(buildCard(item)));
+}
+
+fetch('/api/items')
+  .then(r => r.json())
+  .then(data => {
+    allItems = data;
+    loading.style.display = 'none';
+    render(allItems);
+  })
+  .catch(() => { loading.textContent = 'Failed to load data. Is the server running?'; });
+
+search.addEventListener('input', applyFilters);
+</script>
+</body>
+</html>
