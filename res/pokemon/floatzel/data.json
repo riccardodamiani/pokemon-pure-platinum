@@ -52,7 +52,7 @@
             [ 43, "MOVE_RAZOR_WIND"],
             [ 46, "MOVE_BOUNCE" ],
             [ 49, "MOVE_RAIN_DANCE" ], 
-            [ 53, "MOVE_HYDRO_PUMP" ]
+            [ 53, "MOVE_AQUA_TAIL" ]
         ],
         "by_tm": [
             "TM01",
