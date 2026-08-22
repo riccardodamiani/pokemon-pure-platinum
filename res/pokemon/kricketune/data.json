@@ -47,9 +47,11 @@
             [ 35, "MOVE_PURSUIT" ],
             [ 37, "MOVE_X_SCISSOR" ],
             [ 39, "MOVE_TAUNT" ],
-            [ 42, "MOVE_NIGHT_SLASH" ],
+            [ 42, "MOVE_SUCKER_PUNCH"],
             [ 45, "MOVE_PERISH_SONG" ],
-            [ 48, "MOVE_MINIMIZE"]
+            [ 48, "MOVE_MINIMIZE"],
+            [ 52, "MOVE_NIGHT_SLASH" ],
+            [ 56, "MOVE_LEAF_BLADE" ]
         ],
         "by_tm": [
             "TM06",
