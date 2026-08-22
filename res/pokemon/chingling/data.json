@@ -108,7 +108,11 @@
         ]
     },
     "evolutions": [
-        [ "EVO_LEVEL_HAPPINESS_NIGHT", "SPECIES_CHIMECHO" ]
+        [
+            "EVO_LEVEL",
+            25,
+            "SPECIES_CHIMECHO"
+        ]
     ],
     "offspring": "SPECIES_CHINGLING",
     "footprint": {
