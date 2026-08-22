@@ -49,8 +49,7 @@
             [ 31, "MOVE_ENERGY_BALL" ],
             [ 34, "MOVE_GIGA_DRAIN" ],
             [ 37, "MOVE_MUDDY_WATER" ],
-            [ 40, "MOVE_NIGHT_SLASH" ],
-            [ 48, "MOVE_HYDRO_PUMP" ]
+            [ 45, "MOVE_HYDRO_PUMP" ]
         ],
         "by_tm": [
             "TM03",
