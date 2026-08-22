@@ -130,12 +130,7 @@
             "SPECIES_SLOWBRO"
         ],
         [
-            "EVO_LEVEL_WITH_HELD_ITEM_DAY",
-            "ITEM_KINGS_ROCK",
-            "SPECIES_SLOWKING"
-        ],
-        [
-            "EVO_LEVEL_WITH_HELD_ITEM_NIGHT",
+            "EVO_LEVEL_WITH_HELD_ITEM",
             "ITEM_KINGS_ROCK",
             "SPECIES_SLOWKING"
         ]
