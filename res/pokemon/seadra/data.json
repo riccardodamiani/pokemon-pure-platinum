@@ -94,7 +94,7 @@
     },
     "evolutions": [
         [
-            "EVO_TRADE_WITH_HELD_ITEM",
+            "EVO_LEVEL_WITH_HELD_ITEM",
             "ITEM_DRAGON_SCALE",
             "SPECIES_KINGDRA"
         ]
