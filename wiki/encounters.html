@@ -310,6 +310,95 @@
       display: inline-block; margin-bottom: 8px;
     }
 
+    /* ── Pokémon detail modal ────────────────────────── */
+    .type-badge { font-size:.63rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:2px 7px; border-radius:4px; color:#fff; }
+    .type-normal{background:#9a9a7a} .type-fire{background:#f08030} .type-water{background:#6890f0}
+    .type-electric{background:#f8d030;color:#333} .type-grass{background:#78c850} .type-ice{background:#98d8d8;color:#333}
+    .type-fighting{background:#c03028} .type-poison{background:#a040a0} .type-ground{background:#e0c068;color:#333}
+    .type-flying{background:#a890f0} .type-psychic{background:#f85888} .type-bug{background:#a8b820}
+    .type-rock{background:#b8a038} .type-ghost{background:#705898} .type-dragon{background:#7038f8}
+    .type-dark{background:#705848} .type-steel{background:#b8b8d0;color:#333} .type-unknown{background:#68a090}
+    #pk-backdrop {
+      position:fixed; inset:0; background:rgba(0,0,0,0.72);
+      display:flex; align-items:center; justify-content:center;
+      z-index:300; opacity:0; pointer-events:none; transition:opacity var(--tr);
+    }
+    #pk-backdrop.open { opacity:1; pointer-events:all; }
+    #pk-panel {
+      background:var(--surface); border:1px solid rgba(255,255,255,0.08); border-radius:16px;
+      width:min(1100px, calc(100vw - 32px)); max-height:calc(100vh - 48px);
+      overflow-y:auto; padding:28px; position:relative;
+      transform:translateY(20px); transition:transform var(--tr);
+    }
+    #pk-backdrop.open #pk-panel { transform:translateY(0); }
+    #pk-close {
+      position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.06);
+      border:none; border-radius:50%; width:32px; height:32px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; color:var(--text-muted); transition:background .2s,color .2s;
+    }
+    #pk-close:hover { background:rgba(255,255,255,0.12); color:var(--text); }
+    .detail-name { font-size:1.6rem; font-weight:800; text-transform:capitalize; margin-bottom:20px; padding-right:40px; }
+    .detail-body { display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:320px; }
+    .detail-left { display:flex; flex-direction:column; gap:18px; padding-right:28px; border-right:1px solid rgba(255,255,255,0.07); }
+    .detail-right { padding-left:28px; }
+    .detail-top-row { display:flex; gap:20px; align-items:flex-start; }
+    .detail-sprite-wrap canvas { image-rendering:pixelated; display:block; }
+    .detail-info { flex:1; display:flex; flex-direction:column; gap:18px; }
+    .section-title { font-size:0.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+    .stats-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+    .stats-table td { padding:3px 0; }
+    .stats-table .sn { color:var(--text-muted); width:30%; white-space:nowrap; padding-right:8px; }
+    .stats-table .sv { font-weight:700; width:30px; text-align:right; padding-right:10px; }
+    .stat-bar-wrap { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; }
+    .stat-bar { height:100%; border-radius:3px; background:var(--accent2); }
+    .stat-bar.hi { background:#78c850; } .stat-bar.vhi { background:#f8d030; }
+    .stats-total { display:flex; justify-content:space-between; font-size:0.82rem; padding-top:6px; border-top:1px solid rgba(255,255,255,0.07); margin-top:2px; }
+    .stats-total .lbl { color:var(--text-muted); font-weight:600; } .stats-total .val { font-weight:800; }
+    .detail-meta { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; }
+    .evo-chain { display:flex; flex-direction:column; gap:6px; }
+    .evo-entry { display:flex; align-items:center; gap:8px; font-size:0.82rem; cursor:pointer; border-radius:6px; padding:3px 6px; margin:0 -6px; transition:background .15s; }
+    .evo-entry:hover { background:var(--surface2); }
+    .evo-arrow { color:var(--text-muted); font-size:1rem; }
+    .evo-method { font-size:0.7rem; font-weight:600; color:var(--text-muted); letter-spacing:.04em; }
+    .evo-target { font-weight:700; text-transform:capitalize; }
+    .meta-item { font-size:0.8rem; }
+    .meta-item .mk { color:var(--text-muted); font-size:0.68rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; display:block; margin-bottom:2px; }
+    .meta-item .mv { font-weight:600; }
+    /* ── Move detail modal ──────────────────────────────── */
+    #move-backdrop {
+      position:fixed; inset:0; background:rgba(0,0,0,0.55);
+      display:flex; align-items:center; justify-content:center;
+      z-index:400; opacity:0; pointer-events:none; transition:opacity var(--tr);
+    }
+    #move-backdrop.open { opacity:1; pointer-events:all; }
+    #move-panel { background:var(--surface); border:1px solid rgba(255,255,255,0.08); border-radius:16px; width:min(560px, calc(100vw - 32px)); max-height:calc(100vh - 48px); overflow-y:auto; padding:28px; position:relative; transform:translateY(20px); transition:transform var(--tr); }
+    #move-backdrop.open #move-panel { transform:translateY(0); }
+    #move-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.06); border:none; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--text-muted); transition:background .2s,color .2s; }
+    #move-close:hover { background:rgba(255,255,255,0.12); color:var(--text); }
+    .move-detail-name { font-size:1.4rem; font-weight:800; margin-bottom:18px; padding-right:40px; }
+    .move-detail-desc { font-size:0.8rem; color:var(--text-muted); line-height:1.5; margin-bottom:18px; }
+    .move-detail-badges { display:grid; grid-template-columns:1fr 1fr; margin-bottom:16px; }
+    .move-detail-badges .col { display:flex; flex-direction:column; gap:6px; align-items:flex-start; }
+    .move-detail-meta { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-bottom:16px; }
+    .flag-badge { font-size:0.66rem; font-weight:600; padding:2px 8px; border-radius:4px; background:var(--surface2); color:#c8ccd8; letter-spacing:.04em; }
+    .flags-list { display:flex; flex-wrap:wrap; gap:5px; }
+    /* ── Learnset ───────────────────────────────────────────── */
+    .learnset-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:14px; }
+    .ls-tab { font-size:0.7rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:5px 12px; border-radius:6px; border:1.5px solid rgba(255,255,255,0.12); background:none; color:var(--text-muted); cursor:pointer; transition:all .15s; }
+    .ls-tab:hover { color:var(--text); border-color:rgba(255,255,255,0.3); } .ls-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; } .ls-tab:disabled { opacity:0.3; cursor:default; }
+    .move-table { width:100%; border-collapse:collapse; font-size:0.8rem; }
+    .move-table th { text-align:left; color:var(--text-muted); font-size:0.65rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:0 8px 6px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
+    .move-table td { padding:5px 8px 5px 0; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:middle; }
+    .move-table tr:last-child td { border-bottom:none; }
+    .move-table tbody tr { cursor:pointer; transition:background .12s; } .move-table tbody tr:hover { background:var(--surface2); }
+    .col-lv { color:var(--accent); font-weight:700; width:32px; } .col-tm { color:var(--text-muted); font-weight:600; font-size:0.7rem; width:38px; } .col-name { font-weight:600; } .col-pow,.col-acc { text-align:right; width:38px; color:var(--text-muted); }
+    .move-class { font-size:0.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 6px; border-radius:3px; }
+    .move-class-physical{background:#c03028;color:#fff} .move-class-special{background:#6890f0;color:#fff} .move-class-status{background:#555;color:#ccc}
+    /* ── Clickable species ────────────────────────────────── */
+    .pk-link { cursor:pointer; text-decoration:underline; text-underline-offset:2px; text-decoration-color:rgba(255,255,255,.2); transition:color .15s,text-decoration-color .15s; }
+    .pk-link:hover { color:var(--accent2); text-decoration-color:var(--accent2); }
+
     #loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
     #empty   { display: none; text-align: center; padding: 80px 0; color: var(--text-muted); }
   </style>
@@ -418,6 +507,42 @@
   </div>
 </div>
 
+<!-- ── Pokémon detail modal ─────────────────────────────── -->
+<div id="pk-backdrop">
+  <div id="pk-panel">
+    <button id="pk-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+    <div id="pk-name" class="detail-name"></div>
+    <div class="detail-body">
+      <div class="detail-left">
+        <div class="detail-top-row">
+          <div id="pk-sprite" class="detail-sprite-wrap"></div>
+          <div id="pk-stats"  class="detail-info"></div>
+        </div>
+        <div id="pk-types"></div>
+        <div id="pk-evo"></div>
+        <div id="pk-misc"></div>
+      </div>
+      <div class="detail-right" id="pk-right"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Move detail modal ──────────────────────────────────── -->
+<div id="move-backdrop">
+  <div id="move-panel">
+    <button id="move-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+    <div id="move-content"></div>
+  </div>
+</div>
+
 <script>
 // ── sidebar ────────────────────────────────────────────────────────────────
 const btn     = document.getElementById('logo-btn');
@@ -453,6 +578,12 @@ const backdrop      = document.getElementById('detail-backdrop');
 const detailContent = document.getElementById('detail-content');
 document.getElementById('detail-close').addEventListener('click', closeDetail);
 backdrop.addEventListener('click', e => { if (e.target === backdrop) closeDetail(); });
+
+// open Pokémon modal when a species name is clicked inside the area detail
+detailContent.addEventListener('click', e => {
+  const link = e.target.closest('.pk-link');
+  if (link) { e.stopPropagation(); openPkDetail(link.dataset.pk); }
+});
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (backdrop.classList.contains('open')) closeDetail();
@@ -511,14 +642,15 @@ function calcWaterRates(encounters, probs) {
 
 function buildRateRows(rows, barCls) {
   if (!rows.length) return '<p style="color:var(--text-muted);font-size:.8rem">No encounters.</p>';
-  return rows.map(({ species, pct, lvlStr }) =>
-    `<div class="rate-row">
-      <span class="rate-species">${fmtSpecies(species)}</span>
+  return rows.map(({ species, pct, lvlStr }) => {
+    const pkName = species.replace(/^SPECIES_/, '').toLowerCase();
+    return `<div class="rate-row">
+      <span class="rate-species pk-link" data-pk="${pkName}">${fmtSpecies(species)}</span>
       <span class="rate-lvl">${lvlStr}</span>
       <span class="rate-pct">${pct}%</span>
       <div class="rate-bar-wrap"><div class="rate-bar ${barCls}" style="width:${pct}%"></div></div>
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
 }
 
 let _currentEncData = null;
@@ -644,6 +776,295 @@ async function loadDetail(slug) {
   ['chk-swarm', 'chk-radar'].forEach(id =>
     document.getElementById(id)?.addEventListener('change', renderLandRatesBody)
   );
+}
+
+// ── Pokémon detail modal ──────────────────────────────────────────────
+
+function fmtConst(s) {
+  return (s || '').replace(/^[A-Z]+?_/, '').replace(/_/g, ' ')
+    .toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+
+const TYPE_RE = /^TYPE_(.+)$/;
+function typeKey(raw)   { const m = raw.match(TYPE_RE); return m ? m[1].toLowerCase() : 'unknown'; }
+function typeLabel(raw) { const k = typeKey(raw); return k.charAt(0).toUpperCase() + k.slice(1); }
+function typeClass(raw) { return 'type-' + typeKey(raw); }
+function typeBadge(raw) {
+  const el = document.createElement('span');
+  el.className = 'type-badge ' + typeClass(raw);
+  el.textContent = typeLabel(raw);
+  return el;
+}
+
+function classBadge(cls) {
+  const map = { CLASS_PHYSICAL: 'physical', CLASS_SPECIAL: 'special', CLASS_STATUS: 'status' };
+  const k = map[cls] || 'status';
+  return `<span class="move-class move-class-${k}">${k.charAt(0).toUpperCase()+k.slice(1)}</span>`;
+}
+
+function makeSpriteCanvas(url, scale = 1) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const halfW = Math.floor(img.naturalWidth / 2);
+      const c = document.createElement('canvas');
+      c.width = halfW; c.height = img.naturalHeight;
+      c.getContext('2d').drawImage(img, 0, 0);
+      c.style.width  = (halfW             * scale) + 'px';
+      c.style.height = (img.naturalHeight * scale) + 'px';
+      resolve(c);
+    };
+    img.onerror = () => resolve(null);
+    img.src = url;
+  });
+}
+
+const STAT_LABELS = { hp:'HP', attack:'Atk', defense:'Def', special_attack:'SpA', special_defense:'SpD', speed:'Spe' };
+const STAT_MAX = 255;
+function statBarCls(v) { return v >= 130 ? 'hi vhi' : v >= 90 ? 'hi' : ''; }
+
+function buildStatsBlock(stats) {
+  const wrap = document.createElement('div');
+  const title = document.createElement('div');
+  title.className = 'section-title'; title.textContent = 'Base Stats';
+  wrap.appendChild(title);
+  const table = document.createElement('table');
+  table.className = 'stats-table';
+  let total = 0;
+  for (const [key, label] of Object.entries(STAT_LABELS)) {
+    const v = stats[key] ?? 0; total += v;
+    const pct = Math.round((v / STAT_MAX) * 100);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="sn">${label}</td><td class="sv">${v}</td><td><div class="stat-bar-wrap"><div class="stat-bar ${statBarCls(v)}" style="width:${pct}%"></div></div></td>`;
+    table.appendChild(tr);
+  }
+  wrap.appendChild(table);
+  const tot = document.createElement('div'); tot.className = 'stats-total';
+  tot.innerHTML = `<span class="lbl">Total</span><span class="val">${total}</span>`;
+  wrap.appendChild(tot);
+  return wrap;
+}
+
+const LEARNSET_TABS = [
+  { key: 'by_level', label: 'By Level' }, { key: 'by_tm', label: 'TM / HM' },
+  { key: 'by_tutor', label: 'Tutor'    }, { key: 'egg_moves', label: 'Egg'  },
+];
+
+function buildLearnsetPanel(learnset) {
+  const wrap = document.createElement('div');
+  const title = document.createElement('div'); title.className = 'section-title'; title.textContent = 'Learnset';
+  wrap.appendChild(title);
+  const tabBar = document.createElement('div'); tabBar.className = 'learnset-tabs';
+  const tableWrap = document.createElement('div');
+  function showTab(key) {
+    tabBar.querySelectorAll('.ls-tab').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+    tableWrap.innerHTML = '';
+    const moves = learnset[key] || [];
+    if (!moves.length) { tableWrap.innerHTML = '<p style="color:var(--text-muted);font-size:0.8rem;padding:8px 0">None</p>'; return; }
+    const table = document.createElement('table'); table.className = 'move-table';
+    const thead = document.createElement('thead');
+    let thHTML = '';
+    if (key === 'by_level') thHTML += '<th class="col-lv">Lv</th>';
+    if (key === 'by_tm')    thHTML += '<th class="col-tm">TM</th>';
+    thHTML += '<th class="col-name">Move</th><th>Type</th><th>Cat</th><th class="col-pow">Pow</th><th class="col-acc">Acc</th>';
+    thead.innerHTML = `<tr>${thHTML}</tr>`; table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    moves.forEach(m => {
+      const tr = document.createElement('tr');
+      let html = '';
+      if (key === 'by_level') html += `<td class="col-lv">${m.level}</td>`;
+      if (key === 'by_tm')    html += `<td class="col-tm">${m.tm}</td>`;
+      html += `<td class="col-name">${m.name ?? '—'}</td>`;
+      html += `<td>${m.type ? `<span class="type-badge ${typeClass(m.type)}">${typeLabel(m.type)}</span>` : '—'}</td>`;
+      html += `<td>${m.class ? classBadge(m.class) : '—'}</td>`;
+      html += `<td class="col-pow">${m.power || '—'}</td><td class="col-acc">${m.accuracy || '—'}</td>`;
+      tr.innerHTML = html;
+      if (m.slug) tr.addEventListener('click', () => openMoveDetail(m.slug));
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody); tableWrap.appendChild(table);
+  }
+  LEARNSET_TABS.forEach(({ key, label }) => {
+    const btn = document.createElement('button'); btn.className = 'ls-tab'; btn.dataset.key = key; btn.textContent = label;
+    if (!(learnset[key] || []).length) btn.disabled = true;
+    btn.addEventListener('click', () => showTab(key)); tabBar.appendChild(btn);
+  });
+  wrap.appendChild(tabBar); wrap.appendChild(tableWrap);
+  const first = LEARNSET_TABS.find(({ key }) => (learnset[key] || []).length > 0);
+  if (first) showTab(first.key);
+  return wrap;
+}
+
+function fmtEvoMethod(method, value) {
+  const item = () => fmtConst(String(value));
+  switch (method) {
+    case 'EVO_LEVEL':                     return `Lv. ${value}`;
+    case 'EVO_LEVEL_MALE':                return `Lv. ${value} (Male)`;
+    case 'EVO_LEVEL_FEMALE':              return `Lv. ${value} (Female)`;
+    case 'EVO_LEVEL_DAY':                 return `Lv. ${value} (Day)`;
+    case 'EVO_LEVEL_NIGHT':               return `Lv. ${value} (Night)`;
+    case 'EVO_LEVEL_HAPPINESS':           return 'Happiness';
+    case 'EVO_LEVEL_HAPPINESS_DAY':       return 'Happiness (Day)';
+    case 'EVO_LEVEL_HAPPINESS_NIGHT':     return 'Happiness (Night)';
+    case 'EVO_LEVEL_ATK_GT_DEF':          return `Lv. ${value} (Atk > Def)`;
+    case 'EVO_LEVEL_ATK_EQ_DEF':          return `Lv. ${value} (Atk = Def)`;
+    case 'EVO_LEVEL_ATK_LT_DEF':          return `Lv. ${value} (Atk < Def)`;
+    case 'EVO_LEVEL_WITH_HELD_ITEM':      return `Lv. up w/ ${item()}`;
+    case 'EVO_LEVEL_WITH_HELD_ITEM_DAY':  return `Lv. up w/ ${item()} (Day)`;
+    case 'EVO_LEVEL_WITH_HELD_ITEM_NIGHT':return `Lv. up w/ ${item()} (Night)`;
+    case 'EVO_LEVEL_KNOW_MOVE':           return `Lv. up knowing ${item()}`;
+    case 'EVO_LEVEL_MAGNETIC_FIELD':      return 'Lv. up (Magnetic Field)';
+    case 'EVO_LEVEL_MOSS_ROCK':           return 'Lv. up (Moss Rock)';
+    case 'EVO_LEVEL_ICE_ROCK':            return 'Lv. up (Ice Rock)';
+    case 'EVO_USE_ITEM':                  return `Use ${item()}`;
+    case 'EVO_USE_ITEM_MALE':             return `Use ${item()} (Male)`;
+    case 'EVO_USE_ITEM_FEMALE':           return `Use ${item()} (Female)`;
+    case 'EVO_TRADE':                     return 'Trade';
+    case 'EVO_TRADE_WITH_HELD_ITEM':      return `Trade w/ ${item()}`;
+    default:                              return fmtConst(method) + (value ? ` ${value}` : '');
+  }
+}
+
+// ── Pokémon detail open/close ───────────────────────────────────────
+const pkBackdrop = document.getElementById('pk-backdrop');
+const pkName     = document.getElementById('pk-name');
+const pkSprite   = document.getElementById('pk-sprite');
+const pkStats    = document.getElementById('pk-stats');
+const pkTypes    = document.getElementById('pk-types');
+const pkEvo      = document.getElementById('pk-evo');
+const pkMisc     = document.getElementById('pk-misc');
+const pkRight    = document.getElementById('pk-right');
+document.getElementById('pk-close').addEventListener('click', closePkDetail);
+pkBackdrop.addEventListener('click', e => { if (e.target === pkBackdrop) closePkDetail(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('move-backdrop').classList.contains('open')) closeMoveDetail();
+    else if (pkBackdrop.classList.contains('open')) closePkDetail();
+    else if (backdrop.classList.contains('open')) closeDetail();
+    else closeSidebar();
+  }
+});
+function openPkDetail(name) { pkBackdrop.classList.add('open'); loadPkDetail(name); }
+function closePkDetail()    { pkBackdrop.classList.remove('open'); }
+
+async function loadPkDetail(name) {
+  pkName.textContent = '…';
+  pkSprite.innerHTML = pkStats.innerHTML = pkTypes.innerHTML = pkEvo.innerHTML = pkMisc.innerHTML = pkRight.innerHTML = '';
+  let d;
+  try { d = await fetch(`/api/pokemon/${name}`).then(r => r.json()); }
+  catch { pkName.textContent = 'Error loading data'; return; }
+
+  pkName.textContent = name.replace(/-/g, ' ');
+
+  const sprCanvas = await makeSpriteCanvas(`/sprites/${name}/male`, 2.8)
+    ?? await makeSpriteCanvas(`/sprites/${name}/female`, 2.8);
+  if (sprCanvas) { pkSprite.appendChild(sprCanvas); pkStats.style.height = sprCanvas.style.height; }
+
+  if (d.base_stats) pkStats.appendChild(buildStatsBlock(d.base_stats));
+  const entryLines = d.pokedex_data?.en?.entry_text;
+  if (entryLines) {
+    const p = document.createElement('p');
+    p.style.cssText = 'font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin-top:8px;';
+    p.textContent = entryLines.join('').replace(/\n/g, ' ').trim();
+    pkStats.appendChild(p);
+  }
+
+  const types = [...new Set(d.types || [])];
+  const typesTitle = document.createElement('div'); typesTitle.className = 'section-title'; typesTitle.textContent = 'Type';
+  pkTypes.appendChild(typesTitle);
+  const typesBadges = document.createElement('div'); typesBadges.className = 'types'; typesBadges.style.cssText = 'display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-start;';
+  types.forEach(t => typesBadges.appendChild(typeBadge(t))); pkTypes.appendChild(typesBadges);
+
+  const evoRow = document.createElement('div');
+  evoRow.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:flex-start;';
+  const evos = d.evolutions || [];
+  if (evos.length) {
+    const evoWrap = document.createElement('div');
+    const evoTitle = document.createElement('div'); evoTitle.className = 'section-title'; evoTitle.textContent = 'Evolution';
+    evoWrap.appendChild(evoTitle);
+    const chain = document.createElement('div'); chain.className = 'evo-chain';
+    evos.forEach(evo => {
+      const method = evo[0], target = evo[evo.length - 1], value = evo.length === 3 ? evo[1] : null;
+      const targetFolder = target.replace(/^SPECIES_/, '').toLowerCase();
+      const targetStr = targetFolder.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      const entry = document.createElement('div'); entry.className = 'evo-entry';
+      entry.innerHTML = `<span class="evo-arrow">→</span><span class="evo-target">${targetStr}</span><span class="evo-method">(${fmtEvoMethod(method, value)})</span>`;
+      entry.addEventListener('click', () => loadPkDetail(targetFolder));
+      chain.appendChild(entry);
+    });
+    evoWrap.appendChild(chain); evoRow.appendChild(evoWrap);
+  } else {
+    evoRow.appendChild(document.createElement('div'));
+  }
+  const offspring = d.offspring || '';
+  const offSelf = offspring.replace(/^SPECIES_/, '').toLowerCase() === name;
+  if (offspring && offspring !== 'SPECIES_NONE' && !offSelf) {
+    const offFolder = offspring.replace(/^SPECIES_/, '').toLowerCase();
+    const offStr = offFolder.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const offWrap = document.createElement('div');
+    const offTitle = document.createElement('div'); offTitle.className = 'section-title'; offTitle.textContent = 'Offspring'; offWrap.appendChild(offTitle);
+    const offEntry = document.createElement('div'); offEntry.className = 'evo-entry';
+    offEntry.innerHTML = `<span class="evo-target">${offStr}</span>`;
+    offEntry.addEventListener('click', () => loadPkDetail(offFolder));
+    offWrap.appendChild(offEntry); evoRow.appendChild(offWrap);
+  }
+  if (evoRow.children.length) pkEvo.appendChild(evoRow);
+
+  const miscTitle = document.createElement('div'); miscTitle.className = 'section-title'; miscTitle.textContent = 'Info'; pkMisc.appendChild(miscTitle);
+  const abilities = (d.abilities || []).filter(a => a !== 'ABILITY_NONE').map(fmtConst);
+  const eggGroups = [...new Set((d.egg_groups || []).filter(g => g !== 'EGG_GROUP_NONE').map(fmtConst))];
+  const rows = [
+    ['Abilities', abilities.join(', ') || '—'], ['Egg Groups', eggGroups.join(', ') || '—'],
+    ['Catch Rate', d.catch_rate ?? '—'], ['Base Exp', d.base_exp_reward ?? '—'],
+    ['Hatch Cycles', d.hatch_cycles ?? '—'], ['Friendship', d.base_friendship ?? '—'],
+    ['Exp Rate', fmtConst(d.exp_rate || '') || '—'], ['Gender', fmtConst(d.gender_ratio || '') || '—'],
+  ];
+  const meta = document.createElement('div'); meta.className = 'detail-meta';
+  rows.forEach(([k, v]) => {
+    const item = document.createElement('div'); item.className = 'meta-item';
+    item.innerHTML = `<span class="mk">${k}</span><span class="mv">${v}</span>`;
+    meta.appendChild(item);
+  });
+  pkMisc.appendChild(meta);
+  if (d.learnset_resolved) pkRight.appendChild(buildLearnsetPanel(d.learnset_resolved));
+}
+
+// ── Move detail ───────────────────────────────────────────────────
+const moveBackdrop = document.getElementById('move-backdrop');
+const moveContent  = document.getElementById('move-content');
+document.getElementById('move-close').addEventListener('click', closeMoveDetail);
+moveBackdrop.addEventListener('click', e => { if (e.target === moveBackdrop) closeMoveDetail(); });
+function openMoveDetail(slug) { moveBackdrop.classList.add('open'); loadMoveDetail(slug); }
+function closeMoveDetail()    { moveBackdrop.classList.remove('open'); }
+
+async function loadMoveDetail(slug) {
+  moveContent.innerHTML = '<p style="color:var(--text-muted);padding:20px 0">Loading…</p>';
+  let d;
+  try { d = await fetch(`/api/moves/${slug}`).then(r => r.json()); }
+  catch { moveContent.innerHTML = '<p style="color:var(--text-muted)">Error loading data.</p>'; return; }
+  const desc = (d.description || []).join('').replace(/\n/g, ' ').trim();
+  const priorityStr = d.priority > 0 ? `+${d.priority}` : `${d.priority ?? 0}`;
+  const effectVal = d.effect ? fmtConst(d.effect.type) + (d.effect.chance ? ` (${d.effect.chance}%)` : '') : '';
+  const contestVal = d.contest ? fmtConst(d.contest.type) : '';
+  const flags = (d.flags || []).map(f => `<span class="flag-badge">${fmtConst(f)}</span>`).join('');
+  moveContent.innerHTML = `
+    <div class="move-detail-name">${d.name || slug}</div>
+    ${desc ? `<div class="move-detail-desc">${desc}</div>` : ''}
+    <div class="move-detail-badges">
+      <div class="col"><div class="section-title">Type</div>${d.type ? `<span class="type-badge ${typeClass(d.type)}">${typeLabel(d.type)}</span>` : '—'}</div>
+      <div class="col"><div class="section-title">Class</div>${d.class ? classBadge(d.class) : '—'}</div>
+    </div>
+    <div class="section-title">Stats</div>
+    <div class="move-detail-meta">
+      <div class="meta-item"><span class="mk">Power</span>   <span class="mv">${d.power || '—'}</span></div>
+      <div class="meta-item"><span class="mk">Accuracy</span><span class="mv">${d.accuracy ? d.accuracy+'%' : '—'}</span></div>
+      <div class="meta-item"><span class="mk">PP</span>      <span class="mv">${d.pp ?? '—'}</span></div>
+      <div class="meta-item"><span class="mk">Priority</span><span class="mv">${priorityStr}</span></div>
+      <div class="meta-item"><span class="mk">Range</span>   <span class="mv">${fmtConst(d.range) || '—'}</span></div>
+      ${effectVal  ? `<div class="meta-item"><span class="mk">Effect</span>  <span class="mv">${effectVal}</span></div>` : ''}
+      ${contestVal ? `<div class="meta-item"><span class="mk">Contest</span><span class="mv">${contestVal}</span></div>` : ''}
+    </div>
+    ${flags ? `<div class="section-title" style="margin-bottom:8px">Flags</div><div class="flags-list">${flags}</div>` : ''}`;
 }
 
 // ── card builder ──────────────────────────────────────────────────────────
