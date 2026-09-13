@@ -2,6 +2,7 @@
 
 import json
 import mimetypes
+import re
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
@@ -15,6 +16,13 @@ ITEMS_ICONS_DIR       = (WIKI_DIR / ".." / "res" / "items" / "icons").resolve()
 TRAINERS_DATA_DIR     = (WIKI_DIR / ".." / "res" / "trainers" / "data").resolve()
 TRAINERS_CLASSES_DIR  = (WIKI_DIR / ".." / "res" / "trainers" / "classes").resolve()
 ENCOUNTERS_DIR        = (WIKI_DIR / ".." / "res" / "field" / "encounters").resolve()
+EVENTS_DIR            = (WIKI_DIR / ".." / "res" / "field" / "events").resolve()
+MATRICES_DIR          = (WIKI_DIR / ".." / "res" / "field" / "matrices").resolve()
+AREA_DATA_DIR         = (WIKI_DIR / ".." / "res" / "field" / "area_data").resolve()
+MAPS_DATA_DIR         = (WIKI_DIR / ".." / "res" / "field" / "maps" / "data").resolve()
+MAP_HEADERS_FILE      = (WIKI_DIR / ".." / "include" / "data" / "map_headers.h").resolve()
+PROP_MODELS_ORDER_FILE = (WIKI_DIR / ".." / "res" / "field" / "props" / "models" / "map_prop_models.order").resolve()
+PROP_MODELS_DIR       = (WIKI_DIR / ".." / "res" / "field" / "props" / "models").resolve()
 PORT                  = 5000
 
 _SKIP_MOVES = {"none"}
@@ -83,6 +91,74 @@ _SKIP_TRAINERS = {"none"}
 
 def _trainer_class_folder(class_const: str) -> str:
     return class_const.removeprefix("TRAINER_CLASS_").lower()
+
+
+_REMATCH_NUM_RE = re.compile(r"^(.*)_rematch_(\d+)$")
+_REMATCH_PLAIN_RE = re.compile(r"^(.*)_rematch$")
+
+
+def _trainer_rematch_nav(slug: str) -> dict:
+    """prev/next slugs for a trainer's rematch chain (base -> _rematch_1 -> _rematch_2 -> ...),
+    based on which res/trainers/data/<slug>_rematch_N.json files actually exist. Some trainers
+    only ever get a single rematch stored as "<base>_rematch.json" (no numeric suffix) instead
+    of "<base>_rematch_1.json" — treated here as index 1."""
+    m = _REMATCH_NUM_RE.match(slug)
+    if m:
+        base, index = m.group(1), int(m.group(2))
+    else:
+        m = _REMATCH_PLAIN_RE.match(slug)
+        base, index = (m.group(1), 1) if m else (slug, 0)
+
+    def _slug_for(i: int) -> str | None:
+        if i == 0:
+            return base
+        numbered = f"{base}_rematch_{i}"
+        if (TRAINERS_DATA_DIR / f"{numbered}.json").exists():
+            return numbered
+        if i == 1:
+            plain = f"{base}_rematch"
+            if (TRAINERS_DATA_DIR / f"{plain}.json").exists():
+                return plain
+        return None
+
+    prev_slug = _slug_for(index - 1) if index > 0 else None
+    next_slug = _slug_for(index + 1)
+    return {"rematch_prev": prev_slug, "rematch_next": next_slug, "rematch_index": index}
+
+
+def _trainers_for_encounter_area(slug: str) -> list:
+    """Trainers placed on an encounter area's map, read from the matching events_<slug>.json
+    object_events (trainer_type != TRAINER_TYPE_NONE, script is the TRAINER_XXX const)."""
+    events_file = EVENTS_DIR / f"events_{slug}.json"
+    if not events_file.exists():
+        return []
+    events = json.loads(events_file.read_text(encoding="utf-8"))
+    result = []
+    seen = set()
+    for obj in events.get("object_events", []):
+        if obj.get("trainer_type", "TRAINER_TYPE_NONE") == "TRAINER_TYPE_NONE":
+            continue
+        script = obj.get("script")
+        if not isinstance(script, str) or not script.startswith("TRAINER_"):
+            continue
+        trainer_slug = script.removeprefix("TRAINER_").lower()
+        if trainer_slug in seen or trainer_slug in _SKIP_TRAINERS:
+            continue
+        seen.add(trainer_slug)
+        trainer_file = TRAINERS_DATA_DIR / f"{trainer_slug}.json"
+        if not trainer_file.exists():
+            continue
+        td = json.loads(trainer_file.read_text(encoding="utf-8"))
+        class_const = td.get("class", "")
+        class_folder = _trainer_class_folder(class_const)
+        result.append({
+            "slug":         trainer_slug,
+            "name":         td.get("name", trainer_slug),
+            "class":        class_const,
+            "class_folder": class_folder,
+            "has_icon":     (TRAINERS_CLASSES_DIR / class_folder / "front.png").exists(),
+        })
+    return result
 
 
 class WikiHandler(BaseHTTPRequestHandler):
@@ -281,6 +357,7 @@ class WikiHandler(BaseHTTPRequestHandler):
         d["slug"]       = slug
         d["class_folder"] = class_folder
         d["has_icon"]   = (TRAINERS_CLASSES_DIR / class_folder / "front.png").exists()
+        d.update(_trainer_rematch_nav(slug))
         self._json(d)
 
     def _api_encounters_list(self):
@@ -306,6 +383,7 @@ class WikiHandler(BaseHTTPRequestHandler):
         d = json.loads(enc_file.read_text(encoding="utf-8"))
         d["slug"] = slug
         d["name"] = slug.replace("_", " ").title()
+        d["trainers"] = _trainers_for_encounter_area(slug)
         self._json(d)
 
     def _trainer_icon(self, class_folder: str):

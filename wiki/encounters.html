@@ -202,7 +202,7 @@
       background: var(--surface);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
-      width: min(900px, calc(100vw - 32px));
+      width: min(1500px, calc(100vw - 32px));
       max-height: calc(100vh - 48px);
       overflow-y: auto;
       padding: 28px;
@@ -399,6 +399,108 @@
     .pk-link { cursor:pointer; text-decoration:underline; text-underline-offset:2px; text-decoration-color:rgba(255,255,255,.2); transition:color .15s,text-decoration-color .15s; }
     .pk-link:hover { color:var(--accent2); text-decoration-color:var(--accent2); }
 
+    /* ── Wild encounters / Trainers section headings ─────── */
+    .section-heading { font-size: 1rem; font-weight: 800; letter-spacing: -.01em; margin: 0 0 12px; }
+
+    /* ── Main layout: wild encounters | trainers side-by-side ── */
+    .detail-main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .detail-main-grid { grid-template-columns: 1fr; }
+    }
+    .trainers-col {
+      border-left: 1px solid rgba(255,255,255,0.07);
+      padding-left: 28px;
+      min-width: 0;
+    }
+    @media (max-width: 760px) {
+      .trainers-col { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; }
+    }
+
+    /* ── Trainers list (own scrollbar, independent from the modal's) ── */
+    .trainer-list {
+      display: flex; flex-direction: column; gap: 8px;
+      max-height: 420px; overflow-y: auto; padding-right: 6px;
+    }
+    .trainer-list::-webkit-scrollbar { width: 6px; }
+    .trainer-list::-webkit-scrollbar-track { background: transparent; }
+    .trainer-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    .trainer-row {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface2); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .trainer-row:hover { background: #2a2e42; border-color: rgba(255,255,255,0.2); }
+    .trainer-row-icon, .trainer-row-icon-placeholder {
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 6px;
+    }
+    .trainer-row-icon { image-rendering: pixelated; }
+    .trainer-row-icon-placeholder { background: rgba(255,255,255,0.05); }
+    .trainer-row-name  { font-weight: 700; font-size: 0.85rem; }
+    .trainer-row-class { font-size: 0.7rem; color: var(--text-muted); }
+    .no-trainers { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* ── Trainer detail modal (z-index between area detail and pokémon modal) ── */
+    #trainer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.72);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 250; opacity: 0; pointer-events: none; transition: opacity var(--tr);
+    }
+    #trainer-backdrop.open { opacity: 1; pointer-events: all; }
+    #trainer-panel {
+      background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 48px);
+      overflow-y: auto; padding: 28px; position: relative;
+      transform: translateY(20px); transition: transform var(--tr);
+    }
+    #trainer-backdrop.open #trainer-panel { transform: translateY(0); }
+    #trainer-close {
+      position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.06);
+      border: none; border-radius: 50%; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-muted); transition: background .2s, color .2s;
+    }
+    #trainer-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+    .detail-slug { font-size: 1rem; font-weight: 400; color: var(--text-muted); margin-left: 10px; font-style: italic; }
+    .detail-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; }
+    .detail-top-section {
+      display: flex; gap: 24px; align-items: flex-start; margin-bottom: 24px;
+      padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .detail-info-col { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .flags-list { display: flex; flex-wrap: wrap; gap: 5px; }
+    .flag-badge { font-size: 0.66rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; background: var(--surface2); color: #c8ccd8; letter-spacing: .04em; }
+    .trainer-icon-canvas { image-rendering: pixelated; display: block; width: 80px; height: 80px; }
+    .detail-party-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 700px) { .detail-party-grid { grid-template-columns: 1fr; } }
+    .party-card {
+      background: var(--surface2); border-radius: 8px; padding: 10px 14px;
+      display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: background .15s;
+    }
+    .party-card:hover { background: #2a2e42; }
+    .party-sprite-wrap { flex-shrink: 0; width: 56px; height: 56px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .party-sprite-wrap canvas { image-rendering: pixelated; display: block; max-width: 56px; max-height: 56px; width: auto !important; height: auto !important; }
+    .party-sprite-placeholder { width: 56px; height: 56px; flex-shrink: 0; background: rgba(255,255,255,0.04); border-radius: 4px; }
+    .party-info { flex: 1; min-width: 0; }
+    .party-name { font-weight: 700; font-size: 0.9rem; text-transform: capitalize; margin-bottom: 4px; }
+    .party-details { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 12px; margin-bottom: 5px; }
+    .party-detail-item { font-size: 0.72rem; color: var(--text-muted); }
+    .party-detail-item .dk { font-weight: 600; color: var(--text-muted); }
+    .party-detail-item .dv { color: var(--text); font-weight: 500; }
+    .party-moves { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+    .move-pill {
+      font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+      background: var(--surface); color: var(--text-muted); letter-spacing: .02em;
+      cursor: pointer; transition: color .15s, background .15s;
+    }
+    .move-pill:hover { background: #2a2e42; color: var(--text); }
+
     #loading { text-align: center; padding: 80px 0; color: var(--text-muted); }
     #empty   { display: none; text-align: center; padding: 80px 0; color: var(--text-muted); }
   </style>
@@ -531,6 +633,21 @@
   </div>
 </div>
 
+<!-- ── Trainer detail modal ───────────────────────────────── -->
+<div id="trainer-backdrop">
+  <div id="trainer-panel">
+    <button id="trainer-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+      </svg>
+    </button>
+    <div id="trainer-name"     class="detail-name"></div>
+    <div id="trainer-subtitle" class="detail-subtitle"></div>
+    <div id="trainer-top"></div>
+    <div id="trainer-party"></div>
+  </div>
+</div>
+
 <!-- ── Move detail modal ──────────────────────────────────── -->
 <div id="move-backdrop">
   <div id="move-panel">
@@ -584,9 +701,256 @@ detailContent.addEventListener('click', e => {
   const link = e.target.closest('.pk-link');
   if (link) { e.stopPropagation(); openPkDetail(link.dataset.pk); }
 });
+
+// ── trainer list + detail modal ────────────────────────────────────────────
+function fmtClassName(cls) {
+  return (cls || '').replace(/^TRAINER_CLASS_/, '').replace(/_/g, ' ')
+    .toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+}
+function fmtSlug(slug) {
+  return slug.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+function speciesFolder(speciesConst) {
+  return (speciesConst || '').replace(/^SPECIES_/, '').toLowerCase();
+}
+function moveSlug(moveConst) {
+  return moveConst.replace(/^MOVE_/, '').toLowerCase();
+}
+
+// Draws the top-left 80×80 pixels of a trainer class icon onto a canvas
+function makeTrainerIconCanvas(url, cssSize = 80) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width  = 80;
+      c.height = 80;
+      c.getContext('2d').drawImage(img, 0, 0);
+      c.style.width  = cssSize + 'px';
+      c.style.height = cssSize + 'px';
+      resolve(c);
+    };
+    img.onerror = () => resolve(null);
+    img.src = url;
+  });
+}
+
+function buildTrainerRow(t) {
+  const row = document.createElement('div');
+  row.className = 'trainer-row';
+  row.addEventListener('click', () => openTrainerDetail(t.slug));
+
+  const ph = document.createElement('div');
+  ph.className = 'trainer-row-icon-placeholder';
+  row.appendChild(ph);
+  if (t.has_icon) {
+    makeTrainerIconCanvas(`/trainer-icon/${t.class_folder}`, 40).then(c => {
+      if (c) { c.className = 'trainer-row-icon'; ph.replaceWith(c); }
+    });
+  }
+
+  const info = document.createElement('div');
+  const nameEl = document.createElement('div');
+  nameEl.className = 'trainer-row-name';
+  nameEl.textContent = t.name;
+  const classEl = document.createElement('div');
+  classEl.className = 'trainer-row-class';
+  classEl.textContent = fmtClassName(t.class);
+  info.appendChild(nameEl);
+  info.appendChild(classEl);
+  row.appendChild(info);
+
+  return row;
+}
+
+function renderTrainerList(trainers) {
+  const container = document.getElementById('trainer-list');
+  if (!container) return;
+  container.innerHTML = '';
+  if (!trainers.length) {
+    container.innerHTML = '<p class="no-trainers">No trainers on this route.</p>';
+    return;
+  }
+  trainers.forEach(t => container.appendChild(buildTrainerRow(t)));
+}
+
+const trainerBackdrop = document.getElementById('trainer-backdrop');
+const trainerName     = document.getElementById('trainer-name');
+const trainerSub      = document.getElementById('trainer-subtitle');
+const trainerTop      = document.getElementById('trainer-top');
+const trainerParty    = document.getElementById('trainer-party');
+document.getElementById('trainer-close').addEventListener('click', closeTrainerDetail);
+trainerBackdrop.addEventListener('click', e => { if (e.target === trainerBackdrop) closeTrainerDetail(); });
+function openTrainerDetail(slug) { trainerBackdrop.classList.add('open'); loadTrainerDetail(slug); }
+function closeTrainerDetail()    { trainerBackdrop.classList.remove('open'); }
+
+async function loadTrainerDetail(slug) {
+  trainerName.textContent = '…';
+  trainerSub.textContent  = '';
+  trainerTop.innerHTML    = '';
+  trainerParty.innerHTML  = '';
+
+  let d;
+  try {
+    d = await fetch(`/api/trainers/${slug}`).then(r => r.json());
+  } catch {
+    trainerName.textContent = 'Error loading data';
+    return;
+  }
+
+  trainerName.innerHTML = `${d.name || fmtSlug(slug)}<span class="detail-slug">(${fmtSlug(slug)})</span>`;
+  trainerSub.textContent = fmtClassName(d.class);
+
+  const topSection = document.createElement('div');
+  topSection.className = 'detail-top-section';
+
+  if (d.has_icon) {
+    makeTrainerIconCanvas(`/trainer-icon/${d.class_folder}`, 80).then(c => {
+      if (c) { c.className = 'trainer-icon-canvas'; topSection.prepend(c); }
+    });
+  }
+
+  const infoCol = document.createElement('div');
+  infoCol.className = 'detail-info-col';
+  const meta = document.createElement('div');
+  meta.className = 'info-grid';
+  [
+    ['Class',         fmtClassName(d.class)],
+    ['Double Battle', d.double_battle ? 'Yes' : 'No'],
+    ['Party Size',    (d.party || []).length],
+    ['Held Items',    (d.items || []).map(fmtConst).join(', ') || 'None'],
+  ].forEach(([k, v]) => {
+    meta.innerHTML += `<div class="meta-item"><span class="mk">${k}</span><span class="mv">${v}</span></div>`;
+  });
+  infoCol.appendChild(meta);
+  topSection.appendChild(infoCol);
+
+  const aiFlags = (d.ai_flags || []);
+  if (aiFlags.length) {
+    const aiCol = document.createElement('div');
+    aiCol.className = 'detail-info-col';
+    const aiTitle = document.createElement('div');
+    aiTitle.className = 'section-title';
+    aiTitle.textContent = 'AI Flags';
+    aiCol.appendChild(aiTitle);
+    const flagsEl = document.createElement('div');
+    flagsEl.className = 'flags-list';
+    aiFlags.forEach(f => {
+      const b = document.createElement('span');
+      b.className = 'flag-badge';
+      b.textContent = fmtConst(f);
+      flagsEl.appendChild(b);
+    });
+    aiCol.appendChild(flagsEl);
+    topSection.appendChild(aiCol);
+  }
+
+  trainerTop.appendChild(topSection);
+
+  const partyTitle = document.createElement('div');
+  partyTitle.className = 'section-title';
+  partyTitle.textContent = 'Party';
+  trainerParty.appendChild(partyTitle);
+
+  const partyGrid = document.createElement('div');
+  partyGrid.className = 'detail-party-grid';
+
+  const partyPkData = await Promise.all(
+    (d.party || []).map(pk =>
+      fetch(`/api/pokemon/${speciesFolder(pk.species)}`).then(r => r.json()).catch(() => null)
+    )
+  );
+
+  (d.party || []).forEach((pk, i) => {
+    const pkData    = partyPkData[i];
+    const sprFolder = speciesFolder(pk.species);
+
+    const card = document.createElement('div');
+    card.className = 'party-card';
+    card.addEventListener('click', () => openPkDetail(sprFolder));
+
+    const sprWrap = document.createElement('div');
+    sprWrap.className = 'party-sprite-wrap';
+    makeSpriteCanvas(`/sprites/${sprFolder}/male`, 1.5).then(c => {
+      if (c) { sprWrap.appendChild(c); return; }
+      return makeSpriteCanvas(`/sprites/${sprFolder}/female`, 1.5).then(cf => {
+        if (cf) sprWrap.appendChild(cf);
+        else sprWrap.classList.add('party-sprite-placeholder');
+      });
+    });
+    card.appendChild(sprWrap);
+
+    const info = document.createElement('div');
+    info.className = 'party-info';
+
+    const nameRow = document.createElement('div');
+    nameRow.style.cssText = 'display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; margin-bottom:4px; align-items:center;';
+    const nameEl = document.createElement('div');
+    nameEl.className = 'party-name';
+    nameEl.style.margin = '0';
+    nameEl.textContent = sprFolder.replace(/_/g, ' ');
+    nameRow.appendChild(nameEl);
+    if (pkData?.types?.length) {
+      const typesEl = document.createElement('div');
+      typesEl.className = 'types';
+      typesEl.style.cssText = 'justify-content:flex-start; flex-wrap:nowrap; gap:4px;';
+      [...new Set(pkData.types)].forEach(t => typesEl.appendChild(typeBadge(t)));
+      nameRow.appendChild(typesEl);
+    }
+    info.appendChild(nameRow);
+
+    const ivVal      = pk.iv_scale != null ? Math.round(pk.iv_scale / 255.0 * 31) : '—';
+    const abilityVal = (!pk.ability || pk.ability === 'ABILITY_NONE') ? 'Default' : fmtConst(pk.ability);
+    const natureVal  = (!pk.nature  || pk.nature  === 'NATURE_NONE')  ? 'Random'  : fmtConst(pk.nature);
+    const itemVal    = (!pk.item    || pk.item    === 'ITEM_NONE')     ? '—'       : fmtConst(pk.item);
+
+    const details = document.createElement('div');
+    details.className = 'party-details';
+    [
+      ['Level',      pk.level],
+      ['Item',       itemVal],
+      ['IVs',        ivVal],
+      ['Friendship', pk.friendship ?? '—'],
+      ['Ability',    abilityVal],
+      ['Nature',     natureVal],
+    ].forEach(([k, v]) => {
+      const el = document.createElement('div');
+      el.className = 'party-detail-item';
+      el.innerHTML = `<span class="dk">${k}:</span> <span class="dv">${v}</span>`;
+      details.appendChild(el);
+    });
+    info.appendChild(details);
+
+    const moves = (pk.moves || []).filter(m => m && m !== 'MOVE_NONE');
+    if (moves.length) {
+      const movesTitle = document.createElement('div');
+      movesTitle.className = 'section-title';
+      movesTitle.style.marginTop = '6px';
+      movesTitle.textContent = 'Moves';
+      info.appendChild(movesTitle);
+      const movesEl = document.createElement('div');
+      movesEl.className = 'party-moves';
+      moves.forEach(m => {
+        const pill = document.createElement('span');
+        pill.className = 'move-pill';
+        pill.textContent = fmtConst(m);
+        pill.addEventListener('click', e => { e.stopPropagation(); openMoveDetail(moveSlug(m)); });
+        movesEl.appendChild(pill);
+      });
+      info.appendChild(movesEl);
+    }
+
+    card.appendChild(info);
+    partyGrid.appendChild(card);
+  });
+
+  trainerParty.appendChild(partyGrid);
+}
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    if (backdrop.classList.contains('open')) closeDetail();
+    if (trainerBackdrop.classList.contains('open')) closeTrainerDetail();
+    else if (backdrop.classList.contains('open')) closeDetail();
     else closeSidebar();
   }
 });
@@ -740,15 +1104,25 @@ async function loadDetail(slug) {
       <span class="detail-title">${d.name}</span>
       <div class="enc-flags">${flagsHtml}</div>
     </div>
-    <div class="detail-columns">
-      ${landCol}
-      <div>
-        <span class="col-label badge-water">Water</span>
-        ${buildWaterColumn(d)}
+    <div class="detail-main-grid">
+      <div class="wild-encounters-col">
+        <h2 class="section-heading">Wild Encounters</h2>
+        <div class="detail-columns">
+          ${landCol}
+          <div>
+            <span class="col-label badge-water">Water</span>
+            ${buildWaterColumn(d)}
+          </div>
+        </div>
+      </div>
+      <div class="trainers-col">
+        <h2 class="section-heading">Trainers</h2>
+        <div class="trainer-list" id="trainer-list"></div>
       </div>
     </div>`;
 
   renderLandRatesBody();
+  renderTrainerList(d.trainers || []);
 
   // water tabs
   const available = WATER_TYPES.filter(t => d[t.rateKey] > 0);
@@ -940,6 +1314,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if (document.getElementById('move-backdrop').classList.contains('open')) closeMoveDetail();
     else if (pkBackdrop.classList.contains('open')) closePkDetail();
+    else if (trainerBackdrop.classList.contains('open')) closeTrainerDetail();
     else if (backdrop.classList.contains('open')) closeDetail();
     else closeSidebar();
   }

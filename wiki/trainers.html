@@ -201,6 +201,7 @@
       transition: transform var(--tr);
     }
     #detail-backdrop.open #detail-panel { transform: translateY(0); }
+    #detail-panel.has-nav { padding-top: 56px; }
 
     #detail-close {
       position: absolute; top: 16px; right: 16px;
@@ -212,6 +213,20 @@
       transition: background .2s, color .2s;
     }
     #detail-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+    #detail-prev, #detail-next {
+      position: absolute; top: 16px;
+      background: rgba(255,255,255,0.06);
+      border: none; border-radius: 16px;
+      height: 32px; padding: 0 14px;
+      display: none; align-items: center; gap: 6px;
+      cursor: pointer; color: var(--text); font-size: 0.78rem; font-weight: 600;
+      transition: background .2s;
+    }
+    #detail-prev.visible, #detail-next.visible { display: flex; }
+    #detail-prev:hover, #detail-next:hover { background: rgba(255,255,255,0.14); }
+    #detail-prev { left: 16px; }
+    #detail-next { right: 56px; }
 
     .detail-name {
       font-size: 1.6rem; font-weight: 800;
@@ -586,6 +601,18 @@
 <!-- ── Detail modal ────────────────────────────────── -->
 <div id="detail-backdrop">
   <div id="detail-panel">
+    <button id="detail-prev" aria-label="Previous">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="7,1 2,5 7,9"/>
+      </svg>
+      <span id="detail-prev-label"></span>
+    </button>
+    <button id="detail-next" aria-label="Next">
+      <span id="detail-next-label"></span>
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3,1 8,5 3,9"/>
+      </svg>
+    </button>
     <button id="detail-close" aria-label="Close">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
         <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
@@ -646,10 +673,15 @@ overlay.addEventListener('click', closeSidebar);
 
 // ── detail modal ─────────────────────────────────────────────────
 const backdrop     = document.getElementById('detail-backdrop');
+const detailPanel  = document.getElementById('detail-panel');
 const detailName   = document.getElementById('detail-name');
 const detailSub    = document.getElementById('detail-subtitle');
 const detailTop    = document.getElementById('detail-top');
 const detailParty  = document.getElementById('detail-party');
+const detailPrev   = document.getElementById('detail-prev');
+const detailNext   = document.getElementById('detail-next');
+const detailPrevLabel = document.getElementById('detail-prev-label');
+const detailNextLabel = document.getElementById('detail-next-label');
 
 document.getElementById('detail-close').addEventListener('click', closeDetail);
 backdrop.addEventListener('click', e => { if (e.target === backdrop) closeDetail(); });
@@ -664,6 +696,15 @@ document.addEventListener('keydown', e => {
 
 function openDetail(slug) { backdrop.classList.add('open'); loadDetail(slug); }
 function closeDetail()    { backdrop.classList.remove('open'); }
+
+function rematchLabel(slug) {
+  const m = slug.match(/_rematch_(\d+)$/);
+  if (m) return `Rematch ${m[1]}`;
+  return slug.endsWith('_rematch') ? 'Rematch' : 'Base';
+}
+
+detailPrev.addEventListener('click', () => { if (detailPrev.dataset.slug) loadDetail(detailPrev.dataset.slug); });
+detailNext.addEventListener('click', () => { if (detailNext.dataset.slug) loadDetail(detailNext.dataset.slug); });
 
 // ── pokemon detail modal ──────────────────────────────────────────
 const pkBackdrop = document.getElementById('pk-backdrop');
@@ -1105,6 +1146,9 @@ async function loadDetail(slug) {
   detailSub.textContent  = '';
   detailTop.innerHTML    = '';
   detailParty.innerHTML  = '';
+  detailPrev.classList.remove('visible');
+  detailNext.classList.remove('visible');
+  detailPanel.scrollTop = 0;
 
   let d;
   try {
@@ -1116,6 +1160,18 @@ async function loadDetail(slug) {
 
   detailName.innerHTML = `${d.name || fmtSlug(slug)}<span class="detail-slug">(${fmtSlug(slug)})</span>`;
   detailSub.textContent  = fmtClassName(d.class);
+
+  detailPanel.classList.toggle('has-nav', !!(d.rematch_prev || d.rematch_next));
+  if (d.rematch_prev) {
+    detailPrev.dataset.slug = d.rematch_prev;
+    detailPrevLabel.textContent = rematchLabel(d.rematch_prev);
+    detailPrev.classList.add('visible');
+  }
+  if (d.rematch_next) {
+    detailNext.dataset.slug = d.rematch_next;
+    detailNextLabel.textContent = rematchLabel(d.rematch_next);
+    detailNext.classList.add('visible');
+  }
 
   // ── TOP SECTION: icon | info | AI flags ───────────────────────
   const topSection = document.createElement('div');
