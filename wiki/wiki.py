@@ -2,6 +2,7 @@
 
 import json
 import mimetypes
+import re
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
@@ -90,6 +91,39 @@ _SKIP_TRAINERS = {"none"}
 
 def _trainer_class_folder(class_const: str) -> str:
     return class_const.removeprefix("TRAINER_CLASS_").lower()
+
+
+_REMATCH_NUM_RE = re.compile(r"^(.*)_rematch_(\d+)$")
+_REMATCH_PLAIN_RE = re.compile(r"^(.*)_rematch$")
+
+
+def _trainer_rematch_nav(slug: str) -> dict:
+    """prev/next slugs for a trainer's rematch chain (base -> _rematch_1 -> _rematch_2 -> ...),
+    based on which res/trainers/data/<slug>_rematch_N.json files actually exist. Some trainers
+    only ever get a single rematch stored as "<base>_rematch.json" (no numeric suffix) instead
+    of "<base>_rematch_1.json" — treated here as index 1."""
+    m = _REMATCH_NUM_RE.match(slug)
+    if m:
+        base, index = m.group(1), int(m.group(2))
+    else:
+        m = _REMATCH_PLAIN_RE.match(slug)
+        base, index = (m.group(1), 1) if m else (slug, 0)
+
+    def _slug_for(i: int) -> str | None:
+        if i == 0:
+            return base
+        numbered = f"{base}_rematch_{i}"
+        if (TRAINERS_DATA_DIR / f"{numbered}.json").exists():
+            return numbered
+        if i == 1:
+            plain = f"{base}_rematch"
+            if (TRAINERS_DATA_DIR / f"{plain}.json").exists():
+                return plain
+        return None
+
+    prev_slug = _slug_for(index - 1) if index > 0 else None
+    next_slug = _slug_for(index + 1)
+    return {"rematch_prev": prev_slug, "rematch_next": next_slug, "rematch_index": index}
 
 
 def _trainers_for_encounter_area(slug: str) -> list:
@@ -323,6 +357,7 @@ class WikiHandler(BaseHTTPRequestHandler):
         d["slug"]       = slug
         d["class_folder"] = class_folder
         d["has_icon"]   = (TRAINERS_CLASSES_DIR / class_folder / "front.png").exists()
+        d.update(_trainer_rematch_nav(slug))
         self._json(d)
 
     def _api_encounters_list(self):
