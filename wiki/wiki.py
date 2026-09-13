@@ -15,6 +15,13 @@ ITEMS_ICONS_DIR       = (WIKI_DIR / ".." / "res" / "items" / "icons").resolve()
 TRAINERS_DATA_DIR     = (WIKI_DIR / ".." / "res" / "trainers" / "data").resolve()
 TRAINERS_CLASSES_DIR  = (WIKI_DIR / ".." / "res" / "trainers" / "classes").resolve()
 ENCOUNTERS_DIR        = (WIKI_DIR / ".." / "res" / "field" / "encounters").resolve()
+EVENTS_DIR            = (WIKI_DIR / ".." / "res" / "field" / "events").resolve()
+MATRICES_DIR          = (WIKI_DIR / ".." / "res" / "field" / "matrices").resolve()
+AREA_DATA_DIR         = (WIKI_DIR / ".." / "res" / "field" / "area_data").resolve()
+MAPS_DATA_DIR         = (WIKI_DIR / ".." / "res" / "field" / "maps" / "data").resolve()
+MAP_HEADERS_FILE      = (WIKI_DIR / ".." / "include" / "data" / "map_headers.h").resolve()
+PROP_MODELS_ORDER_FILE = (WIKI_DIR / ".." / "res" / "field" / "props" / "models" / "map_prop_models.order").resolve()
+PROP_MODELS_DIR       = (WIKI_DIR / ".." / "res" / "field" / "props" / "models").resolve()
 PORT                  = 5000
 
 _SKIP_MOVES = {"none"}
@@ -83,6 +90,41 @@ _SKIP_TRAINERS = {"none"}
 
 def _trainer_class_folder(class_const: str) -> str:
     return class_const.removeprefix("TRAINER_CLASS_").lower()
+
+
+def _trainers_for_encounter_area(slug: str) -> list:
+    """Trainers placed on an encounter area's map, read from the matching events_<slug>.json
+    object_events (trainer_type != TRAINER_TYPE_NONE, script is the TRAINER_XXX const)."""
+    events_file = EVENTS_DIR / f"events_{slug}.json"
+    if not events_file.exists():
+        return []
+    events = json.loads(events_file.read_text(encoding="utf-8"))
+    result = []
+    seen = set()
+    for obj in events.get("object_events", []):
+        if obj.get("trainer_type", "TRAINER_TYPE_NONE") == "TRAINER_TYPE_NONE":
+            continue
+        script = obj.get("script")
+        if not isinstance(script, str) or not script.startswith("TRAINER_"):
+            continue
+        trainer_slug = script.removeprefix("TRAINER_").lower()
+        if trainer_slug in seen or trainer_slug in _SKIP_TRAINERS:
+            continue
+        seen.add(trainer_slug)
+        trainer_file = TRAINERS_DATA_DIR / f"{trainer_slug}.json"
+        if not trainer_file.exists():
+            continue
+        td = json.loads(trainer_file.read_text(encoding="utf-8"))
+        class_const = td.get("class", "")
+        class_folder = _trainer_class_folder(class_const)
+        result.append({
+            "slug":         trainer_slug,
+            "name":         td.get("name", trainer_slug),
+            "class":        class_const,
+            "class_folder": class_folder,
+            "has_icon":     (TRAINERS_CLASSES_DIR / class_folder / "front.png").exists(),
+        })
+    return result
 
 
 class WikiHandler(BaseHTTPRequestHandler):
@@ -306,6 +348,7 @@ class WikiHandler(BaseHTTPRequestHandler):
         d = json.loads(enc_file.read_text(encoding="utf-8"))
         d["slug"] = slug
         d["name"] = slug.replace("_", " ").title()
+        d["trainers"] = _trainers_for_encounter_area(slug)
         self._json(d)
 
     def _trainer_icon(self, class_folder: str):
